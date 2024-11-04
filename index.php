@@ -46,6 +46,11 @@ function kw_mini_website_handle_form_submission() {
     $about_title = sanitize_text_field($_POST['about_title']);
     $about_text = sanitize_textarea_field($_POST['about_text']);
 
+    // Sanitize and retrieve new customization fields
+    $share_button_label = sanitize_text_field($_POST['share_button_label']);
+    $contact_button_label = sanitize_text_field($_POST['contact_button_label']);
+    $website_button_label = sanitize_text_field($_POST['website_button_label']);
+
     // Handle file uploads
     $main_image_id = kw_mini_website_handle_file_upload('main_image');
     $bg_image_id = kw_mini_website_handle_file_upload('bg_image');
@@ -70,6 +75,11 @@ function kw_mini_website_handle_form_submission() {
         update_field('fb_url', $fb_url, $post_id);
         update_field('about_title', $about_title, $post_id);
         update_field('about_text', $about_text, $post_id);
+
+        // Save new customization fields
+        update_field('share-button-label', $share_button_label, $post_id);
+        update_field('contact-button-label', $contact_button_label, $post_id);
+        update_field('website-button-label', $website_button_label, $post_id);
 
         // Return success response with post URL
         $post_url = get_permalink($post_id);

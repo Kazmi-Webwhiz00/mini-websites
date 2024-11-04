@@ -117,6 +117,7 @@ jQuery(document).ready(function($) {
             getImagePreviewUrl(this).then(previewUrl => {
                 $('#kw-bg-image-preview').attr('src', previewUrl).show();
                 $('#kw-mini-web-bg-image').css('background-image', `url(${previewUrl})`).show();
+                $('.kw-bg-image-text').hide();
             }).catch(error => console.error(error));
         });
 
@@ -190,10 +191,34 @@ jQuery(document).ready(function($) {
         });
     }
 
+    function updateButtonsPreview() {
+        $('#contact-button-label').on('input', function() {
+            // Get the current value of the input
+            let label = $(this).val();
+            // Update the h2 element within the kw-mini-web-company-name div
+            $('#kw-mini-web-contacts-btn .elementor-button-text').text(label);
+        });
+
+        $('#share-button-label').on('input', function() {
+            // Get the current value of the input
+            let label = $(this).val();
+            // Update the h2 element within the kw-mini-web-company-name div
+            $('#kw-mini-web-share-btn .elementor-button-text').text(label);
+        });
+
+        $('#website-button-label').on('input', function() {
+            // Get the current value of the input
+            let label = $(this).val();
+            // Update the h2 element within the kw-mini-web-company-name div
+            $('#kw-mini-web-website-btn .elementor-button-text').text(label);
+        });
+    }
+
     function bindPreviewEvents(){
         updateUserNameDisplay();
         updateCompanyName();
         updateJobeTitle();
+        updateButtonsPreview();
     }
     // Initialize all event listeners and form handling
     function init() {

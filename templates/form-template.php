@@ -43,6 +43,13 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                         </svg>
                         <span>About Section</span>
                     </div>
+                    <div class="step" id="kw-progress-step-5">
+                        <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" class="circle-inactive"></circle>
+                            <path d="M9.25 11.75L11.25 13.75L14.75 10" stroke="grey" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>Customization</span>
+                    </div>
                 </div>
             </div>
 
@@ -92,6 +99,7 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                             <label for="kw-bg-image" class="bg-image-upload-label">
                                 <input type="file" id="kw-bg-image" name="bg_image" class="form-control-file d-none" required>
                                 <div class="bg-image-preview-wrapper">
+                                <span class="kw-bg-image-text">Cover Image</span>
                                     <img id="kw-bg-image-preview" src="#" alt="Background Image Preview" class="bg-image-thumbnail">
                                     <div class="bg-image-overlay">
                                         <span class="bg-image-upload-icon">📤</span>
@@ -134,8 +142,29 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                             <textarea id="kw-about-text" name="about_text" class="form-control" rows="4" required></textarea>
                         </div>
 
-                        <button type="button" class="btn btn-secondary btn-block" data-prev="3">Back</button>
-                        <button type="submit" name="submit_mini_website" class="btn btn-success btn-block">Submit</button>
+                        <button type="button" class="btn btn-secondary btn-block mt-3" data-prev="3">Back</button>
+                        <button type="button" class="btn btn-primary btn-block mt-3" data-next="5">Next</button>
+                    </div>
+
+                         <!-- Step 5: Customization -->
+                        <div class="form-step" id="kw-step-5" style="display: none;">
+                            <div class="form-group">
+                                <label for="share-button-label">Share Button Label</label>
+                                <input type="text" id="share-button-label" name="share_button_label" class="form-control" placeholder="e.g., Share with Friends">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contact-button-label">Contact Button Label</label>
+                                <input type="text" id="contact-button-label" name="contact_button_label" class="form-control" placeholder="e.g., Contact Us">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="website-button-label">Website Button Label</label>
+                                <input type="text" id="website-button-label" name="website_button_label" class="form-control" placeholder="e.g., Visit Our Website">
+                            </div>
+
+                            <button type="button" class="btn btn-secondary btn-block mt-3" data-prev="4">Back</button>
+                            <button type="submit" name="submit_mini_website" class="btn btn-success btn-block">Submit</button>
                     </div>
 
                     <input type="hidden" name="action" value="submit_mini_website">
