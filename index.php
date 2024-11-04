@@ -2,7 +2,7 @@
 /*
 Plugin Name: KW Mini Website Form Submission
 Description: A plugin to submit a form for creating mini-website custom posts.
-Version: 1.0
+Version: 1.1.0
 Author: Your Name
 */
 
@@ -64,22 +64,25 @@ function kw_mini_website_handle_form_submission() {
 
     // Update post meta fields if post creation is successful
     if ($post_id) {
-        update_field('name', $name, $post_id);
-        update_field('main_image', $main_image_id, $post_id);
-        update_field('bg_image', $bg_image_id, $post_id);
-        update_field('company_name', $company_name, $post_id);
-        update_field('job_title', $job_title, $post_id);
-        update_field('email', $email, $post_id);
-        update_field('phone_number', $phone_number, $post_id);
-        update_field('linkedin_url', $linkedin_url, $post_id);
-        update_field('fb_url', $fb_url, $post_id);
-        update_field('about_title', $about_title, $post_id);
-        update_field('about_text', $about_text, $post_id);
+        !empty($name) && update_field('name', $name, $post_id);
+        !empty($main_image_id) && update_field('main_image', $main_image_id, $post_id);
+        !empty($bg_image_id) && update_field('bg_image', $bg_image_id, $post_id);
+        !empty($company_name) && update_field('company_name', $company_name, $post_id);
+        !empty($job_title) && update_field('job_title', $job_title, $post_id);
 
+        !empty($email) && update_field('email', (strpos($email, 'mailto:') === 0 ? $email : 'mailto:' . $email), $post_id);
+        !empty($phone_number) && update_field('phone_number', (strpos($phone_number, 'tel:') === 0 ? $phone_number : 'tel:' . $phone_number), $post_id);
+
+        !empty($linkedin_url) && update_field('linkedin_url', $linkedin_url, $post_id);
+        !empty($fb_url) && update_field('fb_url', $fb_url, $post_id);
+        !empty($about_title) && update_field('about_title', $about_title, $post_id);
+        !empty($about_text) && update_field('about_text', $about_text, $post_id);
+        
         // Save new customization fields
-        update_field('share-button-label', $share_button_label, $post_id);
-        update_field('contact-button-label', $contact_button_label, $post_id);
-        update_field('website-button-label', $website_button_label, $post_id);
+        !empty($share_button_label) && update_field('share_button_label', $share_button_label, $post_id);
+        !empty($contact_button_label) && update_field('contact_button_label', $contact_button_label, $post_id);
+        !empty($website_button_label) && update_field('website_button_label', $website_button_label, $post_id);
+        
 
         // Return success response with post URL
         $post_url = get_permalink($post_id);
