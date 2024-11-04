@@ -106,19 +106,38 @@ jQuery(document).ready(function($) {
         $('#kw-loader-overlay').hide();
     }
 
+    function validateFileSize(input, maxSizeMB = 1) {
+        const maxFileSize = maxSizeMB * 1024 * 1024; // Convert MB to bytes
+        const file = input.files[0];
+        
+        if (file) {
+            if (file.size > maxFileSize) {
+                alert(`The file size exceeds the ${maxSizeMB} MB limit. Please upload a smaller file.`);
+                return false;
+            } else {
+                return true; // File size is within the limit
+            }
+        }
+        return false;
+    }
+    
     // Bind event listeners for navigation and image preview
     function bindEventListeners() {
         $('#kw-main-image').on('change', function() {
+            if(validateFileSize(this)){
             previewImage(this, 'kw-main-image-preview');
             previewImage(this, 'kw-mini-web-profile-pic img');
+            }
         });
 
         $('#kw-bg-image').on('change', function() {
+            if(validateFileSize(this)){
             getImagePreviewUrl(this).then(previewUrl => {
                 $('#kw-bg-image-preview').attr('src', previewUrl).show();
                 $('#kw-mini-web-bg-image').css('background-image', `url(${previewUrl})`).show();
                 $('.kw-bg-image-text').hide();
             }).catch(error => console.error(error));
+        }
         });
 
         $('[data-next]').on('click', function() {
@@ -130,6 +149,11 @@ jQuery(document).ready(function($) {
         $('[data-prev]').on('click', function() {
             const prevStepNumber = $(this).data('prev');
             prevStep(prevStepNumber);
+        });
+
+            // Hide the error message when the close button is clicked
+        $('#kw-form-error-message-container .close').on('click', function() {
+            $('#kw-form-error-message-container').hide();
         });
     }
 

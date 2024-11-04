@@ -60,6 +60,12 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                 </div>
 
                 <form id="kw-enhanced-form" class="rounded bg-white shadow-lg" method="POST" enctype="multipart/form-data">
+                <div class="alert alert alert-danger alert-dismissible fade show d-none" role="alert" id="kw-form-error-message-container">
+                    <span>Message area</span>
+                    <button type="button" class="close">
+                     <span>&times;</span>
+                    </button>
+                </div>
                     <!-- Step 1: Personal Information -->
                     <div class="form-step" id="kw-step-1">
                         <div class="form-group text-center">
