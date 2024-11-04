@@ -116,6 +116,7 @@ jQuery(document).ready(function($) {
         $('#kw-bg-image').on('change', function() {
             getImagePreviewUrl(this).then(previewUrl => {
                 $('#kw-bg-image-preview').attr('src', previewUrl).show();
+                $('#kw-mini-web-bg-image').css('background-image', `url(${previewUrl})`).show();
             }).catch(error => console.error(error));
         });
 
