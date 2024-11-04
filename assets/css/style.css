@@ -1,0 +1,67 @@
+.jumbotron {
+    background-color: #f5f7fa;
+    padding: 30px;
+    margin-top: 50px;
+}
+
+.steps-progress {
+    display: flex;
+    flex-direction: column;
+}
+.steps-progress .step {
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #6c757d;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.steps-progress .step i {
+    margin-right: 10px;
+}
+.steps-progress .step.active {
+    color: #2c3e50;
+    font-weight: bold;
+}
+.steps-progress .step.completed {
+    color: #28a745;
+    font-weight: bold;
+}
+.steps-progress .step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 40px;
+    background-color: #dee2e6;
+    top: 35px;
+    left: 17px;
+}
+.form-step .form-group .is-invalid {
+    border-color: #dc3545;
+}
+.image-upload-container {
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    position: relative;
+}
+.image-upload-label {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #ced4da;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.upload-overlay {
+    position: absolute;
+    bottom: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
