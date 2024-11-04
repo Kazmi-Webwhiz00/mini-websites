@@ -4,6 +4,11 @@ Template Name: Enhanced Multi-Step Form with SVG Icons and Improved Sidebar
 Description: A refined multi-step form template with SVG icons, a modern sidebar, and an updated form layout.
 */
 ?>
+<div id="kw-loader-overlay">
+    <div class="spinner"></div>
+    <p id="kw-loader-message" style="color: #fff; margin-top: 20px; font-size: 18px; text-align: center;"></p>
+</div>
+
 <div class="jumbotron kw-mini-website-form-container">
     <div class="container py-5">
         <div class="row">
@@ -82,9 +87,17 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                             <label for="kw-job-title">Job Title</label>
                             <input type="text" id="kw-job-title" name="job_title" class="form-control" required>
                         </div>
+                        
                         <div class="form-group">
-                            <label for="kw-bg-image">Background Image</label>
-                            <input type="file" id="kw-bg-image" name="bg_image" class="form-control-file" required>
+                            <label for="kw-bg-image" class="bg-image-upload-label">
+                                <input type="file" id="kw-bg-image" name="bg_image" class="form-control-file d-none" required>
+                                <div class="bg-image-preview-wrapper">
+                                    <img id="kw-bg-image-preview" src="#" alt="Background Image Preview" class="bg-image-thumbnail">
+                                    <div class="bg-image-overlay">
+                                        <span class="bg-image-upload-icon">📤</span>
+                                    </div>
+                                </div>
+                            </label>
                         </div>
 
                         <button type="button" class="btn btn-secondary btn-block mt-3" data-prev="1">Back</button>
