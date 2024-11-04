@@ -1,109 +1,127 @@
 <?php
 /*
-Template Name: Mini Website Multi-Step Form Template with Enhanced UI
-Description: A template for the mini website form submission with multi-step, enhanced image upload, jumbotron, and improved progress bar.
+Template Name: Enhanced Multi-Step Form with SVG Icons and Improved Sidebar
+Description: A refined multi-step form template with SVG icons, a modern sidebar, and an updated form layout.
 */
 ?>
-<div class="jumbotron mini-website-form-container">
+<div class="jumbotron kw-mini-website-form-container">
     <div class="container py-5">
         <div class="row">
             <!-- Side Progress Indicator -->
-            <div class="col-md-3">
-                <div class="steps-progress">
-                    <div class="step active" id="progress-step-1"><i class="fas fa-user"></i> Personal Information</div>
-                    <div class="step" id="progress-step-2"><i class="fas fa-building"></i> Company Information</div>
-                    <div class="step" id="progress-step-3"><i class="fas fa-phone"></i> Contact Information</div>
-                    <div class="step" id="progress-step-4"><i class="fas fa-info-circle"></i> About Section</div>
+            <div class="col-md-4">
+                <div class="steps-progress p-3 shadow-sm rounded">
+                    <div class="step active" id="kw-progress-step-1">
+                        <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" class="circle-active"></circle>
+                            <path d="M9.25 11.75L11.25 13.75L14.75 10" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>Personal Information</span>
+                    </div>
+                    <div class="step" id="kw-progress-step-2">
+                        <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" class="circle-inactive"></circle>
+                            <path d="M9.25 11.75L11.25 13.75L14.75 10" stroke="grey" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>Company Information</span>
+                    </div>
+                    <div class="step" id="kw-progress-step-3">
+                        <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" class="circle-inactive"></circle>
+                            <path d="M9.25 11.75L11.25 13.75L14.75 10" stroke="grey" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>Contact Information</span>
+                    </div>
+                    <div class="step" id="kw-progress-step-4">
+                        <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" class="circle-inactive"></circle>
+                            <path d="M9.25 11.75L11.25 13.75L14.75 10" stroke="grey" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>About Section</span>
+                    </div>
                 </div>
             </div>
 
             <!-- Form Container -->
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <div class="text-center mb-4">
-                    <h3>Please, enter your personal information</h3>
+                    <h3 class="form-title">Please, enter your personal information</h3>
                 </div>
 
-                <form id="kw-mini-website-form" class="p-4 rounded bg-white shadow-sm" method="POST" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" enctype="multipart/form-data">
+                <form id="kw-enhanced-form" class="rounded bg-white shadow-lg" method="POST" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" enctype="multipart/form-data">
                     <!-- Step 1: Personal Information -->
-                    <div class="form-step" id="step-1">
+                    <div class="form-step" id="kw-step-1">
                         <div class="form-group text-center">
                             <div class="image-upload-container">
-                                <label for="main_image" class="image-upload-label">
+                                <label for="kw-main-image" class="image-upload-label">
                                     <span class="upload-overlay">Upload Image</span>
-                                    <img id="mainImagePreview" src="#" alt="Main Image Preview" class="img-thumbnail" style="display: none; width: 150px; height: 150px;">
+                                    <img id="kw-main-image-preview" src="#" alt="Image Preview" class="img-thumbnail" style="display: none; width: 150px; height: 150px;">
                                 </label>
-                                <input type="file" id="main_image" name="main_image" class="d-none" required onchange="previewImage(this, 'mainImagePreview')">
+                                <input type="file" id="kw-main-image" name="main_image" class="d-none" required>
                             </div>
-                            <p class="text-muted mt-2">It has been a while. I would like to present you the project I work on a few...</p>
                         </div>
 
                         <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" class="form-control" required>
+                            <label for="kw-name">Name</label>
+                            <input type="text" id="kw-name" name="name" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" class="form-control" required>
+                            <label for="kw-email">Email</label>
+                            <input type="email" id="kw-email" name="email" class="form-control" required>
                         </div>
 
-                        <button type="button" class="btn btn-primary btn-block" onclick="validateAndNextStep(1, 2)">Next</button>
+                        <button type="button" class="btn btn-primary btn-block mt-4" data-next="2">Next</button>
                     </div>
 
                     <!-- Step 2: Company Information -->
-                    <div class="form-step" id="step-2" style="display: none;">
+                    <div class="form-step" id="kw-step-2" style="display: none;">
                         <div class="form-group">
-                            <label for="company_name">Company Name</label>
-                            <input type="text" id="company_name" name="company_name" class="form-control" required>
+                            <label for="kw-company-name">Company Name</label>
+                            <input type="text" id="kw-company-name" name="company_name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="kw-job-title">Job Title</label>
+                            <input type="text" id="kw-job-title" name="job_title" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="kw-bg-image">Background Image</label>
+                            <input type="file" id="kw-bg-image" name="bg_image" class="form-control-file" required>
                         </div>
 
-                        <div class="form-group">
-                            <label for="job_title">Job Title</label>
-                            <input type="text" id="job_title" name="job_title" class="form-control" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="bg_image">Background Image</label>
-                            <input type="file" id="bg_image" name="bg_image" class="form-control-file" required>
-                        </div>
-
-                        <button type="button" class="btn btn-secondary btn-block" onclick="prevStep(1)">Back</button>
-                        <button type="button" class="btn btn-primary btn-block" onclick="validateAndNextStep(2, 3)">Next</button>
+                        <button type="button" class="btn btn-secondary btn-block mt-3" data-prev="1">Back</button>
+                        <button type="button" class="btn btn-primary btn-block mt-3" data-next="3">Next</button>
                     </div>
 
                     <!-- Step 3: Contact Information -->
-                    <div class="form-step" id="step-3" style="display: none;">
+                    <div class="form-step" id="kw-step-3" style="display: none;">
                         <div class="form-group">
-                            <label for="phone_number">Phone Number</label>
-                            <input type="text" id="phone_number" name="phone_number" class="form-control" required>
+                            <label for="kw-phone-number">Phone Number</label>
+                            <input type="text" id="kw-phone-number" name="phone_number" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="kw-linkedin-url">LinkedIn URL</label>
+                            <input type="url" id="kw-linkedin-url" name="linkedin_url" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="kw-fb-url">Facebook URL</label>
+                            <input type="url" id="kw-fb-url" name="fb_url" class="form-control">
                         </div>
 
-                        <div class="form-group">
-                            <label for="linkedin_url">LinkedIn URL</label>
-                            <input type="url" id="linkedin_url" name="linkedin_url" class="form-control">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="fb_url">Facebook URL</label>
-                            <input type="url" id="fb_url" name="fb_url" class="form-control">
-                        </div>
-
-                        <button type="button" class="btn btn-secondary btn-block" onclick="prevStep(2)">Back</button>
-                        <button type="button" class="btn btn-primary btn-block" onclick="validateAndNextStep(3, 4)">Next</button>
+                        <button type="button" class="btn btn-secondary btn-block mt-3" data-prev="2">Back</button>
+                        <button type="button" class="btn btn-primary btn-block mt-3" data-next="4">Next</button>
                     </div>
 
                     <!-- Step 4: About Section -->
-                    <div class="form-step" id="step-4" style="display: none;">
+                    <div class="form-step" id="kw-step-4" style="display: none;">
                         <div class="form-group">
-                            <label for="about_title">About Title</label>
-                            <input type="text" id="about_title" name="about_title" class="form-control" required>
+                            <label for="kw-about-title">About Title</label>
+                            <input type="text" id="kw-about-title" name="about_title" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="kw-about-text">About Text</label>
+                            <textarea id="kw-about-text" name="about_text" class="form-control" rows="4" required></textarea>
                         </div>
 
-                        <div class="form-group">
-                            <label for="about_text">About Text</label>
-                            <textarea id="about_text" name="about_text" class="form-control" rows="3" required></textarea>
-                        </div>
-
-                        <button type="button" class="btn btn-secondary btn-block" onclick="prevStep(3)">Back</button>
+                        <button type="button" class="btn btn-secondary btn-block" data-prev="3">Back</button>
                         <button type="submit" name="submit_mini_website" class="btn btn-success btn-block">Submit</button>
                     </div>
 
