@@ -73,6 +73,37 @@ jQuery(document).ready(function($) {
         });
     }
 
+    function bindOnSubmit(){
+    // AJAX form submission
+    $('#kw-enhanced-form').on('submit', function(e) {
+        e.preventDefault();
+
+        let formData = new FormData(this);
+        formData.append('action', 'submit_mini_website');
+        formData.append('security', kw_mini_website_vars.nonce);
+
+        $.ajax({
+            url: kw_mini_website_vars.ajax_url,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                if (response.success) {
+                    alert(response.data.message);
+                    window.location.href = response.data.post_url;
+                } else {
+                    alert(response.data.message);
+                }
+            },
+            error: function() {
+                alert('An error occurred while submitting the form.');
+            }
+        });
+    });
+    }
+
     // Initialize event listeners
+    bindOnSubmit();
     bindEventListeners();
 });

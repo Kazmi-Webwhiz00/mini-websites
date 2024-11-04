@@ -47,7 +47,7 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                     <h3 class="form-title">Please, enter your personal information</h3>
                 </div>
 
-                <form id="kw-enhanced-form" class="rounded bg-white shadow-lg" method="POST" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" enctype="multipart/form-data">
+                <form id="kw-enhanced-form" class="rounded bg-white shadow-lg" method="POST" enctype="multipart/form-data">
                     <!-- Step 1: Personal Information -->
                     <div class="form-step" id="kw-step-1">
                         <div class="form-group text-center">
