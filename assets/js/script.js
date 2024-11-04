@@ -29,7 +29,7 @@ jQuery(document).ready(function($) {
     function validateAndNextStep(currentStep, nextStep) {
         let isValid = true;
         const currentStepFields = $(`#kw-step-${currentStep} [required]`);
-        
+    
         currentStepFields.each(function() {
             if (!$(this).val()) {
                 $(this).addClass('is-invalid');
@@ -38,7 +38,21 @@ jQuery(document).ready(function($) {
                 $(this).removeClass('is-invalid');
             }
         });
-
+    
+        // Additional validation for image input
+        const imageInput = $('#kw-main-image');
+        if (currentStep === '1' && imageInput.length && !imageInput[0].files.length) {
+            alert("Image is required. Please upload an image to proceed.");
+            isValid = false;
+        } 
+    
+        // Additional validation for image input
+        const bgImageInput = $('#kw-bg-image');
+        if (currentStep === '2' && bgImageInput.length && !bgImageInput[0].files.length) {
+            alert("Image is required. Please upload an image to proceed.");
+            isValid = false;
+        }
+            
         if (isValid) {
             $(`#kw-step-${currentStep}`).hide();
             $(`#kw-step-${nextStep}`).show();
