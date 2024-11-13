@@ -74,7 +74,7 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                                     <span class="upload-overlay">Upload Image</span>
                                     <img id="kw-main-image-preview" src="#" alt="Image Preview" class="img-thumbnail" style="display: none; width: 150px; height: 150px;">
                                 </label>
-                                <input type="file" id="kw-main-image" name="main_image" class="d-none" required>
+                                <input type="file" id="kw-main-image" name="user_profile_picture" class="d-none" required>
                             </div>
                         </div>
 
@@ -103,7 +103,7 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                         
                         <div class="form-group">
                             <label for="kw-bg-image" class="bg-image-upload-label">
-                                <input type="file" id="kw-bg-image" name="bg_image" class="form-control-file d-none" required>
+                                <input type="file" id="kw-bg-image" name="user_cover_image" class="form-control-file d-none" required>
                                 <div class="bg-image-preview-wrapper">
                                 <span class="kw-bg-image-text">Cover Image</span>
                                     <img id="kw-bg-image-preview" src="#" alt="Background Image Preview" class="bg-image-thumbnail">

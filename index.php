@@ -52,8 +52,8 @@ function kw_mini_website_handle_form_submission() {
     $website_button_label = sanitize_text_field($_POST['website_button_label']);
 
     // Handle file uploads
-    $main_image_id = kw_mini_website_handle_file_upload('main_image');
-    $bg_image_id = kw_mini_website_handle_file_upload('bg_image');
+    $user_profile_picture_id = kw_mini_website_handle_file_upload('user_profile_picture');
+    $user_cover_image_id = kw_mini_website_handle_file_upload('user_cover_image');
 
     // Create new custom post
     $post_id = wp_insert_post(array(
@@ -65,8 +65,8 @@ function kw_mini_website_handle_form_submission() {
     // Update post meta fields if post creation is successful
     if ($post_id) {
         !empty($name) && update_field('name', $name, $post_id);
-        !empty($main_image_id) && update_field('main_image', $main_image_id, $post_id);
-        !empty($bg_image_id) && update_field('bg_image', $bg_image_id, $post_id);
+        !empty($user_profile_picture_id) && update_field('user_profile_picture', $user_profile_picture_id, $post_id);
+        !empty($user_cover_image_id) && update_field('user_cover_image', $user_cover_image_id, $post_id);
         !empty($company_name) && update_field('company_name', $company_name, $post_id);
         !empty($job_title) && update_field('job_title', $job_title, $post_id);
 
