@@ -1,182 +1,133 @@
+// Assuming selectors.js has been imported
 jQuery(document).ready(function($) {
-   
-    function previewImage(input, previewId) {
-        getImagePreviewUrl(input).then(previewUrl => {
-            $('#' + previewId).attr('src', previewUrl)
-            .css({ width: '150px', height: '150px' })
-            .show();
-        }).catch(error => console.error(error));
-    }
-
-        // Function to generate a preview URL for a given file input
-    function getImagePreviewUrl(input) {
-        return new Promise((resolve, reject) => {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    resolve(e.target.result); // Return the image URL
-                };
-                reader.onerror = function() {
-                    reject("Failed to load image");
-                };
-                reader.readAsDataURL(input.files[0]);
-            } else {
-                reject("No file selected");
-            }
-        });
-    }
-    // Form validation and navigation to the next step
-    function validateAndNextStep(currentStep, nextStep) {
-        let isValid = true;
-        const currentStepFields = $(`#kw-step-${currentStep} [required]`);
     
-        currentStepFields.each(function() {
-            if (!$(this).val()) {
-                $(this).addClass('is-invalid');
-                isValid = false;
-            } else {
-                $(this).removeClass('is-invalid');
-            }
-        });
-    
-        // Additional validation for image input
-        const imageInput = $('#kw-main-image');
-        if (currentStep === '1' && imageInput.length && !imageInput[0].files.length) {
-            alert("Image is required. Please upload an image to proceed.");
-            isValid = false;
-        } 
-    
-        // Additional validation for image input
-        const bgImageInput = $('#kw-bg-image');
-        if (currentStep === '2' && bgImageInput.length && !bgImageInput[0].files.length) {
-            alert("Image is required. Please upload an image to proceed.");
-            isValid = false;
-        }
-            
-        if (isValid) {
-            $(`#kw-step-${currentStep}`).hide();
-            $(`#kw-step-${nextStep}`).show();
-            updateProgress(nextStep);
-        }
-    }
-
-    // Navigation to the previous step
-    function prevStep(step) {
-        $('.form-step').hide();
-        $(`#kw-step-${step}`).show();
-        updateProgress(step);
-    }
-
-    // Update the progress UI based on the current step
-    function updateProgress(step) {
-        $('.steps-progress .step').each(function(index) {
-            const circle = $(this).find('circle');
-            const path = $(this).find('path');
-            $(this).removeClass('active completed');
-
-            if (index + 1 < step) {
-                $(this).addClass('completed');
-                circle.addClass('circle-completed').attr('fill', '#28a745');
-                path.attr('stroke', 'white');
-            } else if (index + 1 === step) {
-                $(this).addClass('active');
-                circle.addClass('circle-active').attr('fill', 'none');
-                path.attr('stroke', 'white');
-            } else {
-                circle.addClass('circle-inactive').attr('fill', 'none');
-                path.attr('stroke', 'grey');
-            }
-        });
-    }
-
-    function showLoader(message) {
-        $('#kw-loader-message').text(message);
-        $('#kw-loader-overlay').css('display', 'flex');
-    }
-
-        // Update loader message text in sequence
-        function cycleLoaderMessages() {
-            const messages = [
-                'Uploading your details...',
-                'Creating your mini website...',
-                'Finalizing the setup...',
-                'Almost there...'
-            ];
-            let messageIndex = 0;
-    
-            // Update message every 2 seconds
-            const interval = setInterval(() => {
-                if (messageIndex < messages.length) {
-                    $('#kw-loader-message').text(messages[messageIndex]);
-                    messageIndex++;
-                } else {
-                    clearInterval(interval);
-                }
-            }, 2000); // 2-second interval between messages
-        }
-
-    // Hide the loader overlay
-    function hideLoader() {
-        $('#kw-loader-overlay').hide();
-    }
-
-    function validateFileSize(input, maxSizeMB = 1) {
-        const maxFileSize = maxSizeMB * 1024 * 1024; // Convert MB to bytes
-        const file = input.files[0];
-        
-        if (file) {
-            if (file.size > maxFileSize) {
-                alert(`The file size exceeds the ${maxSizeMB} MB limit. Please upload a smaller file.`);
-                return false;
-            } else {
-                return true; // File size is within the limit
-            }
-        }
-        return false;
-    }
-    
-    // Bind event listeners for navigation and image preview
+    // Main function to initialize all event listeners
     function bindEventListeners() {
-        $('#kw-main-image').on('change', function() {
-            if(validateFileSize(this)){
-            previewImage(this, 'kw-main-image-preview');
-            previewImage(this, 'kw-mini-web-profile-pic img');
+        // Image preview handlers
+        handleProfilePictureChange();
+        handleBackgroundImageChange();
+
+        // Text field live preview handlers
+        updateUserNameDisplay();
+        updateCompanyNameDisplay();
+        updateJobTitleDisplay();
+
+        // Button label live preview handlers
+        updateContactButtonLabel();
+        updateShareButtonLabel();
+        updateWebsiteButtonLabel();
+
+        // Navigation and other event handlers
+        handleNextStepNavigation();
+        handlePrevStepNavigation();
+        handleErrorMessageClose();
+    }
+
+    // ========================
+    // Text Field Live Previews
+    // ========================
+
+    function updateUserNameDisplay() {
+        $(FORM_SELECTORS.NAME_INPUT).on('input', function() {
+            const userName = $(this).val();
+            livePreview.updateLivePreviewTextFieldOnInput(PREVIEW_SELECTORS.LIVE_USER_NAME, userName);
+        });
+    }
+    
+    function updateCompanyNameDisplay() {
+        $(FORM_SELECTORS.COMPANY_NAME_INPUT).on('input', function() {
+            const companyName = $(this).val();
+            livePreview.updateLivePreviewTextFieldOnInput(PREVIEW_SELECTORS.LIVE_COMPANY_NAME, companyName);
+        });
+    }
+    
+    function updateJobTitleDisplay() {
+        $(FORM_SELECTORS.JOB_TITLE_INPUT).on('input', function() {
+            const jobTitle = $(this).val();
+            livePreview.updateLivePreviewTextFieldOnInput(PREVIEW_SELECTORS.LIVE_JOB_TITLE, jobTitle);
+        });
+    }
+
+    // ==========================
+    // Button Label Live Previews
+    // ==========================
+
+    function updateContactButtonLabel() {
+        $(FORM_SELECTORS.CONTACT_BUTTON_LABEL_INPUT).on('input', function() {
+            livePreview.updateLivePreviewTextFieldOnInput(PREVIEW_SELECTORS.LIVE_CONTACT_BUTTON, $(this).val());
+        });
+    }
+
+    function updateShareButtonLabel() {
+        $(FORM_SELECTORS.SHARE_BUTTON_LABEL_INPUT).on('input', function() {
+            livePreview.updateLivePreviewTextFieldOnInput(PREVIEW_SELECTORS.LIVE_SHARE_BUTTON, $(this).val());
+        });
+    }
+
+    function updateWebsiteButtonLabel() {
+        $(FORM_SELECTORS.WEBSITE_BUTTON_LABEL_INPUT).on('input', function() {
+            livePreview.updateLivePreviewTextFieldOnInput(PREVIEW_SELECTORS.LIVE_WEBSITE_BUTTON, $(this).val());
+        });
+    }
+
+    // ========================
+    // Image Preview Handlers
+    // ========================
+
+    function handleProfilePictureChange() {
+        $(FORM_SELECTORS.PROFILE_IMAGE_INPUT).on('change', function() {
+            if (utils.validateFileSize(this)) {
+                utils.previewImage(this, PREVIEW_SELECTORS.PROFILE_IMAGE_PREVIEW).then((previewUrl) => {
+                    livePreview.setLiveProfilePicturePreview(PREVIEW_SELECTORS.PROFILE_PICTURE_PREVIEW, previewUrl, { maxWidth: '200px', maxHeight: '200px' });
+                });
             }
         });
+    }
 
-        $('#kw-bg-image').on('change', function() {
-            if(validateFileSize(this)){
-            getImagePreviewUrl(this).then(previewUrl => {
-                $('#kw-bg-image-preview').attr('src', previewUrl).show();
-                $('#kw-mini-web-bg-image').css('background-image', `url(${previewUrl})`).show();
-                $('.kw-bg-image-text').hide();
-            }).catch(error => console.error(error));
-        }
+    function handleBackgroundImageChange() {
+        $(FORM_SELECTORS.BACKGROUND_IMAGE_INPUT).on('change', function() {
+            if (utils.validateFileSize(this)) {
+                utils.previewImage(this, PREVIEW_SELECTORS.BACKGROUND_IMAGE_PREVIEW, { maxWidth: '100%', maxHeight: '100%' }).then((previewUrl) => {
+                    livePreview.setBackgroundImageLivePreview(PREVIEW_SELECTORS.BACKGROUND_IMAGE_LIVE_PREVIEW, previewUrl, PREVIEW_SELECTORS.BACKGROUND_IMAGE_OVERLAY_TEXT);
+                });
+            }
         });
+    }
 
-        $('[data-next]').on('click', function() {
+    // ============================
+    // Navigation and Miscellaneous
+    // ============================
+
+    function handleNextStepNavigation() {
+        $(FORM_SELECTORS.NEXT_BUTTON).on('click', function() {
             const currentStep = $(this).closest('.form-step').attr('id').split('-')[2];
             const nextStep = $(this).data('next');
-            validateAndNextStep(currentStep, nextStep);
-        });
-
-        $('[data-prev]').on('click', function() {
-            const prevStepNumber = $(this).data('prev');
-            prevStep(prevStepNumber);
-        });
-
-            // Hide the error message when the close button is clicked
-        $('#kw-form-error-message-container .close').on('click', function() {
-            $('#kw-form-error-message-container').hide();
+            utils.validateAndNextStep(currentStep, nextStep);
         });
     }
 
-    // AJAX form submission
+    function handlePrevStepNavigation() {
+        $(FORM_SELECTORS.PREV_BUTTON).on('click', function() {
+            const prevStepNumber = $(this).data('prev');
+            utils.prevStep(prevStepNumber);
+        });
+    }
+
+    function handleErrorMessageClose() {
+        $(FORM_SELECTORS.ERROR_MESSAGE_CLOSE).on('click', function() {
+            $(FORM_SELECTORS.ERROR_MESSAGE_CONTAINER).hide();
+        });
+    }
+
+    // ========================
+    // AJAX Form Submission
+    // ========================
+
     function bindOnSubmit() {
-        $('#kw-enhanced-form').on('submit', function(e) {
+        $(FORM_SELECTORS.FORM).on('submit', function(e) {
             e.preventDefault();
-            showLoader('Initializing...');
-            cycleLoaderMessages();
+            utils.showLoader('Initializing...');
+            utils.cycleLoaderMessages();
 
             const formData = new FormData(this);
             formData.append('action', 'submit_mini_website');
@@ -189,82 +140,30 @@ jQuery(document).ready(function($) {
                 processData: false,
                 contentType: false,
                 success: function(response) {
+                    utils.hideLoader();
                     if (response.success) {
-                        hideLoader();
                         window.location.href = response.data.post_url;
                     } else {
                         alert(response.data.message || 'Submission failed. Please try again.');
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    hideLoader();
+                    utils.hideLoader();
                     alert(`An error occurred: ${textStatus} - ${errorThrown}`);
                 }
             });
         });
     }
 
-    function updateUserNameDisplay() {
-        $('#kw-name').on('input', function() {
-            let userName = $(this).val();
-            $('#kw-mini-web-user-name h2').text(userName);
-        });
-    }
+    // ========================
+    // Initialization
+    // ========================
 
-    function updateCompanyName() {
-        $('#kw-company-name').on('input', function() {
-            // Get the current value of the input
-            let companyName = $(this).val();
-            // Update the h2 element within the kw-mini-web-company-name div
-            $('#kw-mini-web-company-name h2').text(companyName);
-        });
-    }
-
-    function updateJobeTitle() {
-        $('#kw-job-title').on('input', function() {
-            // Get the current value of the input
-            let jobTitle = $(this).val();
-            // Update the h2 element within the kw-mini-web-company-name div
-            $('#kw-mini-web-job-title h2').text(jobTitle);
-        });
-    }
-
-    function updateButtonsPreview() {
-        $('#contact-button-label').on('input', function() {
-            // Get the current value of the input
-            let label = $(this).val();
-            // Update the h2 element within the kw-mini-web-company-name div
-            $('#kw-mini-web-contacts-btn .elementor-button-text').text(label);
-        });
-
-        $('#share-button-label').on('input', function() {
-            // Get the current value of the input
-            let label = $(this).val();
-            // Update the h2 element within the kw-mini-web-company-name div
-            $('#kw-mini-web-share-btn .elementor-button-text').text(label);
-        });
-
-        $('#website-button-label').on('input', function() {
-            // Get the current value of the input
-            let label = $(this).val();
-            // Update the h2 element within the kw-mini-web-company-name div
-            $('#kw-mini-web-website-btn .elementor-button-text').text(label);
-        });
-    }
-
-    function bindPreviewEvents(){
-        updateUserNameDisplay();
-        updateCompanyName();
-        updateJobeTitle();
-        updateButtonsPreview();
-    }
-    // Initialize all event listeners and form handling
     function init() {
         bindEventListeners();
         bindOnSubmit();
-        bindPreviewEvents();
     }
-
+    
     // Start the form setup
     init();
 });
