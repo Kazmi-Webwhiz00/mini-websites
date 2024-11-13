@@ -158,40 +158,49 @@
         // Handle Gallery Change Function
         // ==============================
         function handleGalleryChange() {
-            const galleryInput = $(FORM_SELECTORS.GALLERY_INPUT);
-    
-            const files = Array.from(galleryInput[0].files);
-    
-            // Add new files to selectedFiles without duplicates
-            files.forEach((file) => {
-                // Check if file already exists in selectedFiles
-                const fileExists = selectedFiles.some(f =>
-                    f.file.name === file.name &&
-                    f.file.size === file.size &&
-                    f.file.lastModified === file.lastModified
-                );
-    
-                if (!fileExists) {
-                    // Assign a unique ID to each file
-                    fileIdCounter++;
-                    const fileWithId = {
-                        id: fileIdCounter,
-                        file: file
-                    };
-                    selectedFiles.push(fileWithId);
+            return new Promise((resolve, reject) => {
+                try {
+                    const galleryInput = $(FORM_SELECTORS.GALLERY_INPUT);
+                    const files = Array.from(galleryInput[0].files);
+        
+                    // Add new files to selectedFiles without duplicates
+                    files.forEach((file) => {
+                        // Check if file already exists in selectedFiles
+                        const fileExists = selectedFiles.some(f =>
+                            f.file.name === file.name &&
+                            f.file.size === file.size &&
+                            f.file.lastModified === file.lastModified
+                        );
+        
+                        if (!fileExists) {
+                            // Assign a unique ID to each file
+                            fileIdCounter++;
+                            const fileWithId = {
+                                id: fileIdCounter,
+                                file: file
+                            };
+                            selectedFiles.push(fileWithId);
+                        }
+                    });
+        
+                    // Limit to 5 files
+                    if (selectedFiles.length > 5) {
+                        alert("You can upload a maximum of 5 images.");
+                        selectedFiles = selectedFiles.slice(0, 5);
+                    }
+
+                    renderPreviews();
+                    updateFileInput();
+        
+                    // Resolve the promise with the selected files
+                    resolve(selectedFiles);
+                } catch (error) {
+                    // Reject the promise if there's an error
+                    reject(error);
                 }
             });
-    
-            // Limit to 5 files
-            if (selectedFiles.length > 5) {
-                alert("You can upload a maximum of 5 images.");
-                selectedFiles = selectedFiles.slice(0, 5);
-            }
-    
-            // Update the previews and file input
-            renderPreviews();
-            updateFileInput();
         }
+        
     
         // Function to render image previews
         function renderPreviews() {
@@ -230,6 +239,7 @@
             // Update selected file count
             selectedFileCount.text(`Selected files: ${selectedFiles.length}`);
         }
+        
     
         // Function to update the file input's files property
         function updateFileInput() {

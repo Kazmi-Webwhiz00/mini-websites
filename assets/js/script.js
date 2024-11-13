@@ -26,17 +26,16 @@ jQuery(document).ready(function($) {
 
     function initializeGalleryUpload() {
         const galleryInput = $(FORM_SELECTORS.GALLERY_INPUT);
-        const galleryUpload = $(FORM_SELECTORS.GALLERY_UPLOAD);
-    
-        // Open file input on clicking the upload area
-        galleryUpload.on('click', function(event) {
-            event.preventDefault();
-            galleryInput.click();
-        });
-    
+
         // Handle file selection and preview creation
         galleryInput.on('change', function() {
-            utils.handleGalleryChange();
+            utils.handleGalleryChange()
+            .then(files => {
+                livePreview.updateGalleryImagesLivePreview(files);
+            })
+            .catch(error => {
+                console.error('Error updating images:', error);
+            });
         });
     }
     

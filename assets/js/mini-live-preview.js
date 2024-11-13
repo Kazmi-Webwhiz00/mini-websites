@@ -64,6 +64,28 @@
         $(targetSelector).text(value);
     }
 
+
+    function updateGalleryImagesLivePreview(selectedFiles) {
+        const gallery = document.getElementById('kw-user-gallary-preview');
+        const images = gallery.querySelectorAll('img');
+        const maxImages = 5;
+    
+        // Loop through images and update them with uploaded file URLs
+        selectedFiles.slice(0, maxImages).forEach((fileObj, index) => {
+            const previewUrl = URL.createObjectURL(fileObj.file);
+            if (images[index]) {
+                images[index].src = previewUrl;
+                images[index].parentElement.parentElement.style.display = 'block'; // Show the figure container if hidden
+            }
+        });
+    
+        // Hide any extra images if fewer files are uploaded
+        for (let i = selectedFiles.length; i < maxImages; i++) {
+            if (images[i]) {
+                images[i].parentElement.parentElement.style.display = 'none'; // Hide the figure container
+            }
+        }
+    }
     // ============================
     // Exported Functions
     // ============================
@@ -71,7 +93,8 @@
     window.livePreview = {
         setBackgroundImageLivePreview,
         setLiveProfilePicturePreview,
-        updateLivePreviewTextFieldOnInput
+        updateLivePreviewTextFieldOnInput,
+        updateGalleryImagesLivePreview
     };
 
 })(jQuery);
