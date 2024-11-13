@@ -104,18 +104,18 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
 
                         <!-- Gallery Image Upload Section -->
                         <div class="form-group">
-    <label for="kw-user-gallery">Photos</label>
-    <div id="kw-user-gallery-upload" class="gallery-upload">
-        <span class="upload-icon">⬆</span>
-        <p>Drag & Drop files here or click to browse</p>
-    </div>
-    <input type="file" id="kw-user-gallery" name="user_gallery[]" class="d-none" multiple accept="image/*">
-    <div id="kw-user-gallery-previews" class="gallery-previews">
-        <!-- Preview images will be dynamically added here by JavaScript -->
-    </div>
-    <!-- New element to display selected file count -->
-    <p id="selected-file-count">Selected files: 0</p>
-</div>
+                        <div class="kw-gallary-upload-section">
+                            <div id="kw-user-gallery-previews" class="gallery-previews">
+                                    <!-- Preview images will be dynamically added here by JavaScript -->
+                            </div>
+                                <label for="kw-user-gallery" class="kw-user-gallery-upload-button">
+                                <input type="file" id="kw-user-gallery" name="user_gallery[]" class="d-none" multiple accept="image/*">
+                                    <span> 📤 upload Images</span>
+                                </label>
+                                <!-- New element to display selected file count -->
+                                <p id="selected-file-count">Selected files: 0</p>
+                        </div>
+                    </div>
 
 
 

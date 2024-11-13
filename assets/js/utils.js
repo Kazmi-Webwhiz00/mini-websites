@@ -150,6 +150,106 @@
         });
     }
 
+        // Initialize selected files and file ID counter
+        let selectedFiles = [];
+        let fileIdCounter = 0;
+    
+        // ==============================
+        // Handle Gallery Change Function
+        // ==============================
+        function handleGalleryChange() {
+            const galleryInput = $(FORM_SELECTORS.GALLERY_INPUT);
+    
+            const files = Array.from(galleryInput[0].files);
+    
+            // Add new files to selectedFiles without duplicates
+            files.forEach((file) => {
+                // Check if file already exists in selectedFiles
+                const fileExists = selectedFiles.some(f =>
+                    f.file.name === file.name &&
+                    f.file.size === file.size &&
+                    f.file.lastModified === file.lastModified
+                );
+    
+                if (!fileExists) {
+                    // Assign a unique ID to each file
+                    fileIdCounter++;
+                    const fileWithId = {
+                        id: fileIdCounter,
+                        file: file
+                    };
+                    selectedFiles.push(fileWithId);
+                }
+            });
+    
+            // Limit to 5 files
+            if (selectedFiles.length > 5) {
+                alert("You can upload a maximum of 5 images.");
+                selectedFiles = selectedFiles.slice(0, 5);
+            }
+    
+            // Update the previews and file input
+            renderPreviews();
+            updateFileInput();
+        }
+    
+        // Function to render image previews
+        function renderPreviews() {
+            const galleryPreviews = $(FORM_SELECTORS.GALLERY_PREVIEWS);
+            const selectedFileCount = $(FORM_SELECTORS.SELECTED_FILE_COUNT);
+    
+            galleryPreviews.empty(); // Clear existing previews
+    
+            selectedFiles.forEach((fileObj) => {
+                const file = fileObj.file;
+                const previewUrl = URL.createObjectURL(file);
+    
+                // Create preview item
+                const previewItem = $('<div>').addClass('gallery-preview-item');
+    
+                // Image preview
+                const img = $('<img>').attr('src', previewUrl);
+                previewItem.append(img);
+    
+                // Remove button
+                const removeBtn = $('<button>')
+                    .addClass('remove-preview-btn')
+                    .html('&times;')
+                    .on('click', function(event) {
+                        event.preventDefault();
+                        removeImageFromInput(fileObj.id);
+                    });
+    
+                previewItem.append(removeBtn);
+                galleryPreviews.append(previewItem);
+    
+                // Revoke URL after a short delay to release memory
+                setTimeout(() => URL.revokeObjectURL(previewUrl), 100);
+            });
+    
+            // Update selected file count
+            selectedFileCount.text(`Selected files: ${selectedFiles.length}`);
+        }
+    
+        // Function to update the file input's files property
+        function updateFileInput() {
+            const galleryInput = $(FORM_SELECTORS.GALLERY_INPUT);
+            const dataTransfer = new DataTransfer();
+            selectedFiles.forEach(fileObj => dataTransfer.items.add(fileObj.file));
+            galleryInput[0].files = dataTransfer.files;
+        }
+    
+        // Function to remove image from selectedFiles and update UI and input
+        function removeImageFromInput(fileId) {
+            // Remove the file from selectedFiles
+            selectedFiles = selectedFiles.filter(fileObj => fileObj.id !== fileId);
+    
+            // Update the previews and file input
+            renderPreviews();
+            updateFileInput();
+        }
+    
+
     // ========================
     // Expose Utility Functions
     // ========================
@@ -162,7 +262,8 @@
         cycleLoaderMessages,
         hideLoader,
         validateFileSize,
-        previewImage
+        previewImage,
+        handleGalleryChange
     };
 
 })(jQuery);

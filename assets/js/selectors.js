@@ -21,7 +21,10 @@ const FORM_SELECTORS = {
     BACKGROUND_IMAGE_INPUT: '#kw-bg-image',
 
     GALLERY_INPUT: '#kw-user-gallery',
-    GALLERY_PREVIEW_CONTAINER: '#kw-user-gallery-previews',
+    GALLERY_UPLOAD: '#kw-user-gallery-upload',
+    GALLERY_PREVIEWS: '#kw-user-gallery-previews',
+    SELECTED_FILE_COUNT: '#selected-file-count',
+
 };
 
 // Preview Selectors

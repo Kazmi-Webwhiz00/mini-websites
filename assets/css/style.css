@@ -330,3 +330,23 @@ padding: 3rem;
     justify-content: center;
     cursor: pointer;
 }
+
+.kw-user-gallery-upload-button{
+    background-color: rgb(255 255 255);
+    padding: 30px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 1px dashed #b6b6b6;
+}
+.kw-gallary-upload-section{
+    background-color: #ffffff96;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border: 1px solid #d6d6d6;
+    border-radius: 10px;
+    min-height: 200px;
+    align-items: center;
+    justify-content: end;
+}

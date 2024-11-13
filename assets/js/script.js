@@ -25,14 +25,8 @@ jQuery(document).ready(function($) {
     }
 
     function initializeGalleryUpload() {
-        const galleryInput = $('#kw-user-gallery');
-        const galleryUpload = $('#kw-user-gallery-upload');
-        const galleryPreviews = $('#kw-user-gallery-previews');
-        const selectedFileCount = $('#selected-file-count');
-        let selectedFiles = [];
-    
-        // Counter for unique IDs
-        let fileIdCounter = 0;
+        const galleryInput = $(FORM_SELECTORS.GALLERY_INPUT);
+        const galleryUpload = $(FORM_SELECTORS.GALLERY_UPLOAD);
     
         // Open file input on clicking the upload area
         galleryUpload.on('click', function(event) {
@@ -42,93 +36,10 @@ jQuery(document).ready(function($) {
     
         // Handle file selection and preview creation
         galleryInput.on('change', function() {
-            const files = Array.from(this.files);
-                       // Limit to 5 files
-                       if (files.length > 5) {
-                        alert("You can upload a maximum of 5 images.");
-                        return;
-                    }
-    
-            // Add new files to selectedFiles without duplicates
-            files.forEach((file) => {
-                // Check if file already exists in selectedFiles
-                const fileExists = selectedFiles.some(f =>
-                    f.file.name === file.name &&
-                    f.file.size === file.size &&
-                    f.file.lastModified === file.lastModified
-                );
-    
-                if (!fileExists) {
-                    // Assign a unique ID to each file
-                    fileIdCounter++;
-                    const fileWithId = {
-                        id: fileIdCounter,
-                        file: file
-                    };
-                    selectedFiles.push(fileWithId);
-                }
-            });
-    
-    
-            // Update the previews and file input
-            renderPreviews();
-            updateFileInput();
+            utils.handleGalleryChange();
         });
-    
-        // Function to render image previews
-        function renderPreviews() {
-            galleryPreviews.empty(); // Clear existing previews
-    
-            selectedFiles.forEach((fileObj) => {
-                const file = fileObj.file;
-                const previewUrl = URL.createObjectURL(file);
-    
-                // Create preview item
-                const previewItem = $('<div>').addClass('gallery-preview-item');
-    
-                // Image preview
-                const img = $('<img>').attr('src', previewUrl);
-                previewItem.append(img);
-    
-                // Remove button
-                const removeBtn = $('<button>')
-                    .addClass('remove-preview-btn')
-                    .html('&times;')
-                    .on('click', function(event) {
-                        event.preventDefault();
-                        removeImageFromInput(fileObj.id);
-                    });
-    
-                previewItem.append(removeBtn);
-                galleryPreviews.append(previewItem);
-    
-                // Revoke URL after a short delay to release memory
-                setTimeout(() => URL.revokeObjectURL(previewUrl), 100);
-            });
-    
-            // Update selected file count
-            selectedFileCount.text(`Selected files: ${selectedFiles.length}`);
-        }
-    
-        // Function to update the file input's files property
-        function updateFileInput() {
-            const dataTransfer = new DataTransfer();
-            selectedFiles.forEach(fileObj => dataTransfer.items.add(fileObj.file));
-            galleryInput[0].files = dataTransfer.files;
-        }
-    
-        // Function to remove image from selectedFiles and update UI and input
-        function removeImageFromInput(fileId) {
-            // Remove the file from selectedFiles
-            selectedFiles = selectedFiles.filter(fileObj => fileObj.id !== fileId);
-    
-            // Update the previews and file input
-            renderPreviews();
-            updateFileInput();
-        }
     }
     
-
 
     // ========================
     // Text Field Live Previews
