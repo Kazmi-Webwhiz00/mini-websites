@@ -65,7 +65,6 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                                 <input type="file" id="kw-main-image" name="user_profile_picture" class="d-none" required>
                             </div>
                         </div>
-
                         <div class="form-group">
                             <label for="kw-name">Name</label>
                             <input type="text" id="kw-name" name="name" class="form-control" required>
@@ -162,9 +161,23 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
 
                     <!-- Step 5: Customization -->
                     <div class="form-step" id="kw-step-5" style="display: none;">
+   
+
+                        <!-- Toggle button with switch styling -->
                         <div class="form-group">
-                            <label for="share-button-label">Share Button Label</label>
-                            <input type="text" id="share-button-label" name="share_button_label" class="form-control" placeholder="e.g., Share with Friends">
+                            <label for="is_show_share_button">Show "Add to Contact" Button?</label>
+                            <label class="kw-switch">
+                                <input type="checkbox" id="is_show_share_button" name="is_show_share_button" class="kw-form-control" checked>
+                                <span class="kw-slider"></span>
+                            </label>
+                        </div>
+
+                        <!-- Wrapper div for the fields to show/hide -->
+                        <div id="share-button-fields-wrapper">
+                            <div class="form-group">
+                                <label for="share-button-label">Share Button Label</label>
+                                <input type="text" id="share-button-label" name="share_button_label" class="kw-form-control" placeholder="e.g., Share with Friends">
+                            </div>
                         </div>
 
                         <div class="form-group">

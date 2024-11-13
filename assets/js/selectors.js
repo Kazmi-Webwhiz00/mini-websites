@@ -24,7 +24,8 @@ const FORM_SELECTORS = {
     GALLERY_UPLOAD: '#kw-user-gallery-upload',
     GALLERY_PREVIEWS: '#kw-user-gallery-previews',
     SELECTED_FILE_COUNT: '#selected-file-count',
-
+    SHOW_CONTACT_BUTTON_TOGGLE: '#is_show_share_button',
+    CONTAINER_CONTACT_BUTTON:'#share-button-fields-wrapper',
 };
 
 // Preview Selectors
@@ -43,4 +44,6 @@ const PREVIEW_SELECTORS = {
     LIVE_CONTACT_BUTTON: '#kw-mini-web-contacts-btn .elementor-button-text',
     LIVE_SHARE_BUTTON: '#kw-mini-web-share-btn .elementor-button-text',
     LIVE_WEBSITE_BUTTON: '#kw-mini-web-website-btn .elementor-button-text',
+    LIVE_CONTACT_BUTTON_CONTAINER:'#kw-mini-web-contacts-btn',
+    LIVE_SHARE_BUTTON_CONTAINER:'#kw-mini-web-share-btn',
 };

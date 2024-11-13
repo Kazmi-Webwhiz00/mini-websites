@@ -259,7 +259,23 @@
             updateFileInput();
         }
     
+        function toggleShowButtonFromContainer() {
+            const toggleCheckbox = $(FORM_SELECTORS.SHOW_CONTACT_BUTTON_TOGGLE);
+                if (toggleCheckbox.is(':checked')) {
+                    $(FORM_SELECTORS.CONTAINER_CONTACT_BUTTON).show();
+                } else {
+                    $(FORM_SELECTORS.CONTAINER_CONTACT_BUTTON).hide();
+                }
+        }
 
+        function togglePreviewButtons(toggleSelector, inputSelector) {
+            const toggleCheckbox = $(toggleSelector);
+            if (toggleCheckbox.is(':checked')) {
+                $(inputSelector).show();
+            } else {
+                $(inputSelector).hide();
+            }
+        }
     // ========================
     // Expose Utility Functions
     // ========================
@@ -273,7 +289,9 @@
         hideLoader,
         validateFileSize,
         previewImage,
-        handleGalleryChange
+        handleGalleryChange,
+        toggleShowButtonFromContainer,
+        togglePreviewButtons
     };
 
 })(jQuery);

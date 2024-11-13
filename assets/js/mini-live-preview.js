@@ -94,7 +94,7 @@
         setBackgroundImageLivePreview,
         setLiveProfilePicturePreview,
         updateLivePreviewTextFieldOnInput,
-        updateGalleryImagesLivePreview
+        updateGalleryImagesLivePreview,
     };
 
 })(jQuery);

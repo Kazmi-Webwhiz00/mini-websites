@@ -22,6 +22,8 @@ jQuery(document).ready(function($) {
         handlePrevStepNavigation();
         handleErrorMessageClose();
         initializeGalleryUpload();
+
+        handleShareButtonToggle();
     }
 
     function initializeGalleryUpload() {
@@ -68,6 +70,21 @@ jQuery(document).ready(function($) {
     // ==========================
     // Button Label Live Previews
     // ==========================
+
+    function updateContactButtonToggle() {
+        $(FORM_SELECTORS.SHOW_CONTACT_BUTTON_TOGGLE).on('change', function() {
+            livePreview.togglePreviewButtons(PREVIEW_SELECTORS.SHOW_CONTACT_BUTTON_TOGGLE, PREVIEW_SELECTORS.CONTACT_BUTTON_LABEL_INPUT);
+        });
+    }
+
+    function handleShareButtonToggle() {
+        const toggleCheckbox = $(FORM_SELECTORS.SHOW_CONTACT_BUTTON_TOGGLE);
+        // Register the change event to toggle the contact fields visibility
+        toggleCheckbox.on('change', () => {
+            utils.togglePreviewButtons(FORM_SELECTORS.SHOW_CONTACT_BUTTON_TOGGLE, PREVIEW_SELECTORS.LIVE_SHARE_BUTTON_CONTAINER);
+            utils.togglePreviewButtons(FORM_SELECTORS.SHOW_CONTACT_BUTTON_TOGGLE, FORM_SELECTORS.CONTAINER_CONTACT_BUTTON);
+        });
+    }
 
     function updateContactButtonLabel() {
         $(FORM_SELECTORS.CONTACT_BUTTON_LABEL_INPUT).on('input', function() {
@@ -172,6 +189,9 @@ jQuery(document).ready(function($) {
         });
     }
 
+
+    // ------------------
+    
     // ========================
     // Initialization
     // ========================
