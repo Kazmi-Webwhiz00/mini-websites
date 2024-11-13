@@ -94,6 +94,34 @@ jQuery(document).ready(function($) {
         });
     }
 
+    // Add gallery image previews
+function handleGalleryImageChange() {
+    const galleryInput = $(FORM_SELECTORS.GALLERY_INPUT);
+    
+    galleryInput.on('change', function() {
+        const files = this.files;
+        
+        // Clear existing previews
+        $(FORM_SELECTORS.GALLERY_PREVIEW_CONTAINER).empty();
+
+        if (files.length > 5) {
+            alert("You can upload a maximum of 5 images.");
+            galleryInput.val(''); // Clear the file input if validation fails
+            return;
+        }
+
+        // Loop through each file and generate a preview
+        Array.from(files).forEach((file) => {
+            const previewUrl = URL.createObjectURL(file);
+            const img = $('<img>').attr('src', previewUrl).addClass('gallery-preview-img');
+            $(FORM_SELECTORS.GALLERY_PREVIEW_CONTAINER).append(img);
+
+            // Revoke the preview URL to release memory
+            setTimeout(() => URL.revokeObjectURL(previewUrl), 100);
+        });
+    });
+}
+
     // ============================
     // Navigation and Miscellaneous
     // ============================

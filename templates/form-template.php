@@ -102,6 +102,16 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                             </label>
                         </div>
 
+                        <!-- Gallery Image Upload Section -->
+                        <div class="form-group">
+                            <label for="kw-user-gallery">Upload Gallery Images (Max 5)</label>
+                            <input type="file" id="kw-user-gallery" name="user_gallery[]" class="form-control-file" multiple accept="image/*">
+                            <div id="kw-user-gallery-previews" class="gallery-previews">
+                                <!-- JavaScript will dynamically insert image previews here -->
+                            </div>
+                        </div>
+
+
                         <button type="button" class="btn btn-secondary btn-block mt-3" data-prev="1">Back</button>
                         <button type="button" class="btn btn-primary btn-block mt-3" data-next="3">Next</button>
                     </div>

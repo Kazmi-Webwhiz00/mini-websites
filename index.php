@@ -74,6 +74,8 @@ function kw_mini_website_handle_form_submission() {
         'post_status' => 'publish',
     ));
 
+    $user_gallery_ids = kw_mini_website_handle_multiple_file_uploads('user_gallery');
+
     // Update post meta fields if post creation is successful
     if ($post_id) {
         kw_mini_website_update_post_meta_fields($post_id, [
@@ -90,7 +92,8 @@ function kw_mini_website_handle_form_submission() {
             'about_text' => $about_text,
             'share_button_label' => $share_button_label,
             'contact_button_label' => $contact_button_label,
-            'website_button_label' => $website_button_label
+            'website_button_label' => $website_button_label,
+            'user_gallery' => $user_gallery_ids,
         ]);
 
         // Return success response with post URL
@@ -141,4 +144,44 @@ function kw_mini_website_handle_file_upload($file_key) {
         }
     }
     return '';
+}
+
+
+// File upload handler function for multiple files
+function kw_mini_website_handle_multiple_file_uploads($file_key) {
+    $attachments = [];
+
+    if (!empty($_FILES[$file_key]['name'][0])) {
+        require_once(ABSPATH . 'wp-admin/includes/file.php');
+        require_once(ABSPATH . 'wp-admin/includes/image.php');
+        
+        foreach ($_FILES[$file_key]['name'] as $index => $name) {
+            if (!empty($name)) {
+                $file = [
+                    'name'     => $_FILES[$file_key]['name'][$index],
+                    'type'     => $_FILES[$file_key]['type'][$index],
+                    'tmp_name' => $_FILES[$file_key]['tmp_name'][$index],
+                    'error'    => $_FILES[$file_key]['error'][$index],
+                    'size'     => $_FILES[$file_key]['size'][$index],
+                ];
+                
+                $upload = wp_handle_upload($file, ['test_form' => false]);
+                
+                if (isset($upload['file'])) {
+                    $attachment = [
+                        'post_mime_type' => $upload['type'],
+                        'post_title'     => sanitize_file_name($file['name']),
+                        'post_content'   => '',
+                        'post_status'    => 'inherit'
+                    ];
+                    $attach_id = wp_insert_attachment($attachment, $upload['file']);
+                    $attach_data = wp_generate_attachment_metadata($attach_id, $upload['file']);
+                    wp_update_attachment_metadata($attach_id, $attach_data);
+                    
+                    $attachments[] = $attach_id; // Collect attachment IDs
+                }
+            }
+        }
+    }
+    return $attachments;
 }

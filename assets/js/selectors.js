@@ -19,6 +19,9 @@ const FORM_SELECTORS = {
     // Image Input Selectors
     PROFILE_IMAGE_INPUT: '#kw-main-image',
     BACKGROUND_IMAGE_INPUT: '#kw-bg-image',
+
+    GALLERY_INPUT: '#kw-user-gallery',
+    GALLERY_PREVIEW_CONTAINER: '#kw-user-gallery-previews',
 };
 
 // Preview Selectors
