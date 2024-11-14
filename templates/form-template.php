@@ -20,11 +20,9 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                 <div class="steps-progress p-3 shadow-sm rounded">
                     <?php 
                     $steps = [
-                        1 => 'Personal Information',
-                        2 => 'Company Information',
-                        3 => 'Contact Information',
-                        4 => 'About Section',
-                        5 => 'Customization'
+                        1 => 'Profile Setup',
+                        2 => 'Company & Social Links',
+                        3 => 'About & Media'
                     ];
                     foreach ($steps as $step => $label): ?>
                         <div class="step <?php echo $step === 1 ? 'active' : ''; ?>" id="kw-progress-step-<?php echo $step; ?>">
@@ -56,45 +54,18 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
 
                     <!-- Step 1: Personal Information -->
                     <div class="form-step" id="kw-step-1">
+                        <!-- Profile Image Upload -->
                         <div class="form-group text-center">
                             <div class="image-upload-container">
                                 <label for="kw-main-image" class="image-upload-label">
-                                    <span class="upload-overlay">Upload Image</span>
+                                    <span class="upload-overlay">Upload Profile Picture</span>
                                     <img id="kw-main-image-preview" src="#" alt="Image Preview" class="img-thumbnail" style="display: none; width: 150px; height: 150px;">
                                 </label>
                                 <input type="file" id="kw-main-image" name="user_profile_picture" class="d-none" required>
                             </div>
                         </div>
 
-
-
-                        <div class="form-group">
-                            <label for="kw-name">Name*</label>
-                            <input type="text" id="kw-name" name="name" class="form-control" required>
-                            <span id="kw-user-name-error" style="color: red; display: none;"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="kw-email">Email*</label>
-                            <input type="email" id="kw-email" name="email" class="form-control" required>
-                            <span id="kw-email-error" style="color: red; display: none;">Please enter a valid email address.</span>
-                        </div>
-
-                        <button type="button" class="btn btn-primary btn-block mt-4" data-next="2">Next</button>
-                    </div>
-
-                    <!-- Step 2: Company Information -->
-                    <div class="form-step" id="kw-step-2" style="display: none;">
-                        <div class="form-group">
-                            <label for="kw-company-name">Company Name*</label>
-                            <input type="text" id="kw-company-name" name="company_name" class="form-control" required>
-                            <span id="kw-company-name-error" style="color: red; display: none;">Please enter a valid email address.</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="kw-job-title">Designation*</label>
-                            <input type="text" id="kw-job-title" name="job_title" class="form-control" required>
-                            <span id="kw-designation-error" style="color: red; display: none;">Please enter a valid email address.</span>
-                        </div>
-                        
+                        <!-- Cover Image Upload -->
                         <div class="form-group">
                             <label for="kw-bg-image" class="bg-image-upload-label">
                                 <input type="file" id="kw-bg-image" name="user_cover_image" class="form-control-file d-none" required>
@@ -108,37 +79,41 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                             </label>
                         </div>
 
-                        <!-- Gallery Image Upload Section -->
+                        <!-- Personal Information Fields -->
                         <div class="form-group">
-                        <div class="kw-gallary-upload-section">
-                            <div id="kw-user-gallery-previews" class="gallery-previews">
-                                    <!-- Preview images will be dynamically added here by JavaScript -->
-                            </div>
-                                <label for="kw-user-gallery" class="kw-user-gallery-upload-button">
-                                <input type="file" id="kw-user-gallery" name="user_gallery[]" class="d-none" multiple accept="image/*">
-                                    <span> 📤 Upload Gallery Images</span>
-                                </label>
-                                <!-- New element to display selected file count -->
-                                <p id="selected-file-count">Selected files: 0/4 (MAX UPLOAD IS 4)</p>
+                            <label for="kw-name">Name*</label>
+                            <input type="text" id="kw-name" name="name" class="form-control" required>
+                            <span id="kw-user-name-error" style="color: red; display: none;"></span>
                         </div>
-                    </div>
-
-
-
-
-
-
-                        <button type="button" class="btn btn-secondary btn-block mt-3" data-prev="1">Back</button>
-                        <button type="button" class="btn btn-primary btn-block mt-3" data-next="3">Next</button>
-                    </div>
-
-                    <!-- Step 3: Contact Information -->
-                    <div class="form-step" id="kw-step-3" style="display: none;">
                         <div class="form-group">
-                            <label for="kw-phone-number">Phone Number</label>
+                            <label for="kw-email">Email*</label>
+                            <input type="email" id="kw-email" name="email" class="form-control" required>
+                            <span id="kw-email-error" style="color: red; display: none;">Please enter a valid email address.</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="kw-phone-number">Phone Number*</label>
                             <input type="text" id="kw-phone-number" name="phone_number" class="form-control" required>
                             <span id="kw-phone-number-error" style="color: red; display: none;">Please enter a valid phone number. Only numbers, spaces, dashes, and optional country code are allowed.</span>
                         </div>
+
+                        <button type="button" class="btn btn-primary btn-block mt-4" data-next="2">Next</button>
+                    </div>
+
+                    <!-- Step 2: Company Information -->
+                    <div class="form-step" id="kw-step-2" style="display: none;">
+                        <!-- Company Information Fields -->
+                        <div class="form-group">
+                            <label for="kw-company-name">Company Name*</label>
+                            <input type="text" id="kw-company-name" name="company_name" class="form-control" required>
+                            <span id="kw-company-name-error" style="color: red; display: none;">Please enter a valid email address.</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="kw-job-title">Designation*</label>
+                            <input type="text" id="kw-job-title" name="job_title" class="form-control" required>
+                            <span id="kw-designation-error" style="color: red; display: none;">Please enter a valid email address.</span>
+                        </div>
+
+                        <!-- Social Media Links -->
                         <div class="form-group">
                             <label for="kw-linkedin-url">LinkedIn URL</label>
                             <input type="url" id="kw-linkedin-url" name="linkedin_url" class="form-control">
@@ -150,34 +125,7 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                             <span id="kw-fb-url-error" style="color: red; display: none;">Please enter a valid URL. Make sure it starts with http:// or https://</span>
                         </div>
 
-                        <button type="button" class="btn btn-secondary btn-block mt-3" data-prev="2">Back</button>
-                        <button type="button" class="btn btn-primary btn-block mt-3" data-next="4">Next</button>
-                    </div>
-
-<!-- Step 4: About Section -->
-<div class="form-step" id="kw-step-4" style="display: none;">
-    <div class="form-group">
-        <label for="kw-about-title">About Title</label>
-        <input type="text" id="kw-about-title" name="about_title" class="form-control" required>
-        <span id="kw-about-title-error" style="color: red; display: none;">Please enter a title for the about section.</span>
-    </div>
-    
-    <div class="form-group">
-        <label for="kw-about-text">About Text</label>
-        <textarea id="kw-about-text" name="about_text" class="form-control" rows="4" required></textarea>
-        <span id="kw-about-text-error" style="color: red; display: none;">Please enter text for the about section.</span>
-    </div>
-
-    <button type="button" class="btn btn-secondary btn-block mt-3" data-prev="3">Back</button>
-    <button type="button" class="btn btn-primary btn-block mt-3" data-next="5">Next</button>
-</div>
-
-
-                    <!-- Step 5: Customization -->
-                    <div class="form-step" id="kw-step-5" style="display: none;">
-   
-
-                        <!-- Toggle button with switch styling -->
+                        <!-- Toggle Options -->
                         <div class="form-group">
                             <label for="is_show_share_button">Show Share Button?</label>
                             <label class="kw-switch">
@@ -185,7 +133,6 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                                 <span class="kw-slider"></span>
                             </label>
                         </div>
-
                         <div class="form-group">
                             <label for="is_show_add_to_contact_button">Show "Add to Contact" Button?</label>
                             <label class="kw-switch">
@@ -193,29 +140,57 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                                 <span class="kw-slider"></span>
                             </label>
                         </div>
-
                         <div class="form-group">
-                        <label for="is_show_website_button">Show Website Button?</label>
-                        <label class="kw-switch">
-                            <input type="checkbox" id="is_show_website_button" name="is_show_website_button" class="kw-form-control" checked>
-                            <span class="kw-slider"></span>
-                        </label>
+                            <label for="is_show_website_button">Show Website Button?</label>
+                            <label class="kw-switch">
+                                <input type="checkbox" id="is_show_website_button" name="is_show_website_button" class="kw-form-control" checked>
+                                <span class="kw-slider"></span>
+                            </label>
+                        </div>
+
+                        <!-- Website URL Input -->
+                        <div class="form-group kw-toggle-input-fields-group" id="website-button-fields-wrapper">
+                            <label for="user_website_url">Website URL</label>
+                            <input type="url" id="user_website_url" name="user_website_url" class="form-control">
+                            <span id="user-website-url-error" style="color: red; display: none;">Please enter a valid URL. Make sure it starts with http:// or https://</span>
+                        </div>
+
+                        <button type="button" class="btn btn-secondary btn-block mt-3" data-prev="1">Back</button>
+                        <button type="button" class="btn btn-primary btn-block mt-3" data-next="3">Next</button>
                     </div>
 
-<!-- Wrapper div for the fields to show/hide -->
-<div class="form-group kw-toggle-input-fields-group" id="website-button-fields-wrapper">
-    <label for="user_website_url">Website URL</label>
-    <input type="url" id="user_website_url" name="user_website_url" class="form-control">
-    <span id="user-website-url-error" style="color: red; display: none;">Please enter a valid URL. Make sure it starts with http:// or https://</span>
-</div>
+                    <!-- Step 3: Contact Information -->
+                    <div class="form-step" id="kw-step-3" style="display: none;">
+                        <!-- About Section -->
+                        <div class="form-group">
+                            <label for="kw-about-title">About Title</label>
+                            <input type="text" id="kw-about-title" name="about_title" class="form-control" required>
+                            <span id="kw-about-title-error" style="color: red; display: none;">Please enter a title for the about section.</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="kw-about-text">About Text</label>
+                            <textarea id="kw-about-text" name="about_text" class="form-control" rows="4" required></textarea>
+                            <span id="kw-about-text-error" style="color: red; display: none;">Please enter text for the about section.</span>
+                        </div>
 
-<div class="form-group">
-    <label for="user_video_url">Video URL</label>
-    <input type="url" id="user_video_url" name="user_video_url" class="form-control">
-    <span id="user-video-url-error" style="color: red; display: none;">Please enter a valid URL. Make sure it starts with http:// or https://</span>
-</div>
+                        <!-- Gallery Image Upload -->
+                        <div class="form-group kw-gallery-upload-section">
+                            <div id="kw-user-gallery-previews" class="gallery-previews"></div>
+                            <label for="kw-user-gallery" class="kw-user-gallery-upload-button">
+                                <input type="file" id="kw-user-gallery" name="user_gallery[]" class="d-none" multiple accept="image/*">
+                                <span> 📤 Upload Gallery Images</span>
+                            </label>
+                            <p id="selected-file-count">Selected files: 0/4 (MAX UPLOAD IS 4)</p>
+                        </div>
 
-                        <button type="button" class="btn btn-secondary btn-block mt-3" data-prev="4">Back</button>
+                        <!-- Video URL Input -->
+                        <div class="form-group">
+                            <label for="user_video_url">Video URL</label>
+                            <input type="url" id="user_video_url" name="user_video_url" class="form-control" required>
+                            <span id="user-video-url-error" style="color: red; display: none;">Please enter a valid URL. Make sure it starts with http:// or https://</span>
+                        </div>
+
+                        <button type="button" class="btn btn-secondary btn-block mt-3" data-prev="2">Back</button>
                         <button type="submit" name="submit_mini_website" class="btn btn-success btn-block">Submit</button>
                     </div>
 

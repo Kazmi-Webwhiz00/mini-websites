@@ -18,21 +18,41 @@
             }
         });
     
-        // Additional validation for image inputs based on step
-        const imageInput = $(FORM_SELECTORS.PROFILE_IMAGE_INPUT);
-        if (currentStep === '1' && imageInput.length && !imageInput[0].files.length) {
-            alert("Image is required. Please upload an image to proceed.");
+    // Additional validation for image inputs based on step
+    if (currentStep === '1') {
+        let errorMessages = [];
+        const imageInputs = [
+            { selector: FORM_SELECTORS.PROFILE_IMAGE_INPUT, message: "Profile Image is required. Please upload an image to proceed." },
+            { selector: FORM_SELECTORS.BACKGROUND_IMAGE_INPUT, message: "Cover Image is required. Please upload an image to proceed." }
+        ];
+
+        imageInputs.forEach(input => {
+            const imageInput = $(input.selector);
+            if (imageInput.length && !imageInput[0].files.length) {
+                errorMessages.push(input.message);
+                isValid = false;
+            }
+        });
+
+        // Validate Phone Number
+        if (!FORM_SELECTORS.PHONE_NUMBER_RIGIX.test($(FORM_SELECTORS.PHONE_NUMBER_INPUT_SELECTOR).val())) {
+            $(FORM_SELECTORS.PHONE_NUMBER_INPUT_SELECTOR).addClass('is-invalid');
+            $(FORM_SELECTORS.PHONE_NUMBER_ERROR_DIV).text("Please enter a valid phone number. Only numbers are allowed.").show();
             isValid = false;
+        } else {
+            $(FORM_SELECTORS.PHONE_NUMBER_INPUT_SELECTOR).removeClass('is-invalid');
+            $(FORM_SELECTORS.PHONE_NUMBER_ERROR_DIV).hide();
         }
-    
-        const bgImageInput = $(FORM_SELECTORS.BACKGROUND_IMAGE_INPUT);
-        if (currentStep === '2' && bgImageInput.length && !bgImageInput[0].files.length) {
-            alert("Image is required. Please upload an image to proceed.");
-            isValid = false;
+        // Show a single alert with all missing image messages if any
+        if (errorMessages.length > 0) {
+            alert(errorMessages.join('\n'));
         }
+    }
+
+
     
         // Additional validation for specific fields
-        if (currentStep === '3') {
+        if (currentStep === '2') {
             // Validate Facebook URL
             if (!FORM_SELECTORS.URL_REGIX.test($(FORM_SELECTORS.FB_URL_INPUT_SELECTOR).val())) {
                 $(FORM_SELECTORS.FB_URL_INPUT_SELECTOR).addClass('is-invalid');
@@ -52,16 +72,7 @@
                 $(FORM_SELECTORS.LINKEDIN_URL_INPUT_SELECTOR).removeClass('is-invalid');
                 $(FORM_SELECTORS.LINKEDIN_URL_ERROR_DIV).hide();
             }
-    
-            // Validate Phone Number
-            if (!FORM_SELECTORS.PHONE_NUMBER_RIGIX.test($(FORM_SELECTORS.PHONE_NUMBER_INPUT_SELECTOR).val())) {
-                $(FORM_SELECTORS.PHONE_NUMBER_INPUT_SELECTOR).addClass('is-invalid');
-                $(FORM_SELECTORS.PHONE_NUMBER_ERROR_DIV).text("Please enter a valid phone number. Only numbers are allowed.").show();
-                isValid = false;
-            } else {
-                $(FORM_SELECTORS.PHONE_NUMBER_INPUT_SELECTOR).removeClass('is-invalid');
-                $(FORM_SELECTORS.PHONE_NUMBER_ERROR_DIV).hide();
-            }
+
         }
     
         // Proceed to next step if all validations pass
