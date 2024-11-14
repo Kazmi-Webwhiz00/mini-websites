@@ -161,6 +161,46 @@
         }
     }
     
+    function scrollIframeById(scrollAmount, iframeId = 'kw-mini-web-preview-iframe') {
+        // Get the iframe element by ID
+        const iframe = $('#' + iframeId)[0]; // Ensure the '#' is added here only once
+        
+        // Check if the iframe and its contentWindow are accessible
+        if (iframe && iframe.contentWindow) {
+            // Get the current scroll position and update it by the scrollAmount
+            const currentScroll = $(iframe.contentWindow).scrollTop();
+            $(iframe.contentWindow).scrollTop(currentScroll + scrollAmount);
+        } else {
+            console.error("Iframe with ID '" + iframeId + "' not found or is inaccessible.");
+        }
+    }
+    
+    function scrollToElementInIframe(targetElementId, iframeId = 'kw-mini-web-preview-iframe') {
+        // Get the iframe element by ID
+        const iframe = $('#' + iframeId)[0];
+        
+        // Check if the iframe and its contentWindow are accessible
+        if (iframe && iframe.contentWindow) {
+            // Access the iframe's document
+            const iframeDocument = $(iframe).contents();
+            
+            // Find the target element inside the iframe
+            const targetElement = iframeDocument.find(targetElementId);
+            
+            if (targetElement.length) {
+                // Calculate the target element's position within the iframe
+                const targetPosition = targetElement.offset().top;
+                
+                // Scroll the iframe's content window to the target element's position
+                $(iframe.contentWindow).scrollTop(targetPosition);
+            } else {
+                console.error("Element with ID '" + targetElementId + "' not found inside the iframe.");
+            }
+        } else {
+            console.error("Iframe with ID '" + iframeId + "' not found or is inaccessible.");
+        }
+    }
+    
     // ============================
     // Exported Functions
     // ============================
@@ -170,7 +210,9 @@
         setLiveProfilePicturePreview,
         updateLivePreviewTextFieldOnInput,
         updateGalleryImagesLivePreview,
-        toggleLivePreviewButtons
+        toggleLivePreviewButtons,
+        scrollIframeById,
+        scrollToElementInIframe
     };
 
 })(jQuery);

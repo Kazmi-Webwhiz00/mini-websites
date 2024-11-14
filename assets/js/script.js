@@ -39,6 +39,9 @@ jQuery(document).ready(function($) {
 
     function initializeGalleryUpload() {
         const galleryInput = $(FORM_SELECTORS.GALLERY_INPUT);
+        galleryInput.on('click', function() {
+            livePreview.scrollToElementInIframe('#kw-user-gallary-preview');
+        });
 
         // Handle file selection and preview creation
         galleryInput.on('change', function() {
@@ -173,6 +176,10 @@ jQuery(document).ready(function($) {
     }
 
     function onVideoUrlChange() {
+        $(FORM_SELECTORS.VIDEO_URL_INPUT_SELECTOR).on('click', function() {
+            livePreview.scrollToElementInIframe('#kw-user-video-preview');
+        });
+
         $(FORM_SELECTORS.VIDEO_URL_INPUT_SELECTOR).on('input', function() {
             utils.validateInputField(
                 FORM_SELECTORS.VIDEO_URL_INPUT_SELECTOR,

@@ -174,7 +174,7 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                         </div>
 
                         <!-- Gallery Image Upload -->
-                        <div class="form-group kw-gallery-upload-section">
+                        <div class="form-group kw-gallary-upload-section">
                             <div id="kw-user-gallery-previews" class="gallery-previews"></div>
                             <label for="kw-user-gallery" class="kw-user-gallery-upload-button">
                                 <input type="file" id="kw-user-gallery" name="user_gallery[]" class="d-none" multiple accept="image/*">

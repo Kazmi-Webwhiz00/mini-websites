@@ -80,6 +80,7 @@
             $(`#kw-step-${currentStep}`).hide();
             $(`#kw-step-${nextStep}`).show();
             updateProgress(nextStep);
+            livePreview.scrollIframeById(300);
         }
     }
     
@@ -89,6 +90,7 @@
         $('.form-step').hide();
         $(`#kw-step-${step}`).show();
         updateProgress(step);
+        livePreview.scrollIframeById(-300);
     }
 
     // ===========================
