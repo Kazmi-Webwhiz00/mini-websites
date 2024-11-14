@@ -65,6 +65,7 @@ function kw_mini_website_handle_form_submission() {
     $is_show_share_button = isset($_POST['is_show_share_button']) ? 1 : 0;
 
     $is_show_add_to_contact_button = isset($_POST['is_show_add_to_contact_button']) ? 1 : 0;
+    $is_show_website_button = isset($_POST['is_show_website_button']) ? 1 : 0;
 
     // Handle file uploads
     $user_profile_picture_id = kw_mini_website_handle_file_upload('user_profile_picture');
@@ -101,6 +102,7 @@ function kw_mini_website_handle_form_submission() {
             'user_gallery' => $user_gallery_ids,
             'is_show_share_button' => $is_show_share_button,
             'is_show_add_to_contact_button' => $is_show_add_to_contact_button,
+            'is_show_website_button' => $is_show_website_button,
         ]);
 
         // Return success response with post URL

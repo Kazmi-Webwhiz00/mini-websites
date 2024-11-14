@@ -150,6 +150,38 @@
         });
     }
 
+    function setBackgroundImagePreview(inputElement, previewSelector, overlaySelector = null) {
+        return new Promise((resolve, reject) => {
+            const file = inputElement.files[0];
+    
+            if (file) {
+                const previewUrl = URL.createObjectURL(file);
+    
+                // Apply it as the background-image of the specified element and set it as cover
+                $(previewSelector)
+                    .css({
+                        'background-image': `url(${previewUrl})`,
+                        'background-size': 'cover',
+                        'background-position': 'center'
+                    });
+    
+                // Hide the overlay element if specified
+                if (overlaySelector) {
+                    $(overlaySelector).hide();
+                }
+    
+                // Resolve the Promise with the preview URL
+                resolve(previewUrl);
+    
+                // Optionally revoke the object URL after a short delay to release memory
+                setTimeout(() => URL.revokeObjectURL(previewUrl), 100);
+            } else {
+                reject("No file selected");
+            }
+        });
+    }
+    
+
         // Initialize selected files and file ID counter
         let selectedFiles = [];
         let fileIdCounter = 0;
@@ -291,7 +323,8 @@
         previewImage,
         handleGalleryChange,
         toggleShowButtonFromContainer,
-        togglePreviewButtons
+        togglePreviewButtons,
+        setBackgroundImagePreview
     };
 
 })(jQuery);

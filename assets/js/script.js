@@ -11,6 +11,8 @@ jQuery(document).ready(function($) {
         updateUserNameDisplay();
         updateCompanyNameDisplay();
         updateJobTitleDisplay();
+        updateAboutTitleDisplay();
+        updateAboutTextDisplay();
 
         // Button label live preview handlers
         updateContactButtonLabel();
@@ -25,6 +27,7 @@ jQuery(document).ready(function($) {
 
         handleShareButtonToggle();
         handleAddToContactButtonToggle();
+        handleWebsiteButtonToggle();
     }
 
     function initializeGalleryUpload() {
@@ -68,6 +71,21 @@ jQuery(document).ready(function($) {
         });
     }
 
+    function updateAboutTextDisplay() {
+        $(FORM_SELECTORS.FORM_USER_ABOUT_TEXT).on('input', function() {
+            const val = $(this).val();
+            livePreview.updateLivePreviewTextFieldOnInput(PREVIEW_SELECTORS.LIVE_USER_ABOUT_TEXT, val);
+        });
+    }
+
+    function updateAboutTitleDisplay() {
+        $(FORM_SELECTORS.FORM_USER_ABOUT_TITLE).on('input', function() {
+            const val = $(this).val();
+            livePreview.updateLivePreviewTextFieldOnInput(PREVIEW_SELECTORS.LIVE_USER_ABOUT_TITLE, val);
+        });
+    }
+
+
     // ==========================
     // Button Label Live Previews
     // ==========================
@@ -78,6 +96,15 @@ jQuery(document).ready(function($) {
         toggleCheckbox.on('change', () => {
             livePreview.toggleLivePreviewButtons(FORM_SELECTORS.SHOW_ADD_TO_CONTACT_BUTTON_TOGGLE, PREVIEW_SELECTORS.LIVE_CONTACT_BUTTON_CONTAINER);
             utils.togglePreviewButtons(FORM_SELECTORS.SHOW_ADD_TO_CONTACT_BUTTON_TOGGLE, FORM_SELECTORS.CONTAINER_ADD_TO_CONTACT_BUTTON);
+        });
+    }
+
+    function handleWebsiteButtonToggle() {
+        const toggleCheckbox = $(FORM_SELECTORS.SHOW_WEBSITE_BUTTON_TOGGLE);
+        // Register the change event to toggle the contact fields visibility
+        toggleCheckbox.on('change', () => {
+            livePreview.toggleLivePreviewButtons(FORM_SELECTORS.SHOW_WEBSITE_BUTTON_TOGGLE, PREVIEW_SELECTORS.LIVE_WEBSITE_BUTTON_CONTAINER);
+            utils.togglePreviewButtons(FORM_SELECTORS.SHOW_WEBSITE_BUTTON_TOGGLE, '#website-button-fields-wrapper');
         });
     }
 
@@ -125,7 +152,7 @@ jQuery(document).ready(function($) {
     function handleBackgroundImageChange() {
         $(FORM_SELECTORS.BACKGROUND_IMAGE_INPUT).on('change', function() {
             if (utils.validateFileSize(this)) {
-                utils.previewImage(this, PREVIEW_SELECTORS.BACKGROUND_IMAGE_PREVIEW, { maxWidth: '100%', maxHeight: '100%' }).then((previewUrl) => {
+                utils.setBackgroundImagePreview(this, '.bg-image-preview-wrapper', FORM_SELECTORS.BACKGROUND_IMAGE_OVERLAY_TEXT).then((previewUrl) => {
                     livePreview.setBackgroundImageLivePreview(PREVIEW_SELECTORS.COVER_IMAGE_LIVE_PREVIEW, previewUrl, PREVIEW_SELECTORS.BACKGROUND_IMAGE_OVERLAY_TEXT);
                 });
             }

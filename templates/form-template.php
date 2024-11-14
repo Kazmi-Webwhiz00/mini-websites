@@ -65,6 +65,7 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                                 <input type="file" id="kw-main-image" name="user_profile_picture" class="d-none" required>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <label for="kw-name">Name</label>
                             <input type="text" id="kw-name" name="name" class="form-control" required>
@@ -195,9 +196,18 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                         </div>
 
                         <div class="form-group">
-                            <label for="website-button-label">Website Button Label</label>
-                            <input type="text" id="website-button-label" name="website_button_label" class="form-control" placeholder="e.g., Visit Our Website">
-                        </div>
+    <label for="is_show_website_button">Show Website Button?</label>
+    <label class="kw-switch">
+        <input type="checkbox" id="is_show_website_button" name="is_show_website_button" class="kw-form-control" checked>
+        <span class="kw-slider"></span>
+    </label>
+</div>
+
+<!-- Wrapper div for the fields to show/hide -->
+<div class="form-group kw-toggle-input-fields-group" id="website-button-fields-wrapper">
+    <label for="website-button-label">Website Button Label</label>
+    <input type="text" id="website-button-label" name="website_button_label" class="form-control" placeholder="e.g., Visit Our Website">
+</div>
 
                         <button type="button" class="btn btn-secondary btn-block mt-3" data-prev="4">Back</button>
                         <button type="submit" name="submit_mini_website" class="btn btn-success btn-block">Submit</button>
