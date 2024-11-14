@@ -43,6 +43,47 @@ add_shortcode('kw_mini_website_form', 'kw_mini_website_form_shortcode');
 // 3. AJAX Form Submission Handler
 // =========================
 
+// Function to generate and save QR code image in media library
+function generate_and_save_qr_code_image($post_id) {
+    // Get the post URL
+    $post_url = get_permalink($post_id);
+
+    // Generate QR code image URL using the QR server API
+    $qr_api_url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" . urlencode($post_url);
+
+    // Download the QR code image
+    $image_data = file_get_contents($qr_api_url);
+    if ($image_data === false) {
+        return false; // Handle error if unable to download the image
+    }
+
+    // Create a unique filename
+    $upload_dir = wp_upload_dir();
+    $file_name = 'qr-code-' . $post_id . '.png';
+    $file_path = $upload_dir['path'] . '/' . $file_name;
+
+    // Save the image file locally
+    file_put_contents($file_path, $image_data);
+
+    // Insert the image into the WordPress Media Library
+    $file_type = wp_check_filetype($file_name, null);
+    $attachment = [
+        'guid'           => $upload_dir['url'] . '/' . basename($file_path),
+        'post_mime_type' => $file_type['type'],
+        'post_title'     => sanitize_file_name($file_name),
+        'post_content'   => '',
+        'post_status'    => 'inherit'
+    ];
+
+    $attachment_id = wp_insert_attachment($attachment, $file_path, $post_id);
+    require_once(ABSPATH . 'wp-admin/includes/image.php');
+    $attach_data = wp_generate_attachment_metadata($attachment_id, $file_path);
+    wp_update_attachment_metadata($attachment_id, $attach_data);
+
+    // Return the attachment ID to update ACF field
+    return $attachment_id;
+}
+
 function kw_mini_website_handle_form_submission() {
     // Verify nonce for security
     check_ajax_referer('kw_mini_website_nonce', 'security');
@@ -65,7 +106,6 @@ function kw_mini_website_handle_form_submission() {
     $contact_button_label = sanitize_text_field($_POST['contact_button_label']);
     $website_button_label = sanitize_text_field($_POST['website_button_label']);
     $is_show_share_button = isset($_POST['is_show_share_button']) ? 1 : 0;
-
     $is_show_add_to_contact_button = isset($_POST['is_show_add_to_contact_button']) ? 1 : 0;
     $is_show_website_button = isset($_POST['is_show_website_button']) ? 1 : 0;
 
@@ -106,6 +146,12 @@ function kw_mini_website_handle_form_submission() {
             'is_show_website_button' => $is_show_website_button,
             'user_video_url' => $user_video_url,
         ]);
+
+        // Generate and save QR code image to ACF field
+        $qr_image_id = generate_and_save_qr_code_image($post_id);
+        if ($qr_image_id) {
+            update_field('user_mini_web_qr_code_img', $qr_image_id, $post_id);
+        }
 
         // Return success response with post URL
         wp_send_json_success(['message' => 'Submission successful!', 'post_url' => get_permalink($post_id)]);

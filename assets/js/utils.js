@@ -147,7 +147,7 @@
             } else {
                 clearInterval(interval);
             }
-        }, 2000); // 2-second interval between messages
+        }, 3000); // 2-second interval between messages
     }
 
     // Hide the loader overlay
