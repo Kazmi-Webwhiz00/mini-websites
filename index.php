@@ -54,6 +54,7 @@ function kw_mini_website_handle_form_submission() {
     $email = sanitize_email($_POST['email']);
     $phone_number = sanitize_text_field($_POST['phone_number']);
     $linkedin_url = esc_url_raw($_POST['linkedin_url']);
+    $user_website_url = esc_url_raw($_POST['user_website_url']);
     $fb_url = esc_url_raw($_POST['fb_url']);
     $about_title = sanitize_text_field($_POST['about_title']);
     $about_text = sanitize_textarea_field($_POST['about_text']);
@@ -80,8 +81,6 @@ function kw_mini_website_handle_form_submission() {
 
     $user_gallery_ids = kw_mini_website_handle_multiple_file_uploads('user_gallery');
 
-    error_log("value os is who::::::::::::::::");
-    error_log($is_show_share_button);
     // Update post meta fields if post creation is successful
     if ($post_id) {
         kw_mini_website_update_post_meta_fields($post_id, [
@@ -94,6 +93,7 @@ function kw_mini_website_handle_form_submission() {
             'phone_number' => (strpos($phone_number, 'tel:') === 0 ? $phone_number : 'tel:' . $phone_number),
             'linkedin_url' => $linkedin_url,
             'fb_url' => $fb_url,
+            'user_website_url' => $user_website_url,
             'about_title' => $about_title,
             'about_text' => $about_text,
             'share_button_label' => $share_button_label,

@@ -95,7 +95,7 @@ jQuery(document).ready(function($) {
         // Register the change event to toggle the contact fields visibility
         toggleCheckbox.on('change', () => {
             livePreview.toggleLivePreviewButtons(FORM_SELECTORS.SHOW_ADD_TO_CONTACT_BUTTON_TOGGLE, PREVIEW_SELECTORS.LIVE_CONTACT_BUTTON_CONTAINER);
-            utils.togglePreviewButtons(FORM_SELECTORS.SHOW_ADD_TO_CONTACT_BUTTON_TOGGLE, FORM_SELECTORS.CONTAINER_ADD_TO_CONTACT_BUTTON);
+           // utils.togglePreviewButtons(FORM_SELECTORS.SHOW_ADD_TO_CONTACT_BUTTON_TOGGLE, FORM_SELECTORS.CONTAINER_ADD_TO_CONTACT_BUTTON);
         });
     }
 
@@ -113,7 +113,7 @@ jQuery(document).ready(function($) {
         // Register the change event to toggle the contact fields visibility
         toggleCheckbox.on('change', () => {
             livePreview.toggleLivePreviewButtons(FORM_SELECTORS.SHOW_SHARE_BUTTON_TOGGLE, PREVIEW_SELECTORS.LIVE_SHARE_BUTTON_CONTAINER);
-            utils.togglePreviewButtons(FORM_SELECTORS.SHOW_SHARE_BUTTON_TOGGLE, FORM_SELECTORS.CONTAINER_SHARE_BUTTON);
+            //utils.togglePreviewButtons(FORM_SELECTORS.SHOW_SHARE_BUTTON_TOGGLE, FORM_SELECTORS.CONTAINER_SHARE_BUTTON);
         });
     }
 

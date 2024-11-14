@@ -173,12 +173,6 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                             </label>
                         </div>
 
-                        <!-- Wrapper div for the fields to show/hide -->
-                            <div class="form-group kw-toggle-input-fields-group" id="share-button-fields-wrapper">
-                                <label for="share-button-label">Share Button Label</label>
-                                <input type="text" id="share-button-label" name="share_button_label" class="kw-form-control" placeholder="e.g., Share with Friends">
-                            </div>
-
                         <div class="form-group">
                             <label for="is_show_add_to_contact_button">Show "Add to Contact" Button?</label>
                             <label class="kw-switch">
@@ -187,27 +181,19 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                             </label>
                         </div>
 
-                        <!-- Wrapper div for the fields to show/hide -->
-                        <div id="contact-button-fields-wrapper">
-                            <div class="form-group kw-toggle-input-fields-group" id="contact-button-fields-wrapper">
-                                <label for="contact-button-label">Contact Button Label</label>
-                                <input type="text" id="contact-button-label" name="contact_button_label" class="kw-form-control" placeholder="e.g., Contact Us">
-                            </div>
-                        </div>
-
                         <div class="form-group">
-    <label for="is_show_website_button">Show Website Button?</label>
-    <label class="kw-switch">
-        <input type="checkbox" id="is_show_website_button" name="is_show_website_button" class="kw-form-control" checked>
-        <span class="kw-slider"></span>
-    </label>
-</div>
+                        <label for="is_show_website_button">Show Website Button?</label>
+                        <label class="kw-switch">
+                            <input type="checkbox" id="is_show_website_button" name="is_show_website_button" class="kw-form-control" checked>
+                            <span class="kw-slider"></span>
+                        </label>
+                    </div>
 
-<!-- Wrapper div for the fields to show/hide -->
-<div class="form-group kw-toggle-input-fields-group" id="website-button-fields-wrapper">
-    <label for="website-button-label">Website Button Label</label>
-    <input type="text" id="website-button-label" name="website_button_label" class="form-control" placeholder="e.g., Visit Our Website">
-</div>
+                    <!-- Wrapper div for the fields to show/hide -->
+                    <div class="form-group kw-toggle-input-fields-group" id="website-button-fields-wrapper">
+                        <label for="user_website_url">Website Url</label>
+                        <input type="url" id="user_website_url" name="user_website_url" class="form-control" required>
+                    </div>
 
                         <button type="button" class="btn btn-secondary btn-block mt-3" data-prev="4">Back</button>
                         <button type="submit" name="submit_mini_website" class="btn btn-success btn-block">Submit</button>
