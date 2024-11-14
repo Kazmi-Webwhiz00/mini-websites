@@ -260,11 +260,11 @@
         }
     
         function toggleShowButtonFromContainer() {
-            const toggleCheckbox = $(FORM_SELECTORS.SHOW_CONTACT_BUTTON_TOGGLE);
+            const toggleCheckbox = $(FORM_SELECTORS.SHOW_SHARE_BUTTON_TOGGLE);
                 if (toggleCheckbox.is(':checked')) {
-                    $(FORM_SELECTORS.CONTAINER_CONTACT_BUTTON).show();
+                    $(FORM_SELECTORS.CONTAINER_SHARE_BUTTON).show();
                 } else {
-                    $(FORM_SELECTORS.CONTAINER_CONTACT_BUTTON).hide();
+                    $(FORM_SELECTORS.CONTAINER_SHARE_BUTTON).hide();
                 }
         }
 

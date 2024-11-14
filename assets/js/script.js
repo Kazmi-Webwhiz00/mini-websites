@@ -24,6 +24,7 @@ jQuery(document).ready(function($) {
         initializeGalleryUpload();
 
         handleShareButtonToggle();
+        handleAddToContactButtonToggle();
     }
 
     function initializeGalleryUpload() {
@@ -71,18 +72,21 @@ jQuery(document).ready(function($) {
     // Button Label Live Previews
     // ==========================
 
-    function updateContactButtonToggle() {
-        $(FORM_SELECTORS.SHOW_CONTACT_BUTTON_TOGGLE).on('change', function() {
-            livePreview.togglePreviewButtons(PREVIEW_SELECTORS.SHOW_CONTACT_BUTTON_TOGGLE, PREVIEW_SELECTORS.CONTACT_BUTTON_LABEL_INPUT);
+    function handleAddToContactButtonToggle() {
+        const toggleCheckbox = $(FORM_SELECTORS.SHOW_ADD_TO_CONTACT_BUTTON_TOGGLE);
+        // Register the change event to toggle the contact fields visibility
+        toggleCheckbox.on('change', () => {
+            livePreview.toggleLivePreviewButtons(FORM_SELECTORS.SHOW_ADD_TO_CONTACT_BUTTON_TOGGLE, PREVIEW_SELECTORS.LIVE_CONTACT_BUTTON_CONTAINER);
+            utils.togglePreviewButtons(FORM_SELECTORS.SHOW_ADD_TO_CONTACT_BUTTON_TOGGLE, FORM_SELECTORS.CONTAINER_ADD_TO_CONTACT_BUTTON);
         });
     }
 
     function handleShareButtonToggle() {
-        const toggleCheckbox = $(FORM_SELECTORS.SHOW_CONTACT_BUTTON_TOGGLE);
+        const toggleCheckbox = $(FORM_SELECTORS.SHOW_SHARE_BUTTON_TOGGLE);
         // Register the change event to toggle the contact fields visibility
         toggleCheckbox.on('change', () => {
-            utils.togglePreviewButtons(FORM_SELECTORS.SHOW_CONTACT_BUTTON_TOGGLE, PREVIEW_SELECTORS.LIVE_SHARE_BUTTON_CONTAINER);
-            utils.togglePreviewButtons(FORM_SELECTORS.SHOW_CONTACT_BUTTON_TOGGLE, FORM_SELECTORS.CONTAINER_CONTACT_BUTTON);
+            livePreview.toggleLivePreviewButtons(FORM_SELECTORS.SHOW_SHARE_BUTTON_TOGGLE, PREVIEW_SELECTORS.LIVE_SHARE_BUTTON_CONTAINER);
+            utils.togglePreviewButtons(FORM_SELECTORS.SHOW_SHARE_BUTTON_TOGGLE, FORM_SELECTORS.CONTAINER_SHARE_BUTTON);
         });
     }
 
@@ -112,7 +116,7 @@ jQuery(document).ready(function($) {
         $(FORM_SELECTORS.PROFILE_IMAGE_INPUT).on('change', function() {
             if (utils.validateFileSize(this)) {
                 utils.previewImage(this, PREVIEW_SELECTORS.PROFILE_IMAGE_PREVIEW).then((previewUrl) => {
-                    livePreview.setLiveProfilePicturePreview(PREVIEW_SELECTORS.PROFILE_PICTURE_PREVIEW, previewUrl, { maxWidth: '200px', maxHeight: '200px' });
+                    livePreview.setLiveProfilePicturePreview(PREVIEW_SELECTORS.PROFILE_PICTURE_LIVE_PREVIEW, previewUrl, { maxWidth: '200px', maxHeight: '200px' });
                 });
             }
         });
@@ -122,7 +126,7 @@ jQuery(document).ready(function($) {
         $(FORM_SELECTORS.BACKGROUND_IMAGE_INPUT).on('change', function() {
             if (utils.validateFileSize(this)) {
                 utils.previewImage(this, PREVIEW_SELECTORS.BACKGROUND_IMAGE_PREVIEW, { maxWidth: '100%', maxHeight: '100%' }).then((previewUrl) => {
-                    livePreview.setBackgroundImageLivePreview(PREVIEW_SELECTORS.BACKGROUND_IMAGE_LIVE_PREVIEW, previewUrl, PREVIEW_SELECTORS.BACKGROUND_IMAGE_OVERLAY_TEXT);
+                    livePreview.setBackgroundImageLivePreview(PREVIEW_SELECTORS.COVER_IMAGE_LIVE_PREVIEW, previewUrl, PREVIEW_SELECTORS.BACKGROUND_IMAGE_OVERLAY_TEXT);
                 });
             }
         });

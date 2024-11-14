@@ -407,3 +407,14 @@ padding: 3rem;
 .kw-switch input:checked + .kw-slider:before {
     transform: translateX(1.6em);
 }
+
+.kw-toggle-input-fields-group{
+    display: flex;
+    flex-direction: column;
+}
+
+.kw-toggle-input-fields-group > input {
+    padding: 5px;
+    border: 1px solid #c6c6c6 !important;
+    border-radius: 5px;
+}

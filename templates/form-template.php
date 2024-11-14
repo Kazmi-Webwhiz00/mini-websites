@@ -165,7 +165,7 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
 
                         <!-- Toggle button with switch styling -->
                         <div class="form-group">
-                            <label for="is_show_share_button">Show "Add to Contact" Button?</label>
+                            <label for="is_show_share_button">Show Share Button?</label>
                             <label class="kw-switch">
                                 <input type="checkbox" id="is_show_share_button" name="is_show_share_button" class="kw-form-control" checked>
                                 <span class="kw-slider"></span>
@@ -173,16 +173,25 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                         </div>
 
                         <!-- Wrapper div for the fields to show/hide -->
-                        <div id="share-button-fields-wrapper">
-                            <div class="form-group">
+                            <div class="form-group kw-toggle-input-fields-group" id="share-button-fields-wrapper">
                                 <label for="share-button-label">Share Button Label</label>
                                 <input type="text" id="share-button-label" name="share_button_label" class="kw-form-control" placeholder="e.g., Share with Friends">
                             </div>
-                        </div>
 
                         <div class="form-group">
-                            <label for="contact-button-label">Contact Button Label</label>
-                            <input type="text" id="contact-button-label" name="contact_button_label" class="form-control" placeholder="e.g., Contact Us">
+                            <label for="is_show_add_to_contact_button">Show "Add to Contact" Button?</label>
+                            <label class="kw-switch">
+                                <input type="checkbox" id="is_show_add_to_contact_button" name="is_show_add_to_contact_button" class="kw-form-control" checked>
+                                <span class="kw-slider"></span>
+                            </label>
+                        </div>
+
+                        <!-- Wrapper div for the fields to show/hide -->
+                        <div id="contact-button-fields-wrapper">
+                            <div class="form-group kw-toggle-input-fields-group" id="contact-button-fields-wrapper">
+                                <label for="contact-button-label">Contact Button Label</label>
+                                <input type="text" id="contact-button-label" name="contact_button_label" class="kw-form-control" placeholder="e.g., Contact Us">
+                            </div>
                         </div>
 
                         <div class="form-group">
