@@ -13,6 +13,7 @@ jQuery(document).ready(function($) {
         updateJobTitleDisplay();
         updateAboutTitleDisplay();
         updateAboutTextDisplay();
+        updateUserEmailChange();
 
         // Button label live preview handlers
         updateContactButtonLabel();
@@ -28,6 +29,12 @@ jQuery(document).ready(function($) {
         handleShareButtonToggle();
         handleAddToContactButtonToggle();
         handleWebsiteButtonToggle();
+
+        onFbUrlChange();
+        onLinkedInUrlChange();
+        onPhoneNumberChange();
+        onVideoUrlChange();
+        onWebsiteUrlChange();
     }
 
     function initializeGalleryUpload() {
@@ -53,13 +60,36 @@ jQuery(document).ready(function($) {
     function updateUserNameDisplay() {
         $(FORM_SELECTORS.NAME_INPUT).on('input', function() {
             const userName = $(this).val();
+            utils.validateInputField(
+                FORM_SELECTORS.NAME_INPUT,
+                FORM_SELECTORS.USER_NAME_ERROR_DIV,
+                null,
+                true, // if reuqired
+            );
             livePreview.updateLivePreviewTextFieldOnInput(PREVIEW_SELECTORS.LIVE_USER_NAME, userName);
+        });
+    }
+
+    function updateUserEmailChange() {
+        $(FORM_SELECTORS.EMAIL_INPUT).on('input', function() {
+            utils.validateInputField(
+                FORM_SELECTORS.EMAIL_INPUT,
+                FORM_SELECTORS.EMAIL_ERROR_DIV,
+                FORM_SELECTORS.EMAIL_REGIX,
+                true, // if reuqired
+            );
         });
     }
     
     function updateCompanyNameDisplay() {
         $(FORM_SELECTORS.COMPANY_NAME_INPUT).on('input', function() {
             const companyName = $(this).val();
+            utils.validateInputField(
+                FORM_SELECTORS.COMPANY_NAME_INPUT,
+                FORM_SELECTORS.COMPANY_NAME_ERROR_DIV,
+                null,
+                true, // if reuqired
+            );
             livePreview.updateLivePreviewTextFieldOnInput(PREVIEW_SELECTORS.LIVE_COMPANY_NAME, companyName);
         });
     }
@@ -67,25 +97,112 @@ jQuery(document).ready(function($) {
     function updateJobTitleDisplay() {
         $(FORM_SELECTORS.JOB_TITLE_INPUT).on('input', function() {
             const jobTitle = $(this).val();
+            utils.validateInputField(
+                FORM_SELECTORS.JOB_TITLE_INPUT,
+                FORM_SELECTORS.JOB_TITLE_ERROR_DIV,
+                null,
+                true, // if reuqired
+            );
             livePreview.updateLivePreviewTextFieldOnInput(PREVIEW_SELECTORS.LIVE_JOB_TITLE, jobTitle);
         });
     }
 
     function updateAboutTextDisplay() {
         $(FORM_SELECTORS.FORM_USER_ABOUT_TEXT).on('input', function() {
-            const val = $(this).val();
-            livePreview.updateLivePreviewTextFieldOnInput(PREVIEW_SELECTORS.LIVE_USER_ABOUT_TEXT, val);
+            const aboutText = $(this).val();
+            utils.validateInputField(
+                FORM_SELECTORS.FORM_USER_ABOUT_TEXT,
+                FORM_SELECTORS.ABOUT_TEXT_ERROR_DIV,
+                null,
+                true // Required
+            );
+            livePreview.updateLivePreviewTextFieldOnInput(PREVIEW_SELECTORS.LIVE_USER_ABOUT_TEXT, aboutText);
         });
     }
-
+    
     function updateAboutTitleDisplay() {
         $(FORM_SELECTORS.FORM_USER_ABOUT_TITLE).on('input', function() {
-            const val = $(this).val();
-            livePreview.updateLivePreviewTextFieldOnInput(PREVIEW_SELECTORS.LIVE_USER_ABOUT_TITLE, val);
+            const aboutTitle = $(this).val();
+            utils.validateInputField(
+                FORM_SELECTORS.FORM_USER_ABOUT_TITLE,
+                FORM_SELECTORS.ABOUT_TITLE_ERROR_DIV,
+                null,
+                true // Required
+            );
+            livePreview.updateLivePreviewTextFieldOnInput(PREVIEW_SELECTORS.LIVE_USER_ABOUT_TITLE, aboutTitle);
+        });
+    }
+    
+
+
+
+
+    //urls
+
+    function onFbUrlChange() {
+        $(FORM_SELECTORS.FB_URL_INPUT_SELECTOR).on('input', function() {
+            utils.validateInputField(
+                FORM_SELECTORS.FB_URL_INPUT_SELECTOR,
+                FORM_SELECTORS.FB_URL_ERROR_DIV,
+                FORM_SELECTORS.URL_REGIX,
+                true, // if reuqired
+            );
         });
     }
 
+    function onLinkedInUrlChange() {
+        $(FORM_SELECTORS.LINKEDIN_URL_INPUT_SELECTOR).on('input', function() {
+            utils.validateInputField(
+                FORM_SELECTORS.LINKEDIN_URL_INPUT_SELECTOR,
+                FORM_SELECTORS.LINKEDIN_URL_ERROR_DIV,
+                FORM_SELECTORS.URL_REGIX,
+                true // Required
+            );
+        });
+    }
+    
+    function onPhoneNumberChange() {
+        $(FORM_SELECTORS.PHONE_NUMBER_INPUT_SELECTOR).on('input', function() {
+            utils.validateInputField(
+                FORM_SELECTORS.PHONE_NUMBER_INPUT_SELECTOR,
+                FORM_SELECTORS.PHONE_NUMBER_ERROR_DIV,
+                FORM_SELECTORS.PHONE_NUMBER_RIGIX,
+                true // Required
+            );
+        });
+    }
 
+    function onVideoUrlChange() {
+        $(FORM_SELECTORS.VIDEO_URL_INPUT_SELECTOR).on('input', function() {
+            utils.validateInputField(
+                FORM_SELECTORS.VIDEO_URL_INPUT_SELECTOR,
+                FORM_SELECTORS.VIDEO_URL_ERROR_DIV,
+                FORM_SELECTORS.URL_REGIX,
+                true // Required
+            );
+        });
+    }
+
+    function onWebsiteUrlChange() {
+        $(FORM_SELECTORS.WEBSITE_URL_INPUT_SELECTOR).on('input', function() {
+            // Check if the "Show Website Button" checkbox is checked
+            if ($('#is_show_website_button').is(':checked')) {
+                utils.validateInputField(
+                    FORM_SELECTORS.WEBSITE_URL_INPUT_SELECTOR,
+                    FORM_SELECTORS.WEBSITE_URL_ERROR_DIV,
+                    FORM_SELECTORS.URL_REGIX,
+                    true // Required
+                );
+            } else {
+                // Clear any validation errors if the checkbox is unchecked
+                $(FORM_SELECTORS.WEBSITE_URL_INPUT_SELECTOR).removeClass('is-invalid');
+                $(FORM_SELECTORS.WEBSITE_URL_ERROR_DIV).hide();
+            }
+        });
+    }
+    
+    
+    
     // ==========================
     // Button Label Live Previews
     // ==========================
@@ -141,7 +258,7 @@ jQuery(document).ready(function($) {
 
     function handleProfilePictureChange() {
         $(FORM_SELECTORS.PROFILE_IMAGE_INPUT).on('change', function() {
-            if (utils.validateFileSize(this)) {
+            if (utils.validateFileSize(this,5)) {
                 utils.previewImage(this, PREVIEW_SELECTORS.PROFILE_IMAGE_PREVIEW).then((previewUrl) => {
                     livePreview.setLiveProfilePicturePreview(PREVIEW_SELECTORS.PROFILE_PICTURE_LIVE_PREVIEW, previewUrl, { maxWidth: '200px', maxHeight: '200px' });
                 });
@@ -151,7 +268,7 @@ jQuery(document).ready(function($) {
 
     function handleBackgroundImageChange() {
         $(FORM_SELECTORS.BACKGROUND_IMAGE_INPUT).on('change', function() {
-            if (utils.validateFileSize(this)) {
+            if (utils.validateFileSize(this,5)) {
                 utils.setBackgroundImagePreview(this, '.bg-image-preview-wrapper', FORM_SELECTORS.BACKGROUND_IMAGE_OVERLAY_TEXT).then((previewUrl) => {
                     livePreview.setBackgroundImageLivePreview(PREVIEW_SELECTORS.COVER_IMAGE_LIVE_PREVIEW, previewUrl, PREVIEW_SELECTORS.BACKGROUND_IMAGE_OVERLAY_TEXT);
                 });

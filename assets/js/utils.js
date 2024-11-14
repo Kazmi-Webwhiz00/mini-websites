@@ -7,7 +7,8 @@
     function validateAndNextStep(currentStep, nextStep) {
         let isValid = true;
         const currentStepFields = $(`#kw-step-${currentStep} [required]`);
-
+    
+        // General required field validation
         currentStepFields.each(function() {
             if (!$(this).val()) {
                 $(this).addClass('is-invalid');
@@ -16,26 +17,61 @@
                 $(this).removeClass('is-invalid');
             }
         });
-
+    
         // Additional validation for image inputs based on step
-        const imageInput =  $(FORM_SELECTORS.PROFILE_IMAGE_INPUT);
+        const imageInput = $(FORM_SELECTORS.PROFILE_IMAGE_INPUT);
         if (currentStep === '1' && imageInput.length && !imageInput[0].files.length) {
             alert("Image is required. Please upload an image to proceed.");
             isValid = false;
         }
-
+    
         const bgImageInput = $(FORM_SELECTORS.BACKGROUND_IMAGE_INPUT);
         if (currentStep === '2' && bgImageInput.length && !bgImageInput[0].files.length) {
             alert("Image is required. Please upload an image to proceed.");
             isValid = false;
         }
-
+    
+        // Additional validation for specific fields
+        if (currentStep === '3') {
+            // Validate Facebook URL
+            if (!FORM_SELECTORS.URL_REGIX.test($(FORM_SELECTORS.FB_URL_INPUT_SELECTOR).val())) {
+                $(FORM_SELECTORS.FB_URL_INPUT_SELECTOR).addClass('is-invalid');
+                $(FORM_SELECTORS.FB_URL_ERROR_DIV).text("Please enter a valid Facebook URL.").show();
+                isValid = false;
+            } else {
+                $(FORM_SELECTORS.FB_URL_INPUT_SELECTOR).removeClass('is-invalid');
+                $(FORM_SELECTORS.FB_URL_ERROR_DIV).hide();
+            }
+    
+            // Validate LinkedIn URL
+            if (!FORM_SELECTORS.URL_REGIX.test($(FORM_SELECTORS.LINKEDIN_URL_INPUT_SELECTOR).val())) {
+                $(FORM_SELECTORS.LINKEDIN_URL_INPUT_SELECTOR).addClass('is-invalid');
+                $(FORM_SELECTORS.LINKEDIN_URL_ERROR_DIV).text("Please enter a valid LinkedIn URL.").show();
+                isValid = false;
+            } else {
+                $(FORM_SELECTORS.LINKEDIN_URL_INPUT_SELECTOR).removeClass('is-invalid');
+                $(FORM_SELECTORS.LINKEDIN_URL_ERROR_DIV).hide();
+            }
+    
+            // Validate Phone Number
+            if (!FORM_SELECTORS.PHONE_NUMBER_RIGIX.test($(FORM_SELECTORS.PHONE_NUMBER_INPUT_SELECTOR).val())) {
+                $(FORM_SELECTORS.PHONE_NUMBER_INPUT_SELECTOR).addClass('is-invalid');
+                $(FORM_SELECTORS.PHONE_NUMBER_ERROR_DIV).text("Please enter a valid phone number. Only numbers are allowed.").show();
+                isValid = false;
+            } else {
+                $(FORM_SELECTORS.PHONE_NUMBER_INPUT_SELECTOR).removeClass('is-invalid');
+                $(FORM_SELECTORS.PHONE_NUMBER_ERROR_DIV).hide();
+            }
+        }
+    
+        // Proceed to next step if all validations pass
         if (isValid) {
             $(`#kw-step-${currentStep}`).hide();
             $(`#kw-step-${nextStep}`).show();
             updateProgress(nextStep);
         }
     }
+    
 
     // Navigate to the previous step
     function prevStep(step) {
@@ -216,9 +252,9 @@
                     });
         
                     // Limit to 5 files
-                    if (selectedFiles.length > 5) {
-                        alert("You can upload a maximum of 5 images.");
-                        selectedFiles = selectedFiles.slice(0, 5);
+                    if (selectedFiles.length > 4) {
+                        alert("You can upload a maximum of 4 images.");
+                        selectedFiles = selectedFiles.slice(0, 4);
                     }
 
                     renderPreviews();
@@ -269,7 +305,7 @@
             });
     
             // Update selected file count
-            selectedFileCount.text(`Selected files: ${selectedFiles.length}`);
+            selectedFileCount.text(`Selected files: ${selectedFiles.length}/4 (MAX UPLOAD IS 4)`);
         }
         
     
@@ -308,6 +344,51 @@
                 $(inputSelector).hide();
             }
         }
+
+        function validateInputField(inputId, errorId, regex = null, isRequired = false) {
+            const $inputElement = $(inputId);
+            const $errorElement = $(errorId);
+        
+            // Check if the input, error elements, and next button exist
+            if (!$inputElement.length || !$errorElement.length) {
+                console.error(`Elements with IDs ${inputId} or ${errorId}`);
+                return;
+            }
+        
+        
+            $inputElement.on('keyup', function() {
+                const value = $inputElement.val().trim();
+                let isValid = true;
+        
+                // Check if the field is required and empty
+                if (isRequired && value === '') {
+                    isValid = false;
+                    $inputElement.css({
+                        'border-color': 'red',
+                        'box-shadow': '0 0 5px red'
+                    });
+                    $errorElement.text('This field is required.').css('display', 'block');
+                } else if (regex && !regex.test(value)) {
+                    // If regex is provided, validate against it
+                    isValid = false;
+                    $inputElement.css({
+                        'border-color': 'red',
+                        'box-shadow': '0 0 5px red'
+                    });
+                    $errorElement.text('Please enter a valid input.').css('display', 'block');
+                } else {
+                    // If validation passes
+                    $inputElement.css({
+                        'border-color': 'green',
+                        'box-shadow': '0 0 5px green'
+                    });
+                    $errorElement.css('display', 'none');
+                }
+    
+            });
+        }
+        
+        
     // ========================
     // Expose Utility Functions
     // ========================
@@ -324,7 +405,8 @@
         handleGalleryChange,
         toggleShowButtonFromContainer,
         togglePreviewButtons,
-        setBackgroundImagePreview
+        setBackgroundImagePreview,
+        validateInputField
     };
 
 })(jQuery);

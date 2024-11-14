@@ -1,4 +1,6 @@
 // selectors.js
+// URL Regex
+const urlRegex = /^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+)(\.[a-zA-Z]{2,})(\/[^\s]*)?$/;
 
 // Form Selectors
 const FORM_SELECTORS = {
@@ -10,6 +12,7 @@ const FORM_SELECTORS = {
 
     // Text Input Selectors
     NAME_INPUT: '#kw-name',
+    EMAIL_INPUT: '#kw-email',
     COMPANY_NAME_INPUT: '#kw-company-name',
     JOB_TITLE_INPUT: '#kw-job-title',
     CONTACT_BUTTON_LABEL_INPUT: '#contact-button-label',
@@ -32,6 +35,35 @@ const FORM_SELECTORS = {
     CONTAINER_SHARE_BUTTON:'#share-button-fields-wrapper',
     CONTAINER_ADD_TO_CONTACT_BUTTON: '#contact-button-fields-wrapper',
     BACKGROUND_IMAGE_OVERLAY_TEXT: '.kw-bg-image-text',
+
+    /// ERROR divs
+    USER_NAME_ERROR_DIV: '#kw-user-name-error',
+    EMAIL_ERROR_DIV:'#kw-email-error',
+    EMAIL_REGIX: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+
+    COMPANY_NAME_ERROR_DIV :'#kw-company-name-error',
+    JOB_TITLE_ERROR_DIV: '#kw-designation-error',
+
+    FB_URL_INPUT_SELECTOR:'#kw-fb-url' ,
+    PHONE_NUMBER_INPUT_SELECTOR:'#kw-phone-number',
+    LINKEDIN_URL_INPUT_SELECTOR: '#kw-linkedin-url',
+    PHONE_NUMBER_ERROR_DIV: '#kw-phone-number-error',
+    FB_URL_ERROR_DIV: '#kw-fb-url-error',
+    LINKEDIN_URL_ERROR_DIV: '#kw-linkedin-url-error',
+    URL_REGIX: urlRegex,
+    PHONE_NUMBER_RIGIX: /^\d{7,15}$/,
+
+
+    // New Error divs for Step 4
+    ABOUT_TITLE_ERROR_DIV: '#kw-about-title-error',
+    ABOUT_TEXT_ERROR_DIV: '#kw-about-text-error',
+
+    // New Selectors for Website and Video URL
+    WEBSITE_URL_INPUT_SELECTOR: '#user_website_url',
+    VIDEO_URL_INPUT_SELECTOR: '#user_video_url',
+    WEBSITE_URL_ERROR_DIV: '#user-website-url-error',
+    VIDEO_URL_ERROR_DIV: '#user-video-url-error',
+    
 
 };
 
