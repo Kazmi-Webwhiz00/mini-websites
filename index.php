@@ -55,6 +55,7 @@ function kw_mini_website_handle_form_submission() {
     $phone_number = sanitize_text_field($_POST['phone_number']);
     $linkedin_url = esc_url_raw($_POST['linkedin_url']);
     $user_website_url = esc_url_raw($_POST['user_website_url']);
+    $user_video_url = esc_url_raw($_POST['user_video_url']);
     $fb_url = esc_url_raw($_POST['fb_url']);
     $about_title = sanitize_text_field($_POST['about_title']);
     $about_text = sanitize_textarea_field($_POST['about_text']);
@@ -103,6 +104,7 @@ function kw_mini_website_handle_form_submission() {
             'is_show_share_button' => $is_show_share_button,
             'is_show_add_to_contact_button' => $is_show_add_to_contact_button,
             'is_show_website_button' => $is_show_website_button,
+            'user_video_url' => $user_video_url,
         ]);
 
         // Return success response with post URL

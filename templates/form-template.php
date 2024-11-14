@@ -66,6 +66,8 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                             </div>
                         </div>
 
+
+
                         <div class="form-group">
                             <label for="kw-name">Name</label>
                             <input type="text" id="kw-name" name="name" class="form-control" required>
@@ -192,9 +194,13 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                     <!-- Wrapper div for the fields to show/hide -->
                     <div class="form-group kw-toggle-input-fields-group" id="website-button-fields-wrapper">
                         <label for="user_website_url">Website Url</label>
-                        <input type="url" id="user_website_url" name="user_website_url" class="form-control" required>
+                        <input type="url" id="user_website_url" name="user_website_url" class="form-control">
                     </div>
 
+                    <div class="form-group">
+                        <label for="user_video_url">Video Url</label>
+                        <input type="url" id="user_video_url" name="user_video_url" class="form-control">
+                    </div>
                         <button type="button" class="btn btn-secondary btn-block mt-3" data-prev="4">Back</button>
                         <button type="submit" name="submit_mini_website" class="btn btn-success btn-block">Submit</button>
                     </div>
