@@ -201,7 +201,7 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                         <!-- Video URL Input -->
                         <div class="form-group">
                             <label for="user_video_url">Video URL</label>
-                            <input type="url" id="user_video_url" name="user_video_url" class="form-control" required>
+                            <input type="text" id="user_video_url" name="user_video_url" class="form-control" required>
                             <span id="user-video-url-error" style="color: red; display: none;">Please enter a valid URL. Make sure it starts with http:// or https://</span>
                         </div>
 

@@ -312,9 +312,27 @@ jQuery(document).ready(function($) {
     // AJAX Form Submission
     // ========================
 
+
+    function validationsOnSubmit() {
+        return utils.validateInputField(
+            FORM_SELECTORS.VIDEO_URL_INPUT_SELECTOR,
+            FORM_SELECTORS.VIDEO_URL_ERROR_DIV,
+            FORM_SELECTORS.URL_REGIX,
+            true // Required
+        );
+    }
+
+    
+
     function bindOnSubmit() {
         $(FORM_SELECTORS.FORM).on('submit', function(e) {
             e.preventDefault();
+            
+                    // Run all validations on submit
+        if (!validationsOnSubmit()) {
+            alert('Please fix the errors in the form before submitting.');
+            return;
+        }
             utils.showLoader('Initializing...');
             utils.cycleLoaderMessages();
 

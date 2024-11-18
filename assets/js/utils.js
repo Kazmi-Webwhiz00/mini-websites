@@ -93,6 +93,14 @@
                 $(FORM_SELECTORS.LINKEDIN_URL_ERROR_DIV).hide();
             }
 
+            if(isValid){
+                appendHttpsToUrlsWithAlerts([
+                    FORM_SELECTORS.FB_URL_INPUT_SELECTOR,
+                    FORM_SELECTORS.LINKEDIN_URL_INPUT_SELECTOR,
+                    FORM_SELECTORS.WEBSITE_URL_INPUT_SELECTOR
+                ]);
+            }
+
         }
     
         // Proceed to next step if all validations pass
@@ -386,44 +394,43 @@ function proceedToNextStep(currentStep, nextStep)
             const $inputElement = $(inputId);
             const $errorElement = $(errorId);
         
-            // Check if the input, error elements, and next button exist
+            // Check if the input and error elements exist
             if (!$inputElement.length || !$errorElement.length) {
-                console.error(`Elements with IDs ${inputId} or ${errorId}`);
-                return;
+                console.error(`Elements with IDs ${inputId} or ${errorId} not found.`);
+                return false; // Return false if elements are missing
             }
         
+            const value = $inputElement.val().trim(); // Get the trimmed value
         
-            $inputElement.on('keyup', function() {
-                const value = $inputElement.val().trim();
-                let isValid = true;
+            // Check if the field is required and empty
+            if (isRequired && value === '') {
+                $inputElement.css({
+                    'border-color': 'red',
+                    'box-shadow': '0 0 5px red'
+                });
+                $errorElement.text('This field is required.').css('display', 'block');
+                return false; // Validation failed
+            }
         
-                // Check if the field is required and empty
-                if (isRequired && value === '') {
-                    isValid = false;
-                    $inputElement.css({
-                        'border-color': 'red',
-                        'box-shadow': '0 0 5px red'
-                    });
-                    $errorElement.text('This field is required.').css('display', 'block');
-                } else if (regex && !regex.test(value)) {
-                    // If regex is provided, validate against it
-                    isValid = false;
-                    $inputElement.css({
-                        'border-color': 'red',
-                        'box-shadow': '0 0 5px red'
-                    });
-                    $errorElement.text('Please enter a valid input.').css('display', 'block');
-                } else {
-                    // If validation passes
-                    $inputElement.css({
-                        'border-color': 'green',
-                        'box-shadow': '0 0 5px green'
-                    });
-                    $errorElement.css('display', 'none');
-                }
-    
+            // Check if the value matches the regex (if provided)
+            if (regex && !regex.test(value)) {
+                $inputElement.css({
+                    'border-color': 'red',
+                    'box-shadow': '0 0 5px red'
+                });
+                $errorElement.text('Please enter a valid input.').css('display', 'block');
+                return false; // Validation failed
+            }
+        
+            // If validation passes
+            $inputElement.css({
+                'border-color': 'green',
+                'box-shadow': '0 0 5px green'
             });
+            $errorElement.css('display', 'none');
+            return true; // Validation passed
         }
+        
         
 
         // Unified method for validation and handling success/error messages
@@ -476,6 +483,29 @@ function proceedToNextStep(currentStep, nextStep)
             });
         }
         
+        function appendHttpsToUrlsWithAlerts(selectors) {
+            if (!Array.isArray(selectors) || selectors.length === 0) {
+                console.error("Invalid input: Please provide a non-empty array of selectors.");
+                return;
+            }
+        
+            selectors.forEach((selector) => {
+                const inputField = document.querySelector(selector);
+        
+                if (!inputField) {
+                    console.warn(`No element found for selector: ${selector}`);
+                    return;
+                }
+        
+                const url = inputField.value.trim();
+        
+                // Single condition: If the URL is not empty and does not start with http or https, prepend https://
+                if (url && !/^https?:\/\//i.test(url)) {
+                    inputField.value = `https://${url}`;
+                }
+            });
+        }
+        
     // ========================
     // Expose Utility Functions
     // ========================
@@ -495,7 +525,8 @@ function proceedToNextStep(currentStep, nextStep)
         setBackgroundImagePreview,
         validateInputField,
         handlePermalinkValidation,
-        validatePermalink
+        validatePermalink,
+        appendHttpsToUrlsWithAlerts
     };
 
 })(jQuery);
