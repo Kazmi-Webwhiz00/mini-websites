@@ -18,6 +18,26 @@
             }
         });
     
+
+        if (currentStep === '1') {
+            const permalink = $('#kw-custom-permalink').val();
+            validatePermalink(permalink, function (isAvailable, message) {
+                if (!isAvailable) {
+                    showPermalinkError(message);
+                    isValid = false;
+                } else {
+                    showPermalinkSuccess(message);
+                }
+    
+                // Proceed only if the permalink validation is complete
+                if (isValid) {
+                    proceedToNextStep(currentStep, nextStep);
+                }
+            });
+    
+            // Return early to wait for the asynchronous validation
+            return;
+        }
     // Additional validation for image inputs based on step
     if (currentStep === '2') {
         let errorMessages = [];
@@ -77,13 +97,17 @@
     
         // Proceed to next step if all validations pass
         if (isValid) {
-            $(`#kw-step-${currentStep}`).hide();
-            $(`#kw-step-${nextStep}`).show();
-            updateProgress(nextStep);
+            proceedToNextStep(currentStep, nextStep);
             livePreview.scrollIframeById(300);
         }
     }
     
+function proceedToNextStep(currentStep, nextStep)
+    {
+        $(`#kw-step-${currentStep}`).hide();
+        $(`#kw-step-${nextStep}`).show();
+        updateProgress(nextStep);
+    }
 
     // Navigate to the previous step
     function prevStep(step) {
@@ -302,7 +326,7 @@
                 previewItem.append(img);
     
                 // Remove button
-                const removeBtn = $('<button>')
+                const removeBtn = $('<span>')
                     .addClass('remove-preview-btn')
                     .html('&times;')
                     .on('click', function(event) {
@@ -401,6 +425,56 @@
             });
         }
         
+
+        // Unified method for validation and handling success/error messages
+        function handlePermalinkValidation() {
+            const permalink = $('#kw-custom-permalink').val();
+            validatePermalink(permalink, function (isAvailable, message) {
+                if (!isAvailable) {
+                    showPermalinkError(message);
+                } else {
+                    showPermalinkSuccess(message);
+                }
+            });
+        }
+
+        // Show error message
+        function showPermalinkError(message) {
+            $('#kw-custom-permalink-error').text(message).show();
+            $('#kw-custom-permalink-success').hide(); // Hide success message
+        }
+
+        // Show success message
+        function showPermalinkSuccess(message) {
+            $('#kw-custom-permalink-error').hide();
+            if ($('#kw-custom-permalink-success').length === 0) {
+                $('#kw-custom-permalink').after('<span id="kw-custom-permalink-success" style="color: green; margin-top: 5px;">' + message + '</span>');
+            } else {
+                $('#kw-custom-permalink-success').text(message).show(); // Show or update success message
+            }
+        }
+
+        function validatePermalink(permalink, callback) {
+            $.ajax({
+                url: kw_mini_website_vars.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'check_permalink_availability',
+                    permalink: permalink,
+                    security: kw_mini_website_vars.nonce
+                },
+                success: function (response) {
+                    if (response.success) {
+                        callback(true, 'Permalink is available!');
+                    } else {
+                        callback(false, response.data.message);
+                    }
+                },
+                error: function () {
+                    callback(false, 'Unable to validate the permalink. Please try again.');
+                }
+            });
+        }
         
     // ========================
     // Expose Utility Functions
@@ -419,7 +493,9 @@
         toggleShowButtonFromContainer,
         togglePreviewButtons,
         setBackgroundImagePreview,
-        validateInputField
+        validateInputField,
+        handlePermalinkValidation,
+        validatePermalink
     };
 
 })(jQuery);

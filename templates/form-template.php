@@ -58,7 +58,7 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                     <!-- Step 0: Custom Permalink -->
                     <div class="form-step" id="kw-step-1" >
                         <div class="form-group">
-                            <label for="kw-custom-permalink">Custom Permalink*</label>
+                            <label for="kw-custom-permalink">Select You Mini Web Name*</label>
                             <input type="text" id="kw-custom-permalink" name="custom_permalink" class="form-control" required>
                             <span id="kw-custom-permalink-error" style="color: red; display: none;">This permalink is already taken or invalid.</span>
                             <span id="kw-custom-permalink-success" style="color: green; display: none;">Permalink is available!</span>
@@ -111,7 +111,7 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                         </div>
 
                         <button type="button" class="btn btn-secondary btn-block mt-3" data-prev="1">Back</button>
-                        <button type="button" class="btn btn-primary btn-block mt-4" data-next="3">Next</button>
+                        <button type="button" class="btn btn-primary btn-block mt-3" data-next="3">Next</button>
                     </div>
 
                     <!-- Step 2: Company Information -->
@@ -206,7 +206,7 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                         </div>
 
                         <button type="button" class="btn btn-secondary btn-block mt-3" data-prev="3">Back</button>
-                        <button type="submit" name="submit_mini_website" class="btn btn-success btn-block">Submit</button>
+                        <button type="submit" name="submit_mini_website" class="btn btn-success btn-block mt-3">Submit</button>
                     </div>
 
                     <!-- Hidden Action Input for AJAX -->

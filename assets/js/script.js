@@ -343,48 +343,9 @@ jQuery(document).ready(function($) {
             });
         });
     }
-
-
-    function validatePermalink(permalink, callback) {
-        $.ajax({
-            url: kw_mini_website_vars.ajax_url,
-            type: 'POST',
-            data: {
-                action: 'check_permalink_availability',
-                permalink: permalink,
-                security: kw_mini_website_vars.nonce
-            },
-            success: function (response) {
-                if (response.success) {
-                    callback(true, 'Permalink is available!');
-                } else {
-                    callback(false, response.data.message);
-                }
-            },
-            error: function () {
-                callback(false, 'Unable to validate the permalink. Please try again.');
-            }
-        });
-    }
     
     // Validate and proceed
-    $('#kw-custom-permalink').on('blur', function () {
-        const permalink = $(this).val();
-        validatePermalink(permalink, function (isAvailable, message) {
-            if (!isAvailable) {
-                $('#kw-custom-permalink-error').text(message).show();
-                $('#kw-custom-permalink-success').hide(); // Hide success message
-            } else {
-                $('#kw-custom-permalink-error').hide();
-                if ($('#kw-custom-permalink-success').length === 0) {
-                    $('#kw-custom-permalink').after('<span id="kw-custom-permalink-success" style="color: green; margin-top: 5px;">' + message + '</span>');
-                } else {
-                    $('#kw-custom-permalink-success').text(message).show(); // Show or update success message
-                }
-            }
-        });
-    });
-    
+    $('#kw-custom-permalink').on('blur', utils.handlePermalinkValidation);
     
     // ========================
     // Initialization
