@@ -100,7 +100,7 @@ function kw_mini_website_handle_form_submission() {
     $fb_url = esc_url_raw($_POST['fb_url']);
     $about_title = sanitize_text_field($_POST['about_title']);
     $about_text = sanitize_textarea_field($_POST['about_text']);
-
+    $custom_permalink = sanitize_title($_POST['custom_permalink']);
     // Retrieve customization fields
     $share_button_label = sanitize_text_field($_POST['share_button_label']);
     $contact_button_label = sanitize_text_field($_POST['contact_button_label']);
@@ -117,6 +117,7 @@ function kw_mini_website_handle_form_submission() {
     $post_id = wp_insert_post(array(
         'post_title' => $name,
         'post_type' => 'mini-website',
+        'post_name'    => $custom_permalink,
         'post_status' => 'publish',
     ));
 
@@ -242,3 +243,23 @@ function kw_mini_website_handle_multiple_file_uploads($file_key) {
     }
     return $attachments;
 }
+
+add_action('wp_ajax_check_permalink_availability', 'check_permalink_availability');
+add_action('wp_ajax_nopriv_check_permalink_availability', 'check_permalink_availability');
+
+function check_permalink_availability() {
+    check_ajax_referer('kw_mini_website_nonce', 'security');
+    $permalink = sanitize_title($_POST['permalink']);
+    
+    if (empty($permalink)) {
+        wp_send_json_error(['message' => 'Permalink cannot be empty.']);
+    }
+
+    $existing_post = get_page_by_path($permalink, OBJECT, 'mini-website');
+    if ($existing_post) {
+        wp_send_json_error(['message' => 'This permalink is already in use. Please choose another.']);
+    }
+
+    wp_send_json_success(['message' => 'Permalink is available.']);
+}
+

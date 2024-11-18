@@ -19,7 +19,7 @@
         });
     
     // Additional validation for image inputs based on step
-    if (currentStep === '1') {
+    if (currentStep === '2') {
         let errorMessages = [];
         const imageInputs = [
             { selector: FORM_SELECTORS.PROFILE_IMAGE_INPUT, message: "Profile Image is required. Please upload an image to proceed." },
@@ -52,7 +52,7 @@
 
     
         // Additional validation for specific fields
-        if (currentStep === '2') {
+        if (currentStep === '3') {
             // Validate Facebook URL
             if (!FORM_SELECTORS.URL_REGIX.test($(FORM_SELECTORS.FB_URL_INPUT_SELECTOR).val())) {
                 $(FORM_SELECTORS.FB_URL_INPUT_SELECTOR).addClass('is-invalid');

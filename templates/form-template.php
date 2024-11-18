@@ -20,9 +20,10 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                 <div class="steps-progress p-3 shadow-sm rounded">
                     <?php 
                     $steps = [
-                        1 => 'Profile Setup',
-                        2 => 'Company & Social Links',
-                        3 => 'About & Media'
+                        1 => 'Custom Permalink',
+                        2 => 'Profile Setup',
+                        3 => 'Company & Social Links',
+                        4 => 'About & Media',
                     ];
                     foreach ($steps as $step => $label): ?>
                         <div class="step <?php echo $step === 1 ? 'active' : ''; ?>" id="kw-progress-step-<?php echo $step; ?>">
@@ -52,8 +53,21 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                         </button>
                     </div>
 
+                    <!-- Additional Steps -->
+
+                    <!-- Step 0: Custom Permalink -->
+                    <div class="form-step" id="kw-step-1" >
+                        <div class="form-group">
+                            <label for="kw-custom-permalink">Custom Permalink*</label>
+                            <input type="text" id="kw-custom-permalink" name="custom_permalink" class="form-control" required>
+                            <span id="kw-custom-permalink-error" style="color: red; display: none;">This permalink is already taken or invalid.</span>
+                            <span id="kw-custom-permalink-success" style="color: green; display: none;">Permalink is available!</span>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-block mt-4" data-next="2">Next</button>
+                    </div>
+
                     <!-- Step 1: Personal Information -->
-                    <div class="form-step" id="kw-step-1">
+                    <div class="form-step" id="kw-step-2" style="display: none;">
                         <!-- Profile Image Upload -->
                         <div class="form-group text-center">
                             <div class="image-upload-container">
@@ -96,11 +110,12 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                             <span id="kw-phone-number-error" style="color: red; display: none;">Please enter a valid phone number. Only numbers, spaces, dashes, and optional country code are allowed.</span>
                         </div>
 
-                        <button type="button" class="btn btn-primary btn-block mt-4" data-next="2">Next</button>
+                        <button type="button" class="btn btn-secondary btn-block mt-3" data-prev="1">Back</button>
+                        <button type="button" class="btn btn-primary btn-block mt-4" data-next="3">Next</button>
                     </div>
 
                     <!-- Step 2: Company Information -->
-                    <div class="form-step" id="kw-step-2" style="display: none;">
+                    <div class="form-step" id="kw-step-3" style="display: none;">
                         <!-- Company Information Fields -->
                         <div class="form-group">
                             <label for="kw-company-name">Company Name*</label>
@@ -155,12 +170,12 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                             <span id="user-website-url-error" style="color: red; display: none;">Please enter a valid URL. Make sure it starts with http:// or https://</span>
                         </div>
 
-                        <button type="button" class="btn btn-secondary btn-block mt-3" data-prev="1">Back</button>
-                        <button type="button" class="btn btn-primary btn-block mt-3" data-next="3">Next</button>
+                        <button type="button" class="btn btn-secondary btn-block mt-3" data-prev="2">Back</button>
+                        <button type="button" class="btn btn-primary btn-block mt-3" data-next="4">Next</button>
                     </div>
 
                     <!-- Step 3: Contact Information -->
-                    <div class="form-step" id="kw-step-3" style="display: none;">
+                    <div class="form-step" id="kw-step-4" style="display: none;">
                         <!-- About Section -->
                         <div class="form-group">
                             <label for="kw-about-title">About Title</label>
@@ -190,7 +205,7 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                             <span id="user-video-url-error" style="color: red; display: none;">Please enter a valid URL. Make sure it starts with http:// or https://</span>
                         </div>
 
-                        <button type="button" class="btn btn-secondary btn-block mt-3" data-prev="2">Back</button>
+                        <button type="button" class="btn btn-secondary btn-block mt-3" data-prev="3">Back</button>
                         <button type="submit" name="submit_mini_website" class="btn btn-success btn-block">Submit</button>
                     </div>
 
