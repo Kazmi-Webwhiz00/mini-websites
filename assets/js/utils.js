@@ -71,38 +71,53 @@
 
 
     
-        // Additional validation for specific fields
-        if (currentStep === '3') {
-            // Validate Facebook URL
-            if (!FORM_SELECTORS.URL_REGIX.test($(FORM_SELECTORS.FB_URL_INPUT_SELECTOR).val())) {
-                $(FORM_SELECTORS.FB_URL_INPUT_SELECTOR).addClass('is-invalid');
-                $(FORM_SELECTORS.FB_URL_ERROR_DIV).text("Please enter a valid Facebook URL.").show();
-                isValid = false;
-            } else {
-                $(FORM_SELECTORS.FB_URL_INPUT_SELECTOR).removeClass('is-invalid');
-                $(FORM_SELECTORS.FB_URL_ERROR_DIV).hide();
-            }
-    
-            // Validate LinkedIn URL
-            if (!FORM_SELECTORS.URL_REGIX.test($(FORM_SELECTORS.LINKEDIN_URL_INPUT_SELECTOR).val())) {
-                $(FORM_SELECTORS.LINKEDIN_URL_INPUT_SELECTOR).addClass('is-invalid');
-                $(FORM_SELECTORS.LINKEDIN_URL_ERROR_DIV).text("Please enter a valid LinkedIn URL.").show();
-                isValid = false;
-            } else {
-                $(FORM_SELECTORS.LINKEDIN_URL_INPUT_SELECTOR).removeClass('is-invalid');
-                $(FORM_SELECTORS.LINKEDIN_URL_ERROR_DIV).hide();
-            }
 
-            if(isValid){
+        // Additional validation for specific fields
+    if (currentStep === '3') {
+        // Validate Facebook URL
+        if (!FORM_SELECTORS.URL_REGIX.test($(FORM_SELECTORS.FB_URL_INPUT_SELECTOR).val())) {
+            $(FORM_SELECTORS.FB_URL_INPUT_SELECTOR).addClass('is-invalid');
+            $(FORM_SELECTORS.FB_URL_ERROR_DIV).text("Please enter a valid Facebook URL.").show();
+            isValid = false;
+        } else {
+            $(FORM_SELECTORS.FB_URL_INPUT_SELECTOR).removeClass('is-invalid');
+            $(FORM_SELECTORS.FB_URL_ERROR_DIV).hide();
+        }
+
+        // Validate LinkedIn URL
+        if (!FORM_SELECTORS.URL_REGIX.test($(FORM_SELECTORS.LINKEDIN_URL_INPUT_SELECTOR).val())) {
+            $(FORM_SELECTORS.LINKEDIN_URL_INPUT_SELECTOR).addClass('is-invalid');
+            $(FORM_SELECTORS.LINKEDIN_URL_ERROR_DIV).text("Please enter a valid LinkedIn URL.").show();
+            isValid = false;
+        } else {
+            $(FORM_SELECTORS.LINKEDIN_URL_INPUT_SELECTOR).removeClass('is-invalid');
+            $(FORM_SELECTORS.LINKEDIN_URL_ERROR_DIV).hide();
+        }
+
+        // Validate Website URL if the toggle is checked
+        if ($(FORM_SELECTORS.SHOW_WEBSITE_BUTTON_TOGGLE).is(':checked')) {
+            const websiteUrl = $(FORM_SELECTORS.WEBSITE_URL_INPUT_SELECTOR).val().trim();
+
+            if (!websiteUrl || !FORM_SELECTORS.URL_REGIX.test(websiteUrl)) {
+                $(FORM_SELECTORS.WEBSITE_URL_INPUT_SELECTOR).addClass('is-invalid');
+                $(FORM_SELECTORS.WEBSITE_URL_ERROR_DIV).text("Please enter a valid Website URL.").show();
+                isValid = false;
+            } else {
+                $(FORM_SELECTORS.WEBSITE_URL_INPUT_SELECTOR).removeClass('is-invalid');
+                $(FORM_SELECTORS.WEBSITE_URL_ERROR_DIV).hide();
+            }
+        }
+
+            // Append HTTPS if all validations pass
+            if (isValid) {
                 appendHttpsToUrlsWithAlerts([
                     FORM_SELECTORS.FB_URL_INPUT_SELECTOR,
                     FORM_SELECTORS.LINKEDIN_URL_INPUT_SELECTOR,
                     FORM_SELECTORS.WEBSITE_URL_INPUT_SELECTOR
                 ]);
             }
+    }
 
-        }
-    
         // Proceed to next step if all validations pass
         if (isValid) {
             proceedToNextStep(currentStep, nextStep);
@@ -439,8 +454,10 @@ function proceedToNextStep(currentStep, nextStep)
             validatePermalink(permalink, function (isAvailable, message) {
                 if (!isAvailable) {
                     showPermalinkError(message);
+                    toggleStepButton(2, false);
                 } else {
                     showPermalinkSuccess(message);
+                    toggleStepButton(2, true);
                 }
             });
         }
@@ -472,13 +489,13 @@ function proceedToNextStep(currentStep, nextStep)
                 },
                 success: function (response) {
                     if (response.success) {
-                        callback(true, 'Permalink is available!');
+                        callback(true, 'Domain is available!');
                     } else {
                         callback(false, response.data.message);
                     }
                 },
                 error: function () {
-                    callback(false, 'Unable to validate the permalink. Please try again.');
+                    callback(false, 'Unable to validate the domain. Please try again.');
                 }
             });
         }
@@ -504,6 +521,25 @@ function proceedToNextStep(currentStep, nextStep)
                     inputField.value = `https://${url}`;
                 }
             });
+        }
+        
+
+        function toggleStepButton(stepNumber, shouldEnable) {
+            const inputSelector = $(`#kw-step-${stepNumber} .form-control`); // Input field within the step
+            const stepButtonSelector = $(`.btn[data-next="${stepNumber}"]`); // Corresponding button for the step
+        
+            if (shouldEnable) {
+                // Enable the button explicitly
+                stepButtonSelector.prop('disabled', false);
+            } else {
+                // Check the input value and toggle accordingly
+                const inputValue = inputSelector.val().trim();
+                if (inputValue === '') {
+                    stepButtonSelector.prop('disabled', true);
+                } else {
+                    stepButtonSelector.prop('disabled', false);
+                }
+            }
         }
         
     // ========================

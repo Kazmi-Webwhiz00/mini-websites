@@ -7,6 +7,7 @@ padding: 3rem;
     color: rgb(83, 83, 83) !important;
 }
 
+#kw-custom-permalink,
 .form-group > input {
     border-radius: 5px !important;
     border: 1px solid #c4c4c4 !important;
@@ -370,62 +371,89 @@ padding: 3rem;
     align-items: center;
     justify-content: end;
 }
+/* The switch container */
 .kw-switch {
-    font-size: 17px;
     position: relative;
     display: inline-block;
-    width: 3.5em;
-    height: 2em;
+    width: 2.5em;
+    height: 1.2em; /* Smaller height */
 }
 
-/* Hide default HTML checkbox */
+/* Hide the default HTML checkbox */
 .kw-switch input {
     opacity: 0;
     width: 0;
     height: 0;
 }
 
-/* The slider with default checked (blue) color */
+/* The slider */
 .kw-slider {
     position: absolute;
-    cursor: pointer;
     inset: 0;
-    background: #0974f1; /* Blue for checked state */
+    cursor: pointer;
+    background: linear-gradient(90deg, #0974f1, #0e82fa); /* Blue gradient for checked state */
     border-radius: 50px;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .kw-slider:before {
     position: absolute;
     content: "";
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 2em;
-    width: 2em;
-    inset: 0;
+    height: 1em;
+    width: 1em;
     background-color: white;
-    border-radius: 50px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    top: 0.1em;
+    left: 0.1em; /* Adjust for smaller size */
 }
 
-/* When unchecked, slider turns to gray */
+/* Gray for unchecked state */
 .kw-switch input:not(:checked) + .kw-slider {
-    background: #ccc; /* Gray for unchecked state */
+    background: #ddd;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
 }
 
-/* When checked, slider stays blue */
+/* Blue for checked state */
 .kw-switch input:checked + .kw-slider {
-    background: #0974f1; /* Blue for checked state */
+    background: linear-gradient(90deg, #0974f1, #0e82fa); /* Consistent with the gradient */
 }
 
-.kw-switch input:focus + .kw-slider {
-    box-shadow: 0 0 1px #0974f1;
-}
-
+/* Move the circle for checked state */
 .kw-switch input:checked + .kw-slider:before {
-    transform: translateX(1.6em);
+    transform: translateX(1.3em); /* Smaller transform distance */
+}
+
+/* Focus state */
+.kw-switch input:focus + .kw-slider {
+    box-shadow: 0 0 3px 2px rgba(9, 116, 241, 0.6); /* Glow effect for focus */
+}
+
+/* Input fields group */
+.kw-toggle-input-fields-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Add spacing between inputs */
+}
+
+.kw-toggle-input-fields-group > input {
+    padding: 8px; /* Increased padding for better usability */
+    border: 1px solid #c6c6c6 !important;
+    border-radius: 5px;
+    transition: all 0.3s ease; /* Smooth transitions for hover and focus */
+}
+
+/* Input fields hover state */
+.kw-toggle-input-fields-group > input:hover {
+    border-color: #0974f1; /* Blue border on hover */
+}
+
+/* Input fields focus state */
+.kw-toggle-input-fields-group > input:focus {
+    border-color: #0974f1;
+    box-shadow: 0 0 5px rgba(9, 116, 241, 0.4); /* Subtle glow */
+    outline: none; /* Remove default outline */
 }
 
 .kw-toggle-input-fields-group{
@@ -437,4 +465,93 @@ padding: 3rem;
     padding: 5px;
     border: 1px solid #c6c6c6 !important;
     border-radius: 5px;
+}
+
+
+/* Highlighted text in the URL */
+.kw-highlight {
+    color: #6478D3;
+    font-weight: bold;
+}
+
+/* Notice Box Styling */
+.kw-miniweb-notice-box {
+    background-color: #cce5ff96;
+    color: #2a2a2a;
+    padding: 12px;
+    border-left: 4px solid #6478D3;
+    border-radius: 4px;
+    margin: 12px 0;
+    display: flex;
+    align-items: start;
+    max-width: 500px;
+}
+
+.kw-miniweb-notice-icon {
+    font-size: 18px;
+    font-weight: bold;
+    color: #3b82f6;
+    margin-right: 12px;
+}
+
+.kw-miniweb-notice-content {
+    font-size: 14px;
+}
+
+.kw-miniweb-notice-content a {
+    font-weight: bold;
+    color: #6478D3;
+    text-decoration: none;
+}
+
+.kw-miniweb-notice-content a:hover {
+    text-decoration: underline;
+}
+
+/* Form Group */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Input and Button Group Styling */
+.input-button-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+/* Button Styling */
+#kw-mini-web-domain-availability-button {
+    white-space: nowrap;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#kw-mini-web-domain-availability-button:hover {
+    background-color: #5a6268;
+}
+
+/* Error and Success Messages */
+.error-message {
+    color: red;
+    display: none;
+}
+
+.success-message {
+    color: green;
+    display: none;
+}
+
+/* Next Button Styling */
+.btn-block {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 4px;
 }

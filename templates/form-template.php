@@ -56,15 +56,39 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                     <!-- Additional Steps -->
 
                     <!-- Step 0: Custom Permalink -->
-                    <div class="form-step" id="kw-step-1" >
-                        <div class="form-group">
-                            <label for="kw-custom-permalink">Select You Mini Web Name*</label>
-                            <input type="text" id="kw-custom-permalink" name="custom_permalink" class="form-control" required>
-                            <span id="kw-custom-permalink-error" style="color: red; display: none;">This permalink is already taken or invalid.</span>
-                            <span id="kw-custom-permalink-success" style="color: green; display: none;">Permalink is available!</span>
+                    <div class="form-step" id="kw-step-1">
+                        <!-- Notice Box -->
+                        <div class="kw-miniweb-notice-box">
+                            <span class="kw-miniweb-notice-icon">ⓘ</span>
+                            <div class="kw-miniweb-notice-content">
+                                <strong>Note:</strong> Your website URL will look like: 
+                                <strong>
+                                    <span id="kw-custom-url-preview">
+                                        miniwebsites.local/<span id="kw-input-highlight" class="kw-highlight">your-domain</span>
+                                    </span>
+                                </strong>
+                            </div>
                         </div>
-                        <button type="button" class="btn btn-primary btn-block mt-4" data-next="2">Next</button>
+
+                        <!-- Form Group -->
+                        <div class="form-group">
+                            <label for="kw-custom-permalink">Select Your Mini Web Name*</label>
+                            <div class="input-button-group">
+                                <input type="text" id="kw-custom-permalink" name="custom_permalink" class="form-control" required>
+                                <button type="button" id="kw-mini-web-domain-availability-button" class="btn btn-secondary">
+                                    Check Availability
+                                </button>
+                            </div>
+                            <span id="kw-custom-permalink-error" class="error-message">This domain is already taken or invalid.</span>
+                            <span id="kw-custom-permalink-success" class="success-message">Domain is available!</span>
+                        </div>
+
+                        <!-- Next Button -->
+                        <button type="button" class="btn btn-primary btn-block mt-4" data-next="2" disabled>Next</button>
                     </div>
+
+
+
 
                     <!-- Step 1: Personal Information -->
                     <div class="form-step" id="kw-step-2" style="display: none;">
@@ -72,7 +96,9 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                         <div class="form-group text-center">
                             <div class="image-upload-container">
                                 <label for="kw-main-image" class="image-upload-label">
-                                    <span class="upload-overlay">Upload Profile Picture</span>
+                                    <span class="upload-overlay">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="70" height="30" viewBox="0 0 32 32" xml:space="preserve"><path d="M22.414 23.586a2 2 0 1 1-2.828 2.828L18 24.828V29a2 2 0 0 1-4 0v-4.172l-1.586 1.586a2 2 0 1 1-2.828-2.828l5-5a2 2 0 0 1 2.828 0zM26 10A9 9 0 0 0 8.2 8.12 6 6 0 1 0 7 20h4.758l2.121-2.121A2.98 2.98 0 0 1 16 17c.802 0 1.555.312 2.121.879L20.242 20H26a5 5 0 0 0 0-10" style="fill:#fff"/></svg>
+                                    </span>
                                     <img id="kw-main-image-preview" src="#" alt="Image Preview" class="img-thumbnail" style="display: none; width: 150px; height: 150px;">
                                 </label>
                                 <input type="file" id="kw-main-image" name="user_profile_picture" class="d-none" required>
@@ -142,25 +168,28 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
 
                         <!-- Toggle Options -->
                         <div class="form-group">
-                            <label for="is_show_share_button">Show Share Button?</label>
+                            
                             <label class="kw-switch">
                                 <input type="checkbox" id="is_show_share_button" name="is_show_share_button" class="kw-form-control" checked>
                                 <span class="kw-slider"></span>
                             </label>
+                            <label for="is_show_share_button">Show Share Button?</label>
                         </div>
                         <div class="form-group">
-                            <label for="is_show_add_to_contact_button">Show "Add to Contact" Button?</label>
+                            
                             <label class="kw-switch">
                                 <input type="checkbox" id="is_show_add_to_contact_button" name="is_show_add_to_contact_button" class="kw-form-control" checked>
                                 <span class="kw-slider"></span>
                             </label>
+                            <label for="is_show_add_to_contact_button">Show "Add to Contact" Button?</label>
                         </div>
                         <div class="form-group">
-                            <label for="is_show_website_button">Show Website Button?</label>
+
                             <label class="kw-switch">
                                 <input type="checkbox" id="is_show_website_button" name="is_show_website_button" class="kw-form-control" checked>
                                 <span class="kw-slider"></span>
                             </label>
+                            <label for="is_show_website_button">Show Website Button?</label>
                         </div>
 
                         <!-- Website URL Input -->

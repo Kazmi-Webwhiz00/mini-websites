@@ -362,8 +362,26 @@ jQuery(document).ready(function($) {
         });
     }
     
-    // Validate and proceed
-    $('#kw-custom-permalink').on('blur', utils.handlePermalinkValidation);
+// Validate and proceed
+$('#kw-custom-permalink').on('input', function () {
+    // Get the input value and trim any leading/trailing whitespace
+    const inputValue = $(this).val().trim();
+
+    // Target the span with ID 'kw-input-highlight'
+    const highlightSpan = $('#kw-input-highlight');
+
+    // If the input is empty, fallback to 'your-url'
+    if (inputValue === '') {
+        highlightSpan.text('your-url');
+    } else {
+        // Otherwise, update the span with the entered input
+        highlightSpan.text(inputValue);
+    }
+});
+
+    $(FORM_SELECTORS.DOMAIN_AVAILABLIT_CHECK_BUTTON).on('click', utils.handlePermalinkValidation);
+    
+    
     
     // ========================
     // Initialization

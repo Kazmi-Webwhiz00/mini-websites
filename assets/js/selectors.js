@@ -63,8 +63,10 @@ const FORM_SELECTORS = {
     VIDEO_URL_INPUT_SELECTOR: '#user_video_url',
     WEBSITE_URL_ERROR_DIV: '#user-website-url-error',
     VIDEO_URL_ERROR_DIV: '#user-video-url-error',
-    
 
+
+    DOMAIN_AVAILABLIT_CHECK_BUTTON: '#kw-mini-web-domain-availability-button',
+    
 };
 
 // Preview Selectors

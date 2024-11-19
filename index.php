@@ -2,7 +2,7 @@
 /*
 Plugin Name: KW Mini Website Form Submission
 Description: A plugin to submit a form for creating mini-website custom posts.
-Version: 1.1.0
+Version: 1.2.2
 Author: Your Name
 */
 
@@ -252,7 +252,7 @@ function check_permalink_availability() {
     $permalink = sanitize_title($_POST['permalink']);
     
     if (empty($permalink)) {
-        wp_send_json_error(['message' => 'Permalink cannot be empty.']);
+        wp_send_json_error(['message' => 'Domain cannot be empty.']);
     }
 
     $existing_post = get_page_by_path($permalink, OBJECT, 'mini-website');
