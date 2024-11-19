@@ -53,42 +53,40 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                         </button>
                     </div>
 
-                    <!-- Additional Steps -->
+                    <!-- Step 0: Custom Permalink -->
+                    <div class="form-step" id="kw-step-1">
+                        <!-- Notice Box -->
+                        <div class="kw-miniweb-notice-box">
+                            <span class="kw-miniweb-notice-icon">ⓘ</span>
+                            <div class="kw-miniweb-notice-content">
+                                <strong>Note:</strong> Your website URL will look like: 
+                                <strong>
+                                    <span id="kw-custom-url-preview">
+                                        miniwebsites.local/<span id="kw-input-highlight" class="kw-highlight">your-domain</span>
+                                    </span>
+                                </strong>
+                            </div>
+                        </div>
 
-<!-- Step 0: Custom Permalink -->
-<div class="form-step" id="kw-step-1">
-    <!-- Notice Box -->
-    <div class="kw-miniweb-notice-box">
-        <span class="kw-miniweb-notice-icon">ⓘ</span>
-        <div class="kw-miniweb-notice-content">
-            <strong>Note:</strong> Your website URL will look like: 
-            <strong>
-                <span id="kw-custom-url-preview">
-                    miniwebsites.local/<span id="kw-input-highlight" class="kw-highlight">your-domain</span>
-                </span>
-            </strong>
-        </div>
-    </div>
+                        <!-- Form Group -->
+                        <div class="form-group">
+                            <label for="kw-custom-permalink">Select Your Mini Web Name*</label>
+                            <div class="input-button-group">
+                                <input type="text" id="kw-custom-permalink" name="custom_permalink" class="form-control" required>
+                                <button type="button" id="kw-mini-web-domain-availability-button" class="btn btn-secondary">
+                                    Check Availability
+                                </button>
+                            </div>
+                            <span id="kw-custom-permalink-error" class="error-message">This domain is already taken or invalid.</span>
+                            <span id="kw-custom-permalink-success" class="success-message">Domain is available!</span>
+                        </div>
 
-    <!-- Form Group -->
-    <div class="form-group">
-        <label for="kw-custom-permalink">Select Your Mini Web Name*</label>
-        <div class="input-button-group">
-            <input type="text" id="kw-custom-permalink" name="custom_permalink" class="form-control" required>
-            <button type="button" id="kw-mini-web-domain-availability-button" class="btn btn-secondary">
-                Check Availability
-            </button>
-        </div>
-        <span id="kw-custom-permalink-error" class="error-message">This domain is already taken or invalid.</span>
-        <span id="kw-custom-permalink-success" class="success-message">Domain is available!</span>
-    </div>
+                        <!-- Hidden Field for Preset ID -->
+                        <input type="hidden" id="kw-mini-web-preset-id" name="kw-mini_web_preset_id" value="">
 
-    <!-- Hidden Field for Preset ID -->
-    <input type="hidden" id="kw-mini-web-preset-id" name="mini_web_preset_id" value="">
-
-    <!-- Next Button -->
-    <button type="button" class="btn btn-primary btn-block mt-4" data-next="2" disabled>Next</button>
-</div>
+                        <!-- Next Button -->
+                        <button type="button" class="btn btn-primary btn-block mt-4" data-next="2" disabled>Next</button>
+                    </div>
 
 
 

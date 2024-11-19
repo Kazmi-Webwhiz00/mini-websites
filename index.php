@@ -2,11 +2,15 @@
 /*
 Plugin Name: KW Mini Website Form Submission
 Description: A plugin to submit a form for creating mini-website custom posts.
-Version: 1.2.3
+Version: 1.2.5
 Author: Your Name
 */
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
+
+// Include the settings file
+include_once plugin_dir_path(__FILE__) . 'settings.php';
+
 
 // ============================
 // 1. Enqueue Styles and Scripts
@@ -84,6 +88,7 @@ function generate_and_save_qr_code_image($post_id) {
     return $attachment_id;
 }
 
+
 function kw_mini_website_handle_form_submission() {
     // Verify nonce for security
     check_ajax_referer('kw_mini_website_nonce', 'security');
@@ -101,10 +106,9 @@ function kw_mini_website_handle_form_submission() {
     $about_title = sanitize_text_field($_POST['about_title']);
     $about_text = sanitize_textarea_field($_POST['about_text']);
     $custom_permalink = sanitize_title($_POST['custom_permalink']);
+    $kw_mini_web_preset_id = sanitize_title($_POST['kw-mini_web_preset_id'] ?? '1');
+
     // Retrieve customization fields
-    $share_button_label = sanitize_text_field($_POST['share_button_label']);
-    $contact_button_label = sanitize_text_field($_POST['contact_button_label']);
-    $website_button_label = sanitize_text_field($_POST['website_button_label']);
     $is_show_share_button = isset($_POST['is_show_share_button']) ? 1 : 0;
     $is_show_add_to_contact_button = isset($_POST['is_show_add_to_contact_button']) ? 1 : 0;
     $is_show_website_button = isset($_POST['is_show_website_button']) ? 1 : 0;
@@ -113,39 +117,61 @@ function kw_mini_website_handle_form_submission() {
     $user_profile_picture_id = kw_mini_website_handle_file_upload('user_profile_picture');
     $user_cover_image_id = kw_mini_website_handle_file_upload('user_cover_image');
 
+    // Create or find the category in the miniwebsite-category taxonomy
+    $preset_category_name = 'mini-web-preset-' . $kw_mini_web_preset_id;
+    $preset_category = get_term_by('name', $preset_category_name, 'miniwebsite-category');
+
+    if (!$preset_category) {
+        // Create the category if it doesn't exist
+        $preset_category = wp_insert_term(
+            $preset_category_name,
+            'miniwebsite-category',
+            [
+                'slug' => sanitize_title($preset_category_name),
+                'description' => "Preset category for $preset_category_name"
+            ]
+        );
+
+        if (is_wp_error($preset_category)) {
+            wp_send_json_error(['message' => 'Failed to create preset category: ' . $preset_category->get_error_message()]);
+        }
+    }
+
+    // Get the category ID (whether it was found or created)
+    $preset_category_id = is_array($preset_category) ? $preset_category['term_id'] : $preset_category->term_id;
+
     // Create new custom post
     $post_id = wp_insert_post(array(
-        'post_title' => $name,
-        'post_type' => 'mini-website',
-        'post_name'    => $custom_permalink,
+        'post_title'  => $name,
+        'post_type'   => 'mini-website',
+        'post_name'   => $custom_permalink,
         'post_status' => 'publish',
     ));
 
-    $user_gallery_ids = kw_mini_website_handle_multiple_file_uploads('user_gallery');
-
-    // Update post meta fields if post creation is successful
     if ($post_id) {
+        // Assign category to the post
+        wp_set_object_terms($post_id, $preset_category_id, 'miniwebsite-category');
+
+        // Handle additional metadata
+        $user_gallery_ids = kw_mini_website_handle_multiple_file_uploads('user_gallery');
         kw_mini_website_update_post_meta_fields($post_id, [
-            'name' => $name,
-            'user_profile_picture' => $user_profile_picture_id,
-            'user_cover_image' => $user_cover_image_id,
-            'company_name' => $company_name,
-            'job_title' => $job_title,
-            'email' => (strpos($email, 'mailto:') === 0 ? $email : 'mailto:' . $email),
-            'phone_number' => (strpos($phone_number, 'tel:') === 0 ? $phone_number : 'tel:' . $phone_number),
-            'linkedin_url' => $linkedin_url,
-            'fb_url' => $fb_url,
-            'user_website_url' => $user_website_url,
-            'about_title' => $about_title,
-            'about_text' => $about_text,
-            'share_button_label' => $share_button_label,
-            'contact_button_label' => $contact_button_label,
-            'website_button_label' => $website_button_label,
-            'user_gallery' => $user_gallery_ids,
-            'is_show_share_button' => $is_show_share_button,
+            'name'                     => $name,
+            'user_profile_picture'     => $user_profile_picture_id,
+            'user_cover_image'         => $user_cover_image_id,
+            'company_name'             => $company_name,
+            'job_title'                => $job_title,
+            'email'                    => (strpos($email, 'mailto:') === 0 ? $email : 'mailto:' . $email),
+            'phone_number'             => (strpos($phone_number, 'tel:') === 0 ? $phone_number : 'tel:' . $phone_number),
+            'linkedin_url'             => $linkedin_url,
+            'fb_url'                   => $fb_url,
+            'user_website_url'         => $user_website_url,
+            'about_title'              => $about_title,
+            'about_text'               => $about_text,
+            'user_gallery'             => $user_gallery_ids,
+            'is_show_share_button'     => $is_show_share_button,
             'is_show_add_to_contact_button' => $is_show_add_to_contact_button,
-            'is_show_website_button' => $is_show_website_button,
-            'user_video_url' => $user_video_url,
+            'is_show_website_button'   => $is_show_website_button,
+            'user_video_url'           => $user_video_url,
         ]);
 
         // Generate and save QR code image to ACF field
