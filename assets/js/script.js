@@ -372,7 +372,7 @@ $('#kw-custom-permalink').on('input', function () {
 
     // If the input is empty, fallback to 'your-url'
     if (inputValue === '') {
-        highlightSpan.text('your-url');
+        highlightSpan.text('your-domain');
     } else {
         // Otherwise, update the span with the entered input
         highlightSpan.text(inputValue);
@@ -381,13 +381,35 @@ $('#kw-custom-permalink').on('input', function () {
 
     $(FORM_SELECTORS.DOMAIN_AVAILABLIT_CHECK_BUTTON).on('click', utils.handlePermalinkValidation);
     
+
+    //  set preset 
+
+    function initializePreset() {
+        // Function to get query parameters from URL
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
     
+        // Get the 'preset-id' query parameter
+        const presetId = getQueryParam('preset-id') || '1'; // Default to '1' if not present
     
+        // Update the hidden field value
+        $('#kw-mini-web-preset-id').val(presetId);
+    
+        // Dynamically update iframe URL
+        const iframe = $('#kw-mini-web-preview-iframe');
+        const currentUrl = iframe.attr('src');
+        const updatedUrl = currentUrl.replace(/\/mini-web-preset-\d+\//, `/mini-web-preset-${presetId}/`);
+        iframe.attr('src', updatedUrl);
+    }
+
     // ========================
     // Initialization
     // ========================
 
     function init() {
+        initializePreset();
         bindEventListeners();
         bindOnSubmit();
     }

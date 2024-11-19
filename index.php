@@ -2,7 +2,7 @@
 /*
 Plugin Name: KW Mini Website Form Submission
 Description: A plugin to submit a form for creating mini-website custom posts.
-Version: 1.2.2
+Version: 1.2.3
 Author: Your Name
 */
 
@@ -257,7 +257,7 @@ function check_permalink_availability() {
 
     $existing_post = get_page_by_path($permalink, OBJECT, 'mini-website');
     if ($existing_post) {
-        wp_send_json_error(['message' => 'This permalink is already in use. Please choose another.']);
+        wp_send_json_error(['message' => 'This DomainFv is already in use. Please choose another.']);
     }
 
     wp_send_json_success(['message' => 'Permalink is available.']);
