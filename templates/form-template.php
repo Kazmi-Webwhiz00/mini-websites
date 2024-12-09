@@ -62,7 +62,7 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                                 <strong>Note:</strong> Your website URL will look like: 
                                 <strong>
                                     <span id="kw-custom-url-preview">
-                                        miniwebsites.local/<span id="kw-input-highlight" class="kw-highlight">your-domain</span>
+                                    <?php echo esc_url(home_url('/')); ?><span id="kw-input-highlight" class="kw-highlight">your-domain</span>
                                     </span>
                                 </strong>
                             </div>

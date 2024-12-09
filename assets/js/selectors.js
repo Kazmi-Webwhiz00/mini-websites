@@ -1,6 +1,6 @@
 // selectors.js
 // URL Regex
-const urlRegex = /^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+)(\.[a-zA-Z]{2,})(\/[^\s]*)?$/;
+const urlRegex = /^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$/;
 
 // Form Selectors
 const FORM_SELECTORS = {
