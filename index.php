@@ -32,6 +32,22 @@ function kw_mini_website_enqueue_scripts() {
 }
 add_action('wp_enqueue_scripts', 'kw_mini_website_enqueue_scripts');
 
+add_action('wp_enqueue_scripts', 'enqueue_cropper_assets');
+
+function enqueue_cropper_assets() {
+    // Enqueue Cropper.js CSS and JS
+    wp_enqueue_style( 'cropper-css', 'https://unpkg.com/cropperjs/dist/cropper.css', [], '1.5.12' );
+    wp_enqueue_script( 'cropper-js', 'https://unpkg.com/cropperjs/dist/cropper.js', ['jquery'], '1.5.12', true );
+
+    // Enqueue your custom script
+    wp_enqueue_script('custom-cropper-script', plugin_dir_url(__FILE__) . 'assets/js/custom-cropper.js', ['jquery', 'cropper-js'], null, true);
+
+    // Enqueue custom CSS for styling (if needed)
+    wp_enqueue_style('custom-cropper-style', plugin_dir_url(__FILE__) . 'assets/css/custom-cropper.css');
+}
+
+
+
 // =========================
 // 2. Shortcode for Form Display
 // =========================

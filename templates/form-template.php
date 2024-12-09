@@ -89,9 +89,6 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                     </div>
 
 
-
-
-
                     <!-- Step 1: Personal Information -->
                     <div class="form-step" id="kw-step-2" style="display: none;">
                         <!-- Profile Image Upload -->
@@ -106,6 +103,28 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                                 <input type="file" id="kw-main-image" name="user_profile_picture" class="d-none" required>
                             </div>
                         </div>
+
+                        <!-- Crop Modal -->
+                        <div id="imageCropModal" class="crop-modal" style="display: none;">
+                            <div class="crop-modal-content">
+                                <div class="crop-modal-header">
+                                    <span>Crop Your Image</span>
+                                    <button type="button" class="close-crop-modal btn btn-secondary btn-block">×</button>
+                                </div>
+                                <div class="crop-modal-body">
+                                    <div class="crop-container">
+                                        <img id="cropper-image" src="#" alt="To be cropped" style="max-width:100%;">
+                                    </div>
+                                </div>
+                                <div class="crop-modal-footer">
+                                    <button type="button" id="zoom-out" class="btn btn-secondary">- Zoom Out</button>
+                                    <button type="button" id="zoom-in" class="btn btn-secondary">+ Zoom In</button>
+                                    <button type="button" id="crop-and-save" class="btn btn-primary">Crop & Save</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end Crop Modal -->
+
 
                         <!-- Cover Image Upload -->
                         <div class="form-group">
@@ -170,7 +189,6 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
 
                         <!-- Toggle Options -->
                         <div class="form-group">
-                            
                             <label class="kw-switch">
                                 <input type="checkbox" id="is_show_share_button" name="is_show_share_button" class="kw-form-control" checked>
                                 <span class="kw-slider"></span>
@@ -178,7 +196,6 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                             <label for="is_show_share_button">Show Share Button?</label>
                         </div>
                         <div class="form-group">
-                            
                             <label class="kw-switch">
                                 <input type="checkbox" id="is_show_add_to_contact_button" name="is_show_add_to_contact_button" class="kw-form-control" checked>
                                 <span class="kw-slider"></span>
@@ -186,7 +203,6 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                             <label for="is_show_add_to_contact_button">Show "Add to Contact" Button?</label>
                         </div>
                         <div class="form-group">
-
                             <label class="kw-switch">
                                 <input type="checkbox" id="is_show_website_button" name="is_show_website_button" class="kw-form-control" checked>
                                 <span class="kw-slider"></span>
@@ -205,7 +221,7 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
                         <button type="button" class="btn btn-primary btn-block mt-3" data-next="4">Next</button>
                     </div>
 
-                    <!-- Step 3: Contact Information -->
+                    <!-- Step 3: About & Media -->
                     <div class="form-step" id="kw-step-4" style="display: none;">
                         <!-- About Section -->
                         <div class="form-group">
