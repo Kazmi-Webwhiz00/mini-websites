@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: KW Mini Website Form Submission
+Plugin Name: KW Mini Website 
 Description: A plugin to submit a form for creating mini-website custom posts.
-Version: 1.2.5
-Author: Your Name
+Version: 1.2.6
+Author: KazVerse
 */
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
@@ -137,6 +137,16 @@ function kw_mini_website_handle_form_submission() {
     $preset_category_name = 'mini-web-preset-' . $kw_mini_web_preset_id;
     $preset_category = get_term_by('name', $preset_category_name, 'miniwebsite-category');
 
+    // Step 1: Create user and send email
+    $user_id = kw_create_user_and_send_email($email, $name);
+
+    if (is_wp_error($user_id)) {
+        wp_send_json_error(['message' => 'User creation failed: ' . $user_id->get_error_message()]);
+    }
+
+    // Step 2: Log the user in
+    kw_login_user($user_id);
+    
     if (!$preset_category) {
         // Create the category if it doesn't exist
         $preset_category = wp_insert_term(
@@ -299,9 +309,78 @@ function check_permalink_availability() {
 
     $existing_post = get_page_by_path($permalink, OBJECT, 'mini-website');
     if ($existing_post) {
-        wp_send_json_error(['message' => 'This DomainFv is already in use. Please choose another.']);
+        wp_send_json_error(['message' => 'This Domain is already in use. Please choose another.']);
     }
 
     wp_send_json_success(['message' => 'Permalink is available.']);
 }
 
+
+// ===============================
+// Method to Regsiter User and Send Email
+// ===============================
+
+
+/**
+ * Create a new user and send login credentials via email.
+ *
+ * @param string $email User's email address.
+ * @param string $name User's name.
+ * @return int|WP_Error User ID if successful, WP_Error on failure.
+ */
+function kw_create_user_and_send_email($email, $name) {
+    // Check if the user already exists
+    $user = get_user_by('email', $email);
+
+    if ($user) {
+        return $user->ID; // Return existing user's ID
+    }
+
+    // Generate a username and random password
+    $username = sanitize_user(current(explode('@', $email))); // Prefix of email
+    $password = wp_generate_password(12);
+
+    // Create the user
+    $user_id = wp_insert_user([
+        'user_login' => $username,
+        'user_email' => $email,
+        'user_pass'  => $password,
+        'first_name' => $name,
+        'role'       => 'subscriber'
+    ]);
+
+    if (is_wp_error($user_id)) {
+        return $user_id; // Return the error
+    }
+
+    // Send email with login details
+    $subject = 'Your Mini-Website Account Details';
+    $message = "Hi $name,\n\nYour account has been created successfully!\n\n" .
+               "Username: $username\n" .
+               "Password: $password\n\n" .
+               "You can log in here: " . wp_login_url();
+
+    wp_mail($email, $subject, $message);
+
+    return $user_id; // Return the new user ID
+}
+
+
+
+// ===============================
+// Method to Login User 
+// ===============================
+
+
+/**
+ * Log in a user programmatically.
+ *
+ * @param int $user_id User ID to log in.
+ * @return void
+ */
+function kw_login_user($user_id) {
+    if (!is_wp_error($user_id) && $user_id > 0) {
+        wp_set_current_user($user_id);
+        wp_set_auth_cookie($user_id);
+    }
+}
