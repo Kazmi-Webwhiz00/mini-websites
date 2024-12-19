@@ -555,3 +555,29 @@ padding: 3rem;
     text-align: center;
     border-radius: 4px;
 }
+
+
+.acf-input-wrap > input {
+    border-radius: 5px !important;
+    border: 1px solid #c4c4c4 !important;
+    width: 50%;
+}
+
+.fea-modal-content {
+    width: 850px !important;
+}
+
+.fea-modal-inner span.acf-icon {
+    padding:10px 50px;
+}
+
+.fea-modal-inner .content-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px ;
+}
+
+.show-if-value > img{
+    max-width: 150px !important;
+}

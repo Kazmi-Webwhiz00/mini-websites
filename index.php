@@ -2,7 +2,7 @@
 /*
 Plugin Name: KW Mini Website 
 Description: A plugin to submit a form for creating mini-website custom posts.
-Version: 1.2.6
+Version: 1.3.0
 Author: KazVerse
 */
 
@@ -10,6 +10,9 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 // Include the settings file
 include_once plugin_dir_path(__FILE__) . 'settings.php';
+
+include_once plugin_dir_path(__FILE__) . 'addToContact.php';
+include_once plugin_dir_path(__FILE__) . 'editFormShortCode.php';
 
 
 // ============================
@@ -186,8 +189,8 @@ function kw_mini_website_handle_form_submission() {
             'user_cover_image'         => $user_cover_image_id,
             'company_name'             => $company_name,
             'job_title'                => $job_title,
-            'email'                    => (strpos($email, 'mailto:') === 0 ? $email : 'mailto:' . $email),
-            'phone_number'             => (strpos($phone_number, 'tel:') === 0 ? $phone_number : 'tel:' . $phone_number),
+            'email'                    => $email,
+            'phone_number'             => $phone_number,
             'linkedin_url'             => $linkedin_url,
             'fb_url'                   => $fb_url,
             'user_website_url'         => $user_website_url,
