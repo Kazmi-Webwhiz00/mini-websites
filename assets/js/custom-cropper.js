@@ -2,12 +2,23 @@ jQuery(document).ready(function($) {
     var cropper;
     var $modal = $('#imageCropModal');
     var $cropperImage = $('#cropper-image');
-    var $preview = $('#kw-main-image-preview');
-    var $input = $('#kw-main-image');
 
-    // After user selects an image
-    $input.on('change', function(e) {
-        var files = e.target.files;
+    // Inputs
+    var $inputProfile = $('#kw-main-image');
+    var $inputCover = $('#kw-bg-image');
+
+    // Previews
+    var $previewProfile = $('#kw-main-image-preview');
+    var $previewCover = $('#kw-bg-image-preview');
+
+    // Variables to track which image is currently being edited
+    var currentInput = null;
+    var currentPreview = null;
+    var currentImageType = null; // 'profile' or 'cover'
+
+    // Common function to handle file input change
+    function handleFileChange(input, preview, imageType) {
+        var files = input[0].files;
         if (files && files.length > 0) {
             var reader = new FileReader();
             reader.onload = function (e) {
@@ -18,8 +29,16 @@ jQuery(document).ready(function($) {
                     if (cropper) {
                         cropper.destroy();
                     }
+
+                    // Set aspect ratio depending on image type
+                    var aspectRatio = 1; 
+                    if (imageType === 'cover') {
+                        // Example aspect ratio for cover image
+                        aspectRatio = 16 / 9; 
+                    }
+
                     cropper = new Cropper($cropperImage[0], {
-                        aspectRatio: 1,
+                        aspectRatio: aspectRatio,
                         viewMode: 1,
                         zoomable: true,
                         scalable: true,
@@ -29,7 +48,22 @@ jQuery(document).ready(function($) {
                 });
             };
             reader.readAsDataURL(files[0]);
+
+            // Set the current variables
+            currentInput = input;
+            currentPreview = preview;
+            currentImageType = imageType;
         }
+    }
+
+    // Profile image change
+    $inputProfile.on('change', function() {
+        handleFileChange($inputProfile, $previewProfile, 'profile');
+    });
+
+    // Cover image change
+    $inputCover.on('change', function() {
+        handleFileChange($inputCover, $previewCover, 'cover');
     });
 
     // Close modal without saving
@@ -39,8 +73,10 @@ jQuery(document).ready(function($) {
             cropper.destroy();
             cropper = null;
         }
-        // Reset the file input if canceled
-        $input.val('');
+        if (currentInput) {
+            // Reset the file input if canceled
+            currentInput.val('');
+        }
     });
 
     // Zoom In
@@ -61,31 +97,50 @@ jQuery(document).ready(function($) {
     $('#crop-and-save').on('click', function() {
         if (!cropper) return;
 
+        // Set desired dimensions
+        var cropWidth = 300;
+        var cropHeight = 300;
+        if (currentImageType === 'cover') {
+            // Adjust for a cover image (example: 16:9 ratio)
+            cropWidth = 1200;
+            cropHeight = 675;
+        }
+
         var canvas = cropper.getCroppedCanvas({
-            width: 300, // desired width
-            height: 300 // desired height
+            width: cropWidth,
+            height: cropHeight
         });
         canvas.toBlob(function(blob) {
             var url = URL.createObjectURL(blob);
             // Set the local preview
-            $preview.attr('src', url).show();
+            currentPreview.attr('src', url).show();
             $modal.hide();
 
             // Create a new file from the blob
             var file = new File([blob], 'cropped-image.png', {type: 'image/png'});
             var dataTransfer = new DataTransfer();
             dataTransfer.items.add(file);
-            $input[0].files = dataTransfer.files; // Update the file input with the cropped image
+            currentInput[0].files = dataTransfer.files; // Update the file input with the cropped image
 
-            // Update the live preview inside the iframe
-            // Assuming PREVIEW_SELECTORS.PROFILE_PICTURE_LIVE_PREVIEW and livePreview are available
-            livePreview.setLiveProfilePicturePreview(PREVIEW_SELECTORS.PROFILE_PICTURE_LIVE_PREVIEW, url, { maxWidth: '200px', maxHeight: '200px' });
+            // Update the live previews
+            if (typeof livePreview !== 'undefined') {
+                if (currentImageType === 'profile') {
+                    livePreview.setLiveProfilePicturePreview(PREVIEW_SELECTORS.PROFILE_PICTURE_LIVE_PREVIEW, url, { maxWidth: '200px', maxHeight: '200px' });
+                } else if (currentImageType === 'cover') {
+                    livePreview.setBackgroundImageLivePreview(PREVIEW_SELECTORS.COVER_IMAGE_LIVE_PREVIEW, url, PREVIEW_SELECTORS.BACKGROUND_IMAGE_OVERLAY_TEXT);
+                }
+            }
 
-            // Clean up
+            // Clean up cropper
             if (cropper) {
                 cropper.destroy();
                 cropper = null;
             }
+
+            // Reset current state
+            currentInput = null;
+            currentPreview = null;
+            currentImageType = null;
         });
     });
 });

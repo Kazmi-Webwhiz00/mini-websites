@@ -91,54 +91,54 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
 
                     <!-- Step 1: Personal Information -->
                     <div class="form-step" id="kw-step-2" style="display: none;">
-                        <!-- Profile Image Upload -->
-                        <div class="form-group text-center">
-                            <div class="image-upload-container">
-                                <label for="kw-main-image" class="image-upload-label">
-                                    <span class="upload-overlay">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="70" height="30" viewBox="0 0 32 32" xml:space="preserve"><path d="M22.414 23.586a2 2 0 1 1-2.828 2.828L18 24.828V29a2 2 0 0 1-4 0v-4.172l-1.586 1.586a2 2 0 1 1-2.828-2.828l5-5a2 2 0 0 1 2.828 0zM26 10A9 9 0 0 0 8.2 8.12 6 6 0 1 0 7 20h4.758l2.121-2.121A2.98 2.98 0 0 1 16 17c.802 0 1.555.312 2.121.879L20.242 20H26a5 5 0 0 0 0-10" style="fill:#fff"/></svg>
-                                    </span>
-                                    <img id="kw-main-image-preview" src="#" alt="Image Preview" class="img-thumbnail" style="display: none; width: 150px; height: 150px;">
-                                </label>
-                                <input type="file" id="kw-main-image" name="user_profile_picture" class="d-none" required>
-                            </div>
-                        </div>
+                       <!-- Profile Image Upload -->
+<div class="form-group text-center">
+    <div class="image-upload-container">
+        <label for="kw-main-image" class="image-upload-label">
+            <span class="upload-overlay">
+                <svg xmlns="http://www.w3.org/2000/svg" width="70" height="30" viewBox="0 0 32 32"><path d="M22.414 23.586a2 2 0 1 1-2.828 2.828L18 24.828V29a2 2 0 0 1-4 0v-4.172l-1.586 1.586a2 2 0 1 1-2.828-2.828l5-5a2 2 0 0 1 2.828 0zM26 10A9 9 0 0 0 8.2 8.12 6 6 0 1 0 7 20h4.758l2.121-2.121A2.98 2.98 0 0 1 16 17c.802 0 1.555.312 2.121.879L20.242 20H26a5 5 0 0 0 0-10" style="fill:#fff"/></svg>
+            </span>
+            <img id="kw-main-image-preview" src="#" alt="Image Preview" class="img-thumbnail" style="display: none; width: 150px; height: 150px;">
+        </label>
+        <input type="file" id="kw-main-image" name="user_profile_picture" class="d-none" required>
+    </div>
+</div>
 
-                        <!-- Crop Modal -->
-                        <div id="imageCropModal" class="crop-modal" style="display: none;">
-                            <div class="crop-modal-content">
-                                <div class="crop-modal-header">
-                                    <span>Crop Your Image</span>
-                                    <button type="button" class="close-crop-modal btn btn-secondary btn-block">×</button>
-                                </div>
-                                <div class="crop-modal-body">
-                                    <div class="crop-container">
-                                        <img id="cropper-image" src="#" alt="To be cropped" style="max-width:100%;">
-                                    </div>
-                                </div>
-                                <div class="crop-modal-footer">
-                                    <button type="button" id="zoom-out" class="btn btn-secondary">- Zoom Out</button>
-                                    <button type="button" id="zoom-in" class="btn btn-secondary">+ Zoom In</button>
-                                    <button type="button" id="crop-and-save" class="btn btn-primary">Crop & Save</button>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end Crop Modal -->
+<!-- Crop Modal -->
+<div id="imageCropModal" class="crop-modal" style="display: none;">
+    <div class="crop-modal-content">
+        <div class="crop-modal-header">
+            <span>Crop Your Image</span>
+            <button type="button" class="close-crop-modal btn btn-secondary btn-block">×</button>
+        </div>
+        <div class="crop-modal-body">
+            <div class="crop-container">
+                <img id="cropper-image" src="#" alt="To be cropped" style="max-width:100%;">
+            </div>
+        </div>
+        <div class="crop-modal-footer">
+            <button type="button" id="zoom-out" class="btn btn-secondary">- Zoom Out</button>
+            <button type="button" id="zoom-in" class="btn btn-secondary">+ Zoom In</button>
+            <button type="button" id="crop-and-save" class="btn btn-primary">Crop & Save</button>
+        </div>
+    </div>
+</div>
+<!-- end Crop Modal -->
 
+<!-- Cover Image Upload -->
+<div class="form-group">
+    <label for="kw-bg-image" class="bg-image-upload-label">
+        <input type="file" id="kw-bg-image" name="user_cover_image" class="form-control-file d-none" required>
+        <div class="bg-image-preview-wrapper">
+            <span class="kw-bg-image-text">Cover Image</span>
+            <img id="kw-bg-image-preview" src="#" alt="Background Image Preview" class="bg-image-thumbnail" style="display: none; width: auto; height: auto; max-width:100%;">
+            <div class="bg-image-overlay">
+                <span class="bg-image-upload-icon">📤</span>
+            </div>
+        </div>
+    </label>
+</div>
 
-                        <!-- Cover Image Upload -->
-                        <div class="form-group">
-                            <label for="kw-bg-image" class="bg-image-upload-label">
-                                <input type="file" id="kw-bg-image" name="user_cover_image" class="form-control-file d-none" required>
-                                <div class="bg-image-preview-wrapper">
-                                    <span class="kw-bg-image-text">Cover Image</span>
-                                    <img id="kw-bg-image-preview" src="#" alt="Background Image Preview" class="bg-image-thumbnail">
-                                    <div class="bg-image-overlay">
-                                        <span class="bg-image-upload-icon">📤</span>
-                                    </div>
-                                </div>
-                            </label>
-                        </div>
 
                         <!-- Personal Information Fields -->
                         <div class="form-group">
