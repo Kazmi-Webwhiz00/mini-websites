@@ -177,11 +177,28 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
 
                         <!-- Social Media Links -->
                         <div class="form-group">
+                            <label class="kw-switch">
+                                <input type="checkbox" id="is_show_linkedin_button" name="is_show_linkedin_button" class="kw-form-control" checked>
+                                <span class="kw-slider"></span>
+                            </label>
+                            <label for="is_show_linkedin_button">Show LinkedIn Icon?</label>
+                        </div>
+
+                        <div class="form-group kw-toggle-input-fields-group" id="linkedin-button-fields-wrapper">
                             <label for="kw-linkedin-url">LinkedIn URL</label>
                             <input type="url" id="kw-linkedin-url" name="linkedin_url" class="form-control">
                             <span id="kw-linkedin-url-error" style="color: red; display: none;">Please enter a valid URL. Make sure it starts with http:// or https://</span>
                         </div>
+
                         <div class="form-group">
+                            <label class="kw-switch">
+                                <input type="checkbox" id="is_show_fb_button" name="is_show_fb_button" class="kw-form-control" checked>
+                                <span class="kw-slider"></span>
+                            </label>
+                            <label for="is_show_fb_button">Show Facebook Icon?</label>
+                        </div>
+
+                        <div class="form-group kw-toggle-input-fields-group" id="fb-button-fields-wrapper">
                             <label for="kw-fb-url">Facebook URL</label>
                             <input type="url" id="kw-fb-url" name="fb_url" class="form-control">
                             <span id="kw-fb-url-error" style="color: red; display: none;">Please enter a valid URL. Make sure it starts with http:// or https://</span>

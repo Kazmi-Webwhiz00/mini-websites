@@ -74,24 +74,30 @@
 
         // Additional validation for specific fields
     if (currentStep === '3') {
-        // Validate Facebook URL
-        if (!FORM_SELECTORS.URL_REGIX.test($(FORM_SELECTORS.FB_URL_INPUT_SELECTOR).val())) {
-            $(FORM_SELECTORS.FB_URL_INPUT_SELECTOR).addClass('is-invalid');
-            $(FORM_SELECTORS.FB_URL_ERROR_DIV).text("Please enter a valid Facebook URL.").show();
-            isValid = false;
-        } else {
-            $(FORM_SELECTORS.FB_URL_INPUT_SELECTOR).removeClass('is-invalid');
-            $(FORM_SELECTORS.FB_URL_ERROR_DIV).hide();
+
+        if ($(FORM_SELECTORS.SHOW_FB_BUTTON_TOGGLE).is(':checked')) {
+            // Validate Facebook URL
+            if (!FORM_SELECTORS.URL_REGIX.test($(FORM_SELECTORS.FB_URL_INPUT_SELECTOR).val())) {
+                $(FORM_SELECTORS.FB_URL_INPUT_SELECTOR).addClass('is-invalid');
+                $(FORM_SELECTORS.FB_URL_ERROR_DIV).text("Please enter a valid Facebook URL.").show();
+                isValid = false;
+            } else {
+                $(FORM_SELECTORS.FB_URL_INPUT_SELECTOR).removeClass('is-invalid');
+                $(FORM_SELECTORS.FB_URL_ERROR_DIV).hide();
+            }
         }
 
         // Validate LinkedIn URL
-        if (!FORM_SELECTORS.URL_REGIX.test($(FORM_SELECTORS.LINKEDIN_URL_INPUT_SELECTOR).val())) {
-            $(FORM_SELECTORS.LINKEDIN_URL_INPUT_SELECTOR).addClass('is-invalid');
-            $(FORM_SELECTORS.LINKEDIN_URL_ERROR_DIV).text("Please enter a valid LinkedIn URL.").show();
-            isValid = false;
-        } else {
-            $(FORM_SELECTORS.LINKEDIN_URL_INPUT_SELECTOR).removeClass('is-invalid');
-            $(FORM_SELECTORS.LINKEDIN_URL_ERROR_DIV).hide();
+        if ($(FORM_SELECTORS.SHOW_LINKEDIN_BUTTON_TOGGLE).is(':checked')) {
+
+            if (!FORM_SELECTORS.URL_REGIX.test($(FORM_SELECTORS.LINKEDIN_URL_INPUT_SELECTOR).val())) {
+                $(FORM_SELECTORS.LINKEDIN_URL_INPUT_SELECTOR).addClass('is-invalid');
+                $(FORM_SELECTORS.LINKEDIN_URL_ERROR_DIV).text("Please enter a valid LinkedIn URL.").show();
+                isValid = false;
+            } else {
+                $(FORM_SELECTORS.LINKEDIN_URL_INPUT_SELECTOR).removeClass('is-invalid');
+                $(FORM_SELECTORS.LINKEDIN_URL_ERROR_DIV).hide();
+            }
         }
 
         // Validate Website URL if the toggle is checked

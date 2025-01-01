@@ -29,6 +29,8 @@ jQuery(document).ready(function($) {
         handleShareButtonToggle();
         handleAddToContactButtonToggle();
         handleWebsiteButtonToggle();
+        handleLinkedInButtonToggle();
+        handlefbButtonToggle();
 
         onFbUrlChange();
         onLinkedInUrlChange();
@@ -238,6 +240,24 @@ jQuery(document).ready(function($) {
         toggleCheckbox.on('change', () => {
             livePreview.toggleLivePreviewButtons(FORM_SELECTORS.SHOW_SHARE_BUTTON_TOGGLE, PREVIEW_SELECTORS.LIVE_SHARE_BUTTON_CONTAINER);
             //utils.togglePreviewButtons(FORM_SELECTORS.SHOW_SHARE_BUTTON_TOGGLE, FORM_SELECTORS.CONTAINER_SHARE_BUTTON);
+        });
+    }
+
+    function handleLinkedInButtonToggle() {
+        const toggleCheckbox = $(FORM_SELECTORS.SHOW_LINKEDIN_BUTTON_TOGGLE);
+        // Register the change event to toggle the contact fields visibility
+        toggleCheckbox.on('change', () => {
+            livePreview.toggleLivePreviewButtons(FORM_SELECTORS.SHOW_LINKEDIN_BUTTON_TOGGLE, PREVIEW_SELECTORS.LIVE_LINKEDIN_BUTTON_CONTAINER);
+            utils.togglePreviewButtons(FORM_SELECTORS.SHOW_LINKEDIN_BUTTON_TOGGLE, '#linkedin-button-fields-wrapper');
+        });
+    }
+
+    function handlefbButtonToggle() {
+        const toggleCheckbox = $(FORM_SELECTORS.SHOW_FB_BUTTON_TOGGLE);
+        // Register the change event to toggle the contact fields visibility
+        toggleCheckbox.on('change', () => {
+            livePreview.toggleLivePreviewButtons(FORM_SELECTORS.SHOW_FB_BUTTON_TOGGLE, PREVIEW_SELECTORS.LIVE_FB_BUTTON_CONTAINER);
+            utils.togglePreviewButtons(FORM_SELECTORS.SHOW_FB_BUTTON_TOGGLE, '#fb-button-fields-wrapper');
         });
     }
 
