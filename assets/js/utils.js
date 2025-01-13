@@ -42,8 +42,8 @@
     if (currentStep === '2') {
         let errorMessages = [];
         const imageInputs = [
-            { selector: FORM_SELECTORS.PROFILE_IMAGE_INPUT, message: "Profile Image is required. Please upload an image to proceed." },
-            { selector: FORM_SELECTORS.BACKGROUND_IMAGE_INPUT, message: "Cover Image is required. Please upload an image to proceed." }
+            { selector: FORM_SELECTORS.PROFILE_IMAGE_INPUT_HIDDEN, message: "Profile Image is required. Please upload an image to proceed." },
+            { selector: FORM_SELECTORS.BACKGROUND_IMAGE_INPUT_HIDDEN, message: "Cover Image is required. Please upload an image to proceed." }
         ];
 
         imageInputs.forEach(input => {

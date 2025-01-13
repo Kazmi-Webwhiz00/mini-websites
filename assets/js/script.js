@@ -288,6 +288,7 @@ jQuery(document).ready(function($) {
             if (utils.validateFileSize(this,5)) {
                 utils.previewImage(this, PREVIEW_SELECTORS.PROFILE_IMAGE_PREVIEW).then((previewUrl) => {
                     livePreview.setLiveProfilePicturePreview(PREVIEW_SELECTORS.PROFILE_PICTURE_LIVE_PREVIEW, previewUrl, { maxWidth: '200px', maxHeight: '200px' });
+                    transferSingleFile(this, FORM_SELECTORS.PROFILE_IMAGE_INPUT_HIDDEN);
                 });
             }
         });
@@ -306,27 +307,30 @@ jQuery(document).ready(function($) {
 
 
     function transferSingleFile(inputFile, targetInputSelector) {
-        const sourceInput = inputFile.files[0];
-        const targetInput = $(targetInputSelector)[0];
+        // Ensure inputFile is a valid input element and has a file
+        if (inputFile.files && inputFile.files.length > 0) {
+            const file = inputFile.files[0]; // Get the first file
+            const targetInput = $(targetInputSelector)[0]; // Target input element
+            
+            if (targetInput) {
+                // Create a DataTransfer object
+                const dataTransfer = new DataTransfer();
     
-        if (sourceInput.files && sourceInput.files.length > 0) {
-            // Get the single file from the source input
-            const file = sourceInput.files[0];
+                // Add the file to the DataTransfer object
+                dataTransfer.items.add(file);
     
-            // Create a DataTransfer object
-            const dataTransfer = new DataTransfer();
+                // Assign the DataTransfer object to the target input's files
+                targetInput.files = dataTransfer.files;
     
-            // Add the single file to the DataTransfer object
-            dataTransfer.items.add(file);
-    
-            // Assign the DataTransfer object to the target input
-            targetInput.files = dataTransfer.files;
-    
-            console.log("File transferred:", targetInput.files[0].name);
+                console.log("File transferred:", targetInput.files[0].name);
+            } else {
+                console.error("Target input not found. Ensure the selector is correct.");
+            }
         } else {
             console.log("No file selected in the source input.");
         }
     }
+    
 
     
     // ============================

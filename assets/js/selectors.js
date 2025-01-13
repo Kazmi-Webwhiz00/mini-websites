@@ -26,7 +26,9 @@ const FORM_SELECTORS = {
 
     // Image Input Selectors
     PROFILE_IMAGE_INPUT: '#kw-main-image',
+    PROFILE_IMAGE_INPUT_HIDDEN:'#kw-main-image-hidden',
     BACKGROUND_IMAGE_INPUT: '#kw-bg-image',
+    BACKGROUND_IMAGE_INPUT_HIDDEN: '#kw-bg-image-hidden',
 
     GALLERY_INPUT: '#kw-user-gallery',
     GALLERY_UPLOAD: '#kw-user-gallery-upload',
