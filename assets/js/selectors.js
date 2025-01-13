@@ -1,7 +1,10 @@
 // selectors.js
 // URL Regex
 const urlRegex = /^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$/;
-
+const IMAGE_TYPE = {
+    BG: 'bg',
+    NORMAL: 'normal',
+}
 // Form Selectors
 const FORM_SELECTORS = {
     FORM: '#kw-enhanced-form',
@@ -77,7 +80,7 @@ const PREVIEW_SELECTORS = {
     PROFILE_IMAGE_PREVIEW: '#kw-main-image-preview',
     PROFILE_PICTURE_LIVE_PREVIEW: '#kw-mini-web-profile-pic img',
     BACKGROUND_IMAGE_PREVIEW: '#kw-bg-image-preview',
-    COVER_IMAGE_LIVE_PREVIEW: '#kw-mini-web-cover-image',
+    COVER_IMAGE_LIVE_PREVIEW: '#kw-mini-web-cover-image img',
 
     // Live Preview Text Selectors
     LIVE_USER_NAME: '#kw-mini-web-user-name h3',

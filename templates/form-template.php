@@ -128,7 +128,8 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
 <!-- Cover Image Upload -->
 <div class="form-group">
     <label for="kw-bg-image" class="bg-image-upload-label">
-        <input type="file" id="kw-bg-image" name="user_cover_image" class="form-control-file d-none" required>
+        <input type="file" id="kw-bg-image" name="user_cover_image_preview" class="form-control-file d-none" required>
+        <input type="file" id="kw-bg-image-hidden" name="user_cover_image" class="form-control-file d-none" required>
         <div class="bg-image-preview-wrapper">
             <span class="kw-bg-image-text">Cover Image</span>
             <img id="kw-bg-image-preview" src="#" alt="Background Image Preview" class="bg-image-thumbnail" style="display: none; width: auto; height: auto; max-width:100%;">

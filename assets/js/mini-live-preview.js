@@ -18,7 +18,7 @@
      * @param {string} previewUrl - URL of the image preview.
      * @param {string|null} overlaySelector - Selector for an optional overlay element to hide within the iframe.
      */
-    function setBackgroundImageLivePreview(previewSelector, previewUrl, overlaySelector = null) {
+    function setBackgroundImageLivePreview(previewSelector, previewUrl, imageType=IMAGE_TYPE.NORMAL, overlaySelector = null) {
         if (!previewUrl) {
             console.error("No file selected");
             return;
@@ -26,9 +26,19 @@
 
         // Ensure iframeDocument is available before accessing it
         if (iframeDocument) {
-            iframeDocument.find(previewSelector)
+            if(imageType === IMAGE_TYPE.BG){
+                iframeDocument.find(previewSelector)
                 .css('background-image', `url(${previewUrl})`)
                 .show();
+            }
+
+            if(imageType === IMAGE_TYPE.NORMAL){
+                iframeDocument.find(previewSelector)
+                .attr('src', previewUrl)
+                .attr('srcset', previewUrl)
+                .show();
+            }
+
 
             // Hide overlay if specified
             if (overlaySelector) {

@@ -298,11 +298,37 @@ jQuery(document).ready(function($) {
             if (utils.validateFileSize(this,5)) {
                 utils.setBackgroundImagePreview(this, '.bg-image-preview-wrapper', FORM_SELECTORS.BACKGROUND_IMAGE_OVERLAY_TEXT).then((previewUrl) => {
                     livePreview.setBackgroundImageLivePreview(PREVIEW_SELECTORS.COVER_IMAGE_LIVE_PREVIEW, previewUrl, PREVIEW_SELECTORS.BACKGROUND_IMAGE_OVERLAY_TEXT);
+                    transferSingleFile(this,'#kw-bg-image-hidden');
                 });
             }
         });
     }
 
+
+    function transferSingleFile(inputFile, targetInputSelector) {
+        const sourceInput = inputFile.files[0];
+        const targetInput = $(targetInputSelector)[0];
+    
+        if (sourceInput.files && sourceInput.files.length > 0) {
+            // Get the single file from the source input
+            const file = sourceInput.files[0];
+    
+            // Create a DataTransfer object
+            const dataTransfer = new DataTransfer();
+    
+            // Add the single file to the DataTransfer object
+            dataTransfer.items.add(file);
+    
+            // Assign the DataTransfer object to the target input
+            targetInput.files = dataTransfer.files;
+    
+            console.log("File transferred:", targetInput.files[0].name);
+        } else {
+            console.log("No file selected in the source input.");
+        }
+    }
+
+    
     // ============================
     // Navigation and Miscellaneous
     // ============================
