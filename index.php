@@ -15,6 +15,7 @@ include_once plugin_dir_path(__FILE__) . 'addToContact.php';
 include_once plugin_dir_path(__FILE__) . 'editFormShortCode.php';
 include_once plugin_dir_path(__FILE__) . 'kwSubscription.php';
 include_once plugin_dir_path(__FILE__) . 'subscriptionStatus.php';
+include_once plugin_dir_path(__FILE__) . 'goHighLevelIntegration.php';
 
 // ============================
 // 1. Enqueue Styles and Scripts
@@ -217,6 +218,8 @@ function kw_mini_website_handle_form_submission() {
             update_field('user_mini_web_qr_code_img', $qr_image_id, $post_id);
         }
 
+        create_gohighlevel_contact($name, $email, $phone_number, $company_name);
+        
         // Payment page link
         $subscription_page_url = add_query_arg('miniweb_id', $post_id, site_url('/subscription'));
 
