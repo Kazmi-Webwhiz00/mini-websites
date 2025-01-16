@@ -40,6 +40,13 @@
         }
     // Additional validation for image inputs based on step
     if (currentStep === '2') {
+        const userEmail = $(FORM_SELECTORS.EMAIL_INPUT).val();
+        if(userEmail){
+            if(!checkMiniWebByEmail(userEmail)) {
+                isValid = false;
+            };
+        }
+       
         let errorMessages = [];
         const imageInputs = [
             { selector: FORM_SELECTORS.PROFILE_IMAGE_INPUT_HIDDEN, message: "Profile Image is required. Please upload an image to proceed." },
@@ -506,6 +513,67 @@ function proceedToNextStep(currentStep, nextStep)
             });
         }
         
+        /**
+         * Check if a MiniWebsite exists for the provided email.
+         * @param {string} email - The email to check.
+         * @returns {boolean} - Returns true if no MiniWebsite exists, false otherwise.
+         */
+        function checkMiniWebByEmail(email) {
+            let result = true;
+
+            // Perform the AJAX request.
+            jQuery.ajax({
+                url: kvMiniWeb.ajax_url, // AJAX URL from localized script.
+                type: 'POST',
+                async: false, // Synchronous request.
+                data: {
+                    action: 'kv_check_user_miniweb', // The action defined in PHP.
+                    security: kvMiniWeb.nonce, // The security nonce.
+                    email: email,
+                },
+                success: function (response) {
+                    // If success = false, MiniWebsite exists.
+                    if (!response.success && response.data && response.data.message) {
+                        // Build the notice box.
+                        const noticeBox = `
+                            <div class="kw-miniweb-notice-box-danger" id="kw-error-exiting-miniweb">
+                                <span class="kw-miniweb-notice-icon">ⓘ</span>
+                                <div class="kw-miniweb-notice-content">
+                                    <strong>Note:</strong> This email already has a MiniWebsite. Visit: 
+                                    <strong>
+                                        <a href="${response.data.message.split('Visit: ')[1]}" target="_blank">
+                                            ${response.data.message.split('Visit: ')[1]}
+                                        </a>
+                                    </strong>
+                                </div>
+                            </div>
+                        `;
+
+                        if (jQuery('#kw-error-exiting-miniweb').length === 0) {
+                            // Append the notice box after #kw-step-2 if it doesn't exist.
+                            jQuery('#kw-step-2').after(noticeBox);
+                        } else {
+                            // Update the notice box content if it already exists.
+                            jQuery('#kw-error-exiting-miniweb .kw-miniweb-notice-content').html(`
+                                <strong>Note:</strong> This email already has a MiniWebsite. Visit: 
+                                <strong>
+                                    <a href="${miniWebUrl}" target="_blank">${miniWebUrl}</a>
+                                </strong>
+                            `);
+                        }
+
+                        // Set the result to false.
+                        result = false;
+                    }
+                },
+                error: function () {
+                    console.error('An error occurred while checking the MiniWebsite.');
+                },
+            });
+
+            return result;
+        }
+
         function appendHttpsToUrlsWithAlerts(selectors) {
             if (!Array.isArray(selectors) || selectors.length === 0) {
                 console.error("Invalid input: Please provide a non-empty array of selectors.");

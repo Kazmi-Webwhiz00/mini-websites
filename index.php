@@ -16,6 +16,7 @@ include_once plugin_dir_path(__FILE__) . 'editFormShortCode.php';
 include_once plugin_dir_path(__FILE__) . 'kwSubscription.php';
 include_once plugin_dir_path(__FILE__) . 'subscriptionStatus.php';
 include_once plugin_dir_path(__FILE__) . 'goHighLevelIntegration.php';
+include_once plugin_dir_path(__FILE__) .  'helper.php';
 
 // ============================
 // 1. Enqueue Styles and Scripts
@@ -33,6 +34,11 @@ function kw_mini_website_enqueue_scripts() {
     wp_localize_script('kw-mini-website-script', 'kw_mini_website_vars', [
         'ajax_url' => admin_url('admin-ajax.php'),
         'nonce' => wp_create_nonce('kw_mini_website_nonce'),
+    ]);
+
+    wp_localize_script('kw-mini-website-utils-js', 'kvMiniWeb', [
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('kv_check_user_miniweb_nonce'),
     ]);
 }
 add_action('wp_enqueue_scripts', 'kw_mini_website_enqueue_scripts');
@@ -114,6 +120,9 @@ function kw_mini_website_handle_form_submission() {
     // Verify nonce for security
     check_ajax_referer('kw_mini_website_nonce', 'security');
 
+
+
+
     // Sanitize and retrieve form data
     $name = sanitize_text_field($_POST['name']);
     $company_name = sanitize_text_field($_POST['company_name']);
@@ -143,6 +152,11 @@ function kw_mini_website_handle_form_submission() {
     // Create or find the category in the miniwebsite-category taxonomy
     $preset_category_name = 'mini-web-preset-' . $kw_mini_web_preset_id;
     $preset_category = get_term_by('name', $preset_category_name, 'miniwebsite-category');
+
+    if(check_user_and_miniweb($email))
+    {
+        wp_send_json_error(['message' => 'You already have miniWebsite.']);
+    }
 
     // Step 1: Create user and send email
     $user_id = kw_create_user_and_send_email($email, $name);
@@ -219,14 +233,14 @@ function kw_mini_website_handle_form_submission() {
         }
 
         create_gohighlevel_contact($name, $email, $phone_number, $company_name);
-        
+
         // Payment page link
         $subscription_page_url = add_query_arg('miniweb_id', $post_id, site_url('/subscription'));
 
         // Return success response with payment page URL
         wp_send_json_success(['message' => 'Submission successful! Please complete the payment to publish your mini-website.', 'post_url' => $subscription_page_url]);
     } else {
-        wp_send_json_error(['message' => 'Failed to create the post.']);
+        wp_send_json_error(['message' => 'Failed to create the post.']);wp_send_json_error(['message' => 'Failed to create the post.']);
     }
 }
 
@@ -400,3 +414,17 @@ function kw_login_user($user_id) {
         wp_set_auth_cookie($user_id);
     }
 }
+
+
+/**
+ * Hook the redirection for any URL that contains "register-mini-web".
+ */
+add_action('template_redirect', function () {
+    // Get the current URL path.
+    $current_path = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+
+    // Check if the path contains "register-mini-web".
+    if (strpos($current_path, 'register-mini-web') !== false) {
+        redirect_to_user_miniweb();
+    }
+});
