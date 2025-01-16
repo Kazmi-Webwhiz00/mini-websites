@@ -581,3 +581,124 @@ padding: 3rem;
 .show-if-value > img{
     max-width: 150px !important;
 }
+
+.subscription-warning-banner {
+    background:  #FFF3CD;
+    color: #333;
+    padding: 20px;
+    border: 2px solid #f35d52;
+    border-radius: 10px;
+    text-align: center;
+    margin: 20px auto;
+    font-family: 'Roboto', Arial, sans-serif;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.subscription-warning-banner .subscription-message {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.subscription-warning-banner .status {
+    color: #d32f2f;
+    text-transform: uppercase;
+    font-weight: 900;
+}
+
+.subscription-warning-banner .action-message {
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.subscription-warning-banner .save-miniwebsite-button {
+    display: inline-block;
+    background-color: #f57c00;
+    color: white;
+    text-decoration: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.subscription-warning-banner .save-miniwebsite-button:hover {
+    background-color: #e65100;
+    transform: scale(1.05);
+}
+
+
+
+
+.miniweb-details {
+    margin: 20px auto;
+    font-family: 'Roboto', Arial, sans-serif;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+    padding: 20px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+}
+
+.miniweb-heading {
+    font-size: 18px !important;
+    font-weight: bold !important;
+    color: #333 !important;
+    margin-bottom: 15px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px !important;
+    text-align: start;
+}
+
+.miniweb-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.miniweb-table th, .miniweb-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    font-size: 16px;
+}
+
+.miniweb-table th {
+    background: #f9f9f9;
+    color: #333;
+    font-weight: bold;
+    width: 30%;
+}
+
+.miniweb-table td {
+    color: #555;
+}
+
+.miniweb-table td a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.miniweb-table td a:hover {
+    color: #0056b3;
+}
+
+.status-message {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #777;
+    text-align: center;
+    font-style: italic;
+}
+
+
+
+

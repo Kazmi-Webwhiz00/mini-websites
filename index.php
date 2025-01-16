@@ -13,7 +13,8 @@ include_once plugin_dir_path(__FILE__) . 'settings.php';
 
 include_once plugin_dir_path(__FILE__) . 'addToContact.php';
 include_once plugin_dir_path(__FILE__) . 'editFormShortCode.php';
-
+include_once plugin_dir_path(__FILE__) . 'kwSubscription.php';
+include_once plugin_dir_path(__FILE__) . 'subscriptionStatus.php';
 
 // ============================
 // 1. Enqueue Styles and Scripts
@@ -151,7 +152,7 @@ function kw_mini_website_handle_form_submission() {
 
     // Step 2: Log the user in
     kw_login_user($user_id);
-    
+
     if (!$preset_category) {
         // Create the category if it doesn't exist
         $preset_category = wp_insert_term(
@@ -171,7 +172,7 @@ function kw_mini_website_handle_form_submission() {
     // Get the category ID (whether it was found or created)
     $preset_category_id = is_array($preset_category) ? $preset_category['term_id'] : $preset_category->term_id;
 
-    // Create new custom post
+    // Create new custom post (set to 'draft' by default)
     $post_id = wp_insert_post(array(
         'post_title'  => $name,
         'post_type'   => 'mini-website',
@@ -205,7 +206,10 @@ function kw_mini_website_handle_form_submission() {
             'is_show_fb_button'        => $is_show_fb_button,
             'is_show_linkedin_button'  => $is_show_linkedin_button,
             'user_video_url'           => $user_video_url,
+            '_payment_status'          => SubscriptionStatus::PENDING, // Mark as unpaid by default
         ]);
+
+        update_user_meta($user_id, 'miniweb_id', $post_id);
 
         // Generate and save QR code image to ACF field
         $qr_image_id = generate_and_save_qr_code_image($post_id);
@@ -213,8 +217,11 @@ function kw_mini_website_handle_form_submission() {
             update_field('user_mini_web_qr_code_img', $qr_image_id, $post_id);
         }
 
-        // Return success response with post URL
-        wp_send_json_success(['message' => 'Submission successful!', 'post_url' => get_permalink($post_id)]);
+        // Payment page link
+        $subscription_page_url = add_query_arg('miniweb_id', $post_id, site_url('/subscription'));
+
+        // Return success response with payment page URL
+        wp_send_json_success(['message' => 'Submission successful! Please complete the payment to publish your mini-website.', 'post_url' => $subscription_page_url]);
     } else {
         wp_send_json_error(['message' => 'Failed to create the post.']);
     }
@@ -371,7 +378,6 @@ function kw_create_user_and_send_email($email, $name) {
 
     return $user_id; // Return the new user ID
 }
-
 
 
 // ===============================
