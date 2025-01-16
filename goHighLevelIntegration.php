@@ -1,8 +1,5 @@
 <?php
 // Define constants for GoHighLevel account/location ID and auth token.
-define('GOHIGHLEVEL_LOCATION_ID', '01QE7eTxpcoIeOFTaYH4'); // Replace with your location ID.
-define('GOHIGHLEVEL_AUTH_TOKEN', 'pit-e449d572-5b5b-472a-80ce-0ef0a57205a8');   // Replace with your auth token.
-define('GOHIGHLEVEL_API_VERSION', '2021-07-28');   
 
 /**
  * Create a contact in GoHighLevel.
@@ -14,6 +11,10 @@ define('GOHIGHLEVEL_API_VERSION', '2021-07-28');
  * @return bool True if the contact was successfully created, false otherwise.
  */
 function create_gohighlevel_contact($firstName, $email, $phone, $companyName) {
+    $location_id = get_option('gohighlevel_location_id', '01QE7eTxpcoIeOFTaYH4');
+    $auth_token = get_option('gohighlevel_auth_token', 'pit-e449d572-5b5b-472a-80ce-0ef0a57205a8');
+    $api_version = get_option('gohighlevel_api_version', '2021-07-28');
+
     // GoHighLevel API endpoint for creating a contact.
     $url = 'https://services.leadconnectorhq.com/contacts/';
 
@@ -22,14 +23,14 @@ function create_gohighlevel_contact($firstName, $email, $phone, $companyName) {
         'firstName'   => $firstName,
         'email'       => $email,
         'companyName' => $companyName,
-        'locationId'  => GOHIGHLEVEL_LOCATION_ID,
+        'locationId'  => $location_id,
         'phone'       => $phone,
     ];
 
     // Headers for the API request.
     $headers = [
-        'Authorization' => 'Bearer ' . GOHIGHLEVEL_AUTH_TOKEN,
-        'Version'       => GOHIGHLEVEL_API_VERSION,
+        'Authorization' => 'Bearer ' . $auth_token,
+        'Version'       => $api_version,
         'Content-Type'  => 'application/json',
     ];
 
