@@ -1,0 +1,45 @@
+.crop-modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+.crop-modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 600px;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+}
+.crop-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.crop-modal-header > span{
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+}
+.close-crop-modal {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+.crop-container {
+    width: 100%;
+    max-height: 400px;
+    overflow: hidden;
+    text-align: center;
+}
+.crop-modal-footer {
+    margin-top: 10px;
+    text-align: right;
+}
