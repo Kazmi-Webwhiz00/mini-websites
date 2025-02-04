@@ -39,6 +39,7 @@ const FORM_SELECTORS = {
     SHOW_WEBSITE_BUTTON_TOGGLE: '#is_show_website_button',
     SHOW_LINKEDIN_BUTTON_TOGGLE: '#is_show_linkedin_button',
     SHOW_FB_BUTTON_TOGGLE: '#is_show_fb_button',
+    USER_VIDEO_URL_TOGGLE: '#is_show_video_url',
     CONTAINER_SHARE_BUTTON:'#share-button-fields-wrapper',
     CONTAINER_ADD_TO_CONTACT_BUTTON: '#contact-button-fields-wrapper',
     BACKGROUND_IMAGE_OVERLAY_TEXT: '.kw-bg-image-text',
@@ -96,6 +97,7 @@ const PREVIEW_SELECTORS = {
     LIVE_SHARE_BUTTON_CONTAINER:'#kw-mini-web-share-btn',
     LIVE_LINKEDIN_BUTTON_CONTAINER:'#kw-mini-web-linkedin-btn',
     LIVE_FB_BUTTON_CONTAINER:'#kw-mini-web-fb-btn',
+    LIVE_USER_VIDEO_CONTAINER: '#kw-user-video-preview-container',
     LIVE_USER_ABOUT_TITLE:'#kw-mini-web-website-about-title h3',
     LIVE_USER_ABOUT_TEXT: '#kw-mini-web-website-about-text p',
 };

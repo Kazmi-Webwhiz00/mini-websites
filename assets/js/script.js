@@ -31,6 +31,7 @@ jQuery(document).ready(function($) {
         handleWebsiteButtonToggle();
         handleLinkedInButtonToggle();
         handlefbButtonToggle();
+        handleVideoButtonToggle();
 
         onFbUrlChange();
         onLinkedInUrlChange();
@@ -261,6 +262,15 @@ jQuery(document).ready(function($) {
         });
     }
 
+    function handleVideoButtonToggle() {
+        const toggleCheckbox = $(FORM_SELECTORS.USER_VIDEO_URL_TOGGLE);
+        // Register the change event to toggle the contact fields visibility
+        toggleCheckbox.on('change', () => {
+            livePreview.toggleLivePreviewButtons(FORM_SELECTORS.USER_VIDEO_URL_TOGGLE, PREVIEW_SELECTORS.LIVE_USER_VIDEO_CONTAINER);
+            utils.togglePreviewButtons(FORM_SELECTORS.USER_VIDEO_URL_TOGGLE, '#video-url-fields-wrapper');
+        });
+    }
+
     function updateContactButtonLabel() {
         $(FORM_SELECTORS.CONTACT_BUTTON_LABEL_INPUT).on('input', function() {
             livePreview.updateLivePreviewTextFieldOnInput(PREVIEW_SELECTORS.LIVE_CONTACT_BUTTON, $(this).val());
@@ -364,14 +374,20 @@ jQuery(document).ready(function($) {
 
 
     function validationsOnSubmit() {
+        const isVideoToggleChecked = document.querySelector(FORM_SELECTORS.USER_VIDEO_URL_TOGGLE).checked;
+        console.log("valoue of check is ", isVideoToggleChecked);
+        if(!isVideoToggleChecked){
+            return true;
+        }
+        
         return utils.validateInputField(
             FORM_SELECTORS.VIDEO_URL_INPUT_SELECTOR,
             FORM_SELECTORS.VIDEO_URL_ERROR_DIV,
             FORM_SELECTORS.URL_REGIX,
-            true // Required
+            true // Pass true if toggle is OFF, false if toggle is ON
         );
     }
-
+    
     
 
     function bindOnSubmit() {

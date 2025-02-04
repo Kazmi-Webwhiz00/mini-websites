@@ -2,7 +2,7 @@
 /*
 Plugin Name: KW Mini Website 
 Description: A plugin to submit a form for creating mini-website custom posts.
-Version: 1.3.1
+Version: 1.3.3
 Author: KazVerse
 */
 
@@ -143,6 +143,7 @@ function kw_mini_website_handle_form_submission() {
     $is_show_add_to_contact_button = isset($_POST['is_show_add_to_contact_button']) ? 1 : 0;
     $is_show_website_button = isset($_POST['is_show_website_button']) ? 1 : 0;
     $is_show_fb_button = isset($_POST['is_show_fb_button']) ? 1 : 0;
+    $is_show_video_url = isset($_POST['is_show_video_url']) ? 1 : 0;
     $is_show_linkedin_button = isset($_POST['is_show_linkedin_button']) ? 1 : 0;
 
     // Handle file uploads
@@ -219,6 +220,7 @@ function kw_mini_website_handle_form_submission() {
             'is_show_add_to_contact_button' => $is_show_add_to_contact_button,
             'is_show_website_button'   => $is_show_website_button,
             'is_show_fb_button'        => $is_show_fb_button,
+            'is_show_video_url'        => $is_show_video_url,
             'is_show_linkedin_button'  => $is_show_linkedin_button,
             'user_video_url'           => $user_video_url,
             '_payment_status'          => SubscriptionStatus::PENDING, // Mark as unpaid by default

@@ -266,10 +266,19 @@ Description: A refined multi-step form template with SVG icons, a modern sidebar
 
                         <!-- Video URL Input -->
                         <div class="form-group">
+                            <label class="kw-switch">
+                                <input type="checkbox" id="is_show_video_url" name="is_show_video_url" class="kw-form-control" checked>
+                                <span class="kw-slider"></span>
+                            </label>
+                            <label for="is_show_video_url">Show Video URL?</label>
+                        </div>
+
+                        <div class="form-group kw-toggle-input-fields-group" id="video-url-fields-wrapper">
                             <label for="user_video_url">Video URL</label>
-                            <input type="text" id="user_video_url" name="user_video_url" class="form-control" required>
+                            <input type="url" id="user_video_url" name="user_video_url" class="form-control">
                             <span id="user-video-url-error" style="color: red; display: none;">Please enter a valid URL. Make sure it starts with http:// or https://</span>
                         </div>
+
 
                         <button type="button" class="btn btn-secondary btn-block mt-3" data-prev="3">Back</button>
                         <button type="submit" name="submit_mini_website" class="btn btn-success btn-block mt-3">Submit</button>

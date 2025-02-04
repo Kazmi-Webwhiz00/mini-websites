@@ -34,7 +34,7 @@ jQuery(document).ready(function($) {
                     var aspectRatio = 1; 
                     if (imageType === 'cover') {
                         // Example aspect ratio for cover image
-                        aspectRatio = 16 / 9; 
+                        aspectRatio = 700 / 275; 
                     }
 
                     cropper = new Cropper($cropperImage[0], {
